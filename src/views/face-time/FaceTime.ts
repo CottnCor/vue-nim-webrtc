@@ -6,27 +6,22 @@ const store = namespace('Common')
 
 import { SketchLayout } from '@/layout'
 
-import {} from '@/api/face-time'
+import { BaiscMap, ClusterMarkers, SpinMarker } from '@/components'
+
+import { getPeopleCoords } from '@/api/_mock-data'
 
 @Component({
-  components: { SketchLayout }
+  components: { SketchLayout, BaiscMap, ClusterMarkers, SpinMarker }
 })
 class FaceTime extends Vue {
-  private interval?: any
+  private mockMarkers!: any[]
 
-  private intervalGap = 3000
+  private currentLatLng = []
+
+  private currentAngle = 135
 
   @Prop({ default: null })
   private appkey!: string
-
-  @Prop({ default: null })
-  private sign!: string
-
-  @Prop({ default: null })
-  private timestamp!: string
-
-  @Prop({ default: null })
-  private userId!: number
 
   @store.Getter('status')
   private status!: number
@@ -50,7 +45,21 @@ class FaceTime extends Vue {
   private activated() {}
 
   private mounted() {
-    this.setStatus(2)
+    getPeopleCoords({
+      level: 2,
+      bounds: {
+        maxLat: 76.44490733708945,
+        maxLng: 116.67480468750001,
+        minLat: 72.54790992192898,
+        minLng: 86.66015625000001
+      }
+    })
+      .then(result => {
+        this.mockMarkers = result
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   private beforeDestroy() {}

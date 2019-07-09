@@ -5,7 +5,6 @@
 @import '../color/color';
 
 html {
-  font-size: 14px; // 页根字体大小，rem参考系原地
   overflow-x: hidden;
 }
 
@@ -39,12 +38,13 @@ $size_42: 3rem; // 42px
 $size_36: 2.572rem; // 36px
 $size_32: 2.286rem; // 32px
 $size_30: 2.143rem; // 30px
-$size_28: 2.0rem; // 28px
+$size_28: 2rem; // 28px
 $size_24: 1.714rem; // 24px
+$size_22: 1.584rem; // 22px
 $size_20: 1.429rem; // 20px
 $size_18: 1.286rem; // 18px
 $size_16: 1.143rem; // 16px
-$size_14: 1.0rem; // 14px
+$size_14: 1rem; // 14px
 $size_12: 0.857rem; // 12px
 $size_10: 0.714rem; // 10px
 $size_9: 0.643rem; // 9px
@@ -58,12 +58,18 @@ $size_2: 0.143rem; // 2px
 $size_1: 0.072rem; // 1px
 
 // 媒体查询断点
-$breakpoint: (xs: 34.286rem, // 480px
-  sm: 41.143rem, // 576px
-  md: 54.857rem, // 768px
-  lg: 70.857rem, // 992px
-  xl: 85.714rem, // 1200px
-  xxl: 114.286rem // 1600px
+$breakpoint: (
+  xs: 34.286rem,
+  // 480px
+    sm: 41.143rem,
+  // 576px
+    md: 54.857rem,
+  // 768px
+    lg: 70.857rem,
+  // 992px
+    xl: 85.714rem,
+  // 1200px
+    xxl: 114.286rem // 1600px
 );
 
 // 布局
@@ -148,34 +154,47 @@ $breakpoint: (xs: 34.286rem, // 480px
   & {
     background-color: transparent;
   }
-
 }
 
 // animation
-$ease_in : 0.3s ease;
-$ease_quick : 0.2s ease;
-$ease_in_out : .1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+$ease_in: 0.3s ease;
+$ease_quick: 0.2s ease;
+$ease_in_out: 0.1s cubic-bezier(1, 0.5, 0.8, 1);
 
 // z-index
-$zindex_affix : 10;
-$zindex_back-top : 101;
-$zindex_modal-mask : 1000;
-$zindex_modal : 1000;
-$zindex_notification : 1010;
-$zindex_message : 1010;
-$zindex_popover : 1030;
-$zindex_picker : 1050;
-$zindex_dropdown : 1050;
-$zindex_tooltip : 1060;
+$zindex_affix: 10;
+$zindex_back-top: 101;
+$zindex_modal-mask: 1000;
+$zindex_modal: 1000;
+$zindex_notification: 1010;
+$zindex_message: 1010;
+$zindex_popover: 1030;
+$zindex_picker: 1050;
+$zindex_dropdown: 1050;
+$zindex_tooltip: 1060;
 
 // border
-$border_base : $size_1 solid map-get($default, grey_4);
+$border-base: $size_1 solid map-get($default, grey_4);
 
-$shadow_base: 0 $size_1 $size_3 map-get($default, grey_2);
+//shadow
 
-$shadow_strong: 0 $size_4 $size_4 map-get($default, grey_3);
+$shadow-base: 0 $size_1 $size_3 map-get($default, grey_2);
 
-$shadow_power: 0 $size_12 $size_20 map-get($default, grey_3);
+$shadow-strong: 0 $size_4 $size_4 map-get($default, grey_3);
+
+$shadow-power: 0 $size_12 $size_20 map-get($default, grey_3);
+
+.shadow-base {
+  box-shadow: $shadow-base;
+}
+
+.shadow-strong {
+  box-shadow: $shadow-strong;
+}
+
+.shadow-power {
+  box-shadow: $shadow-power;
+}
 
 // transform
 $transform_base: scale(1.01);
@@ -192,21 +211,25 @@ $transform_move: translateX($size_3) scale(1.1);
 
 $font_weight: 400;
 
-$font_family: -apple-system,
-BlinkMacSystemFont,
-"Segoe UI",
-"PingFang SC",
-"Hiragino Sans GB",
-"Microsoft YaHei",
-"Helvetica Neue",
-Helvetica,
-Arial,
-sans-serif,
-"Apple Color Emoji",
-"Segoe UI Emoji",
-"Segoe UI Symbol";
+$font_family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+  'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+  sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
 // text
+
+p,
+a,
+span,
+input,
+textarea {
+  font-size: $size_20;
+  font-family: $font_family;
+  font-weight: $font_weight;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 p,
 i,
@@ -214,21 +237,16 @@ a,
 span,
 input,
 textarea {
-
-  font-size: 1rem;
-  font-family: $font_family;
-  font-weight: $font_weight;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
   &.primary {
     margin: auto 0;
     text-align: left;
     line-height: 1.572em;
     vertical-align: middle;
     color: map-get($default, grey_7);
+  }
+
+  &.max {
+    font-size: $size_48;
   }
 
   &.h1 {
@@ -244,19 +262,19 @@ textarea {
   }
 
   &.total {
-    font-size: $size_20;
+    font-size: $size_24;
     line-height: 2em;
     color: map-get($default, grey_7);
   }
 
   &.title {
-    font-size: $size_16;
-    line-height: 1.450em;
+    font-size: $size_22;
+    line-height: 1.45em;
     color: map-get($default, grey_7);
   }
 
   &.secondary {
-    font-size: 0.857rem;
+    font-size: $size_14;
     line-height: 1.667em;
     color: map-get($default, grey_6);
   }
@@ -269,8 +287,8 @@ textarea {
     font-weight: 600;
   }
 
-  &.hard_strong {
-    font-weight: 900;
+  &.hard-strong {
+    font-weight: 800;
   }
 
   &.center {
@@ -279,7 +297,7 @@ textarea {
   }
 
   &.left {
-    margin: auto 0;
+    margin: auto $size_12;
   }
 
   &.right {
@@ -290,32 +308,70 @@ textarea {
     margin: auto 0.6rem;
   }
 
+  &.no-gap {
+    margin: auto 0;
+  }
+
+  &.no-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   &.pure {
-    color: map-get($default, pure);
+    color: map-get($default, pure) !important;
   }
 
   &.nowrap {
     white-space: nowrap;
   }
 
-  i {
-    width: $size_32;
-    height: $size_32;
+  &.shadow {
+    text-shadow: $shadow-power !important;
   }
-}
 
-i {
-  width: auto;
-  height: auto;
-  display: inline-flex;
+  &.narrow {
+    line-height: normal;
+  }
 
-  svg {
-    margin: auto;
+  &.primary-color {
+    color: map-get($default, primary) !important;
+  }
+
+  &.strong-color {
+    color: map-get($default, strong) !important;
+  }
+
+  &.high {
+    color: map-get($default, high_light) !important;
+  }
+
+  &.success {
+    color: map-get($default, success) !important;
+  }
+
+  &.error {
+    color: map-get($default, error) !important;
+  }
+
+  &.warning {
+    color: map-get($default, warning) !important;
+  }
+
+  i {
+    // width: $size_32;
+    height: $size_32;
+    line-height: $size_32;
+    display: inline-flex;
+
+    svg,
+    &::before {
+      margin: auto;
+    }
   }
 }
 
 a {
-
   text-decoration: none;
 
   &:hover {
@@ -347,7 +403,7 @@ a {
     padding: 0 $size_6;
 
     i {
-      width: $size_32;
+      // width: $size_32;
       height: $size_32;
       display: flex;
       color: map-get($default, primary);
@@ -361,7 +417,7 @@ a {
   &.button {
     margin: auto 0;
     display: inline-block;
-    box-shadow: $shadow_base;
+    box-shadow: $shadow-base;
     justify-content: space-between;
     background-color: map-get($default, glass);
 
@@ -429,7 +485,6 @@ a {
 a,
 input,
 button {
-  display: flex;
   outline: none;
   cursor: pointer;
   transition: all $ease_in, transform $ease_in_out;
@@ -468,19 +523,22 @@ mark {
 }
 
 ::-webkit-scrollbar {
-  width: $size_4;
-  background-color: map-get($default, pure);
+  width: $size_1;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: $size_4;
-  box-shadow: $shadow_base;
-  background-color: map-get($default, grey_5);
+  border-radius: $size_1;
+  background-color: #193564;
 }
 
 ::-webkit-scrollbar-track {
-  border-radius: $size_4;
-  background-color: map-get($default, pure);
+  border-radius: $size_1;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 ::selection {
@@ -509,11 +567,11 @@ mark {
 }
 
 .slide-fade-enter-active {
-  transition: transform $ease_quick, opacity $ease_in;
+  transition: transform $ease_in, opacity $ease_in;
 }
 
 .slide-fade-enter {
-  transform: translateX($size_12);
+  transform: translateX($size_24) translateY($size_18);
   opacity: 0;
 }
 
@@ -528,7 +586,7 @@ mark {
 .divider {
   display: inline-flex;
 
-  &>div {
+  & > div {
     margin: auto;
     background-color: map-get($default, primary);
   }
@@ -536,6 +594,29 @@ mark {
 
 .overlay {
   pointer-events: none;
+}
+
+.center {
+  margin: auto;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.action {
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.no-bg {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.circle {
+  border-radius: $size_max;
 }
 
 .marker {
@@ -548,8 +629,112 @@ mark {
   p {
     margin: auto 0.1em;
 
+    &.center {
+      margin: auto;
+    }
+
     &:nth-of-type(1) {
       display: inline-flex;
     }
+  }
+}
+
+.progress {
+  flex: 1;
+  display: flex;
+  position: relative;
+
+  & > div {
+    margin: auto 0;
+    display: flex;
+    height: $size_16;
+    border-radius: $size_16;
+    background-image: map-get($default, linear_background);
+
+    & > div {
+      margin: auto 0;
+      float: left;
+      height: 100%;
+    }
+  }
+
+  .bar {
+    flex: 1;
+  }
+
+  .tips {
+    padding-left: $size_12;
+  }
+}
+
+.overstory {
+  z-index: $zindex_tooltip;
+}
+
+.anime-tiny {
+  animation: anime-tiny 1.5s ease infinite;
+}
+
+.anime-symmetric {
+  animation: anime-symmetric 0.6s ease infinite;
+}
+
+.anime-flicker {
+  animation: flicker 4000ms ease infinite;
+}
+
+.anime-reversal {
+  animation: flicker 4000ms ease infinite;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes anime-tiny {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(16deg);
+  }
+
+  50% {
+    transform: rotate(20deg);
+  }
+
+  75% {
+    transform: rotate(10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes anime-symmetric {
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  50% {
+    transform: rotateX(180deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes anime-reversal {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateY(180deg);
+  }
+
+  100% {
+    transform: rotateY(0deg);
   }
 }

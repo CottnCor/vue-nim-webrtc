@@ -27,6 +27,7 @@ $light : (primary : #1890ff,
   linear_warning : linear-gradient(to right, #f09819 0%, #ff5858 100%),
   linear_pure : linear-gradient(to left, #fdfbfb 0%, #ebedee 100%),
   linear_dark : linear-gradient(to right, #434343 0%, black 100%),
+  linear_background: linear-gradient(to right, rgba(121, 88, 159, 0.2), rgba(121, 88, 159, 0.4)),
 
   primary_light_1: #40a9ff,
   primary_light_2: #69c0ff, // 用于 hover

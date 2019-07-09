@@ -5,7 +5,7 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from "vue-property-decorator";
 
 @Component({})
 class BasicLayout extends Vue {}
@@ -14,9 +14,9 @@ export default BasicLayout;
 
 <style lang='scss' scoped>
 .main {
-    width: 100%;
-    min-height: 100%;
-    display: flex;
-    background: map-get($default, grey_2);
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  background-image: map-get($default, linear_background);
 }
 </style>

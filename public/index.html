@@ -1,25 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="font-size: 14px;">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <title>vue-nim-webrtc</title>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-  <title>vue-nim-webrtc</title>
-</head>
-
-<body>
-  <noscript>
-    <strong>We're sorry but vue-nim-webrtc doesn't work properly without JavaScript enabled. Please enable it to
-      continue.</strong>
-  </noscript>
-  <div id="app"></div>
-  <!-- built files will be auto injected -->
-  <script src="./libs/nim/NIM_Web_SDK_v6.1.2.js"></script>
-  <script src="./libs/nim/NIM_Web_WebRTC_v6.1.2.js"></script>
-  <script src="./libs/nim/NIM_Web_Netcall_v6.1.2.js"></script>
-
-</body>
-
+  <body style="margin: 0px; padding: 0px;">
+    <noscript>
+      <strong>请开启JavaScript支持。</strong>
+    </noscript>
+    <div id="app"></div>
+    <script src="./libs/nim/NIM_Web_SDK_v6.1.2.js"></script>
+    <script src="./libs/nim/NIM_Web_WebRTC_v6.1.2.js"></script>
+    <script src="./libs/nim/NIM_Web_Netcall_v6.1.2.js"></script>
+  </body>
 </html>

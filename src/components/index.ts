@@ -18,7 +18,7 @@ import BaiscMap from "./map/BaiscMap.vue";
 import MapWidgets from "./map/MapWidgets.vue";
 import MapLocalizer from "./map/MapLocalizer.vue";
 import MapPopup from "./map/MapPopup.vue";
-import ClusterLayer from "./map/ClusterLayer.vue";
+import ClusterMarkers from "./map/ClusterMarkers.vue";
 import GeojsonLayer from "./map/GeojsonLayer.vue";
 import PeoplePinMarker from "./map/PeoplePinMarker.vue";
 import PinMarker from "./map/PinMarker.vue";
@@ -56,10 +56,10 @@ SpotinfoUpload,
 SpotSupervisedInfo,
 SpotinfoEditer,
 BaiscMap,
-MapWidgets,,
+MapWidgets,
 MapLocalizer,
 MapPopup,
-ClusterLayer,
+ClusterMarkers,
 GeojsonLayer,
 PeoplePinMarker,
 PinMarker,

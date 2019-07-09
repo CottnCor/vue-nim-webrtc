@@ -1,15 +1,48 @@
 <template>
-  <div class="wapper">
-
+  <div class="wapper" v-show="this.show">
+    <li>
+      <el-tooltip class="item" effect="light" content="全图" placement="left">
+        <el-button class="map-tool-item" icon="md-globe"></el-button>
+      </el-tooltip>
+    </li>
+    <li>
+      <el-tooltip class="item" effect="light" content="放大一级" placement="left">
+        <el-button class="map-tool-item" icon="md-globe"></el-button>
+      </el-tooltip>
+    </li>
+    <li>
+      <el-tooltip class="item" effect="light" content="缩小一级" placement="left">
+        <el-button class="map-tool-item" icon="md-globe"></el-button>
+      </el-tooltip>
+    </li>
+    <li v-show="false">
+      <el-tooltip class="item" effect="light" content="全屏" placement="left">
+        <el-button class="map-tool-item" icon="md-globe"></el-button>
+      </el-tooltip>
+    </li>
+    <li>
+      <el-tooltip class="item" effect="light" content="底图切换" placement="left">
+        <el-button class="map-tool-item" icon="md-globe"></el-button>
+      </el-tooltip>
+    </li>
+    <el-popover v-if="this.map" placement="left" width="320" trigger="click">
+      <collection-site :map="this.map" />
+      <el-button class="map-tool-item" slot="reference" icon="el-icon-star-on"></el-button>
+    </el-popover>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { ROOT_ROUTER, ASSIST_ROUTER } from "@/config";
 
 @Component({})
-class MapWidgets extends Vue {}
+class MapWidgets extends Vue {
+  @Prop({ default: false })
+  private show!: boolean;
+
+  @Prop({ default: null })
+  private map!: any;
+}
 
 export default MapWidgets;
 </script>

@@ -1,10 +1,13 @@
 import Vue from 'vue'
-// import 'vue-tsx-support/enable-check';
 
 import App from '@/App.vue'
 
+///////////////////////////////////////////////////
+
 import router from '@/route'
 import store from '@/store'
+
+///////////////////////////////////////////////////
 
 // element-ui 按需引用
 import {
@@ -166,6 +169,12 @@ Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$prompt = MessageBox.prompt
 Vue.prototype.$notify = Notification
 Vue.prototype.$message = Message
+
+///////////////////////////////////////////////////
+
+import 'leaflet/dist/leaflet.css'
+
+///////////////////////////////////////////////////
 
 new Vue({
   router,
