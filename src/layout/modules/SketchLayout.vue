@@ -5,26 +5,40 @@
     </div>
     <div class="top-wapper">
       <div class="top popup radius">
-        <div class="radius">
-          <slot name="top"></slot>
+        <div class="content radius">
+          <div class="radius">
+            <slot name="top"></slot>
+          </div>
         </div>
       </div>
     </div>
     <div class="main-wapper">
-      <div class="left popup radius">
-        <div class="radius">
-          <slot name="left"></slot>
+      <div :class="[this.popupState[0].state ? '' : 'hide', 'left', 'popup', 'radius']">
+        <div class="content radius">
+          <div class="radius">
+            <slot name="left"></slot>
+          </div>
         </div>
-        <el-button class="visible-controller" type="primary" plain>
-          <p class="primary vertical">{{this.leftLabel}}</p>
-        </el-button>
+        <div class="visible-controller left" @click="activatePopup(0)">
+          <p class="primary vertical pure">
+            <i v-if="this.popupState[0].state" class="el-icon-d-arrow-left"></i>
+            <i v-else class="el-icon-arrow-right"></i>
+          </p>
+        </div>
       </div>
-      <div class="right popup radius">
-        <el-button class="visible-controller" type="primary" plain>
-          <p class="primary vertical">{{this.rightLabel}}</p>
-        </el-button>
-        <div class="radius">
-          <slot name="right"></slot>
+      <div style="flex: 1;"></div>
+      <div style="flex: 1;"></div>
+      <div :class="[this.popupState[1].state ? '' : 'hide', 'right', 'popup', 'radius']">
+        <div class="visible-controller right" @click="activatePopup(1)">
+          <p class="primary vertical pure">
+            <i v-if="this.popupState[1].state" class="el-icon-d-arrow-right"></i>
+            <i v-else class="el-icon-arrow-left"></i>
+          </p>
+        </div>
+        <div class="content radius">
+          <div class="radius">
+            <slot name="right"></slot>
+          </div>
         </div>
       </div>
     </div>
@@ -38,11 +52,24 @@ import { Getter, Action, namespace } from "vuex-class";
 
 @Component({})
 class SketchLayout extends Vue {
-  @Prop({ default: "" })
-  private leftLabel!: string;
+  private popupState = [
+    {
+      tag: 0,
+      state: false
+    },
+    {
+      tag: 1,
+      state: false
+    }
+  ];
 
-  @Prop({ default: "" })
-  private rightLabel!: string;
+  private activatePopup(tag: number) {
+    for (const item of this.popupState) {
+      if (tag === item.tag) {
+        item.state = !item.state;
+      }
+    }
+  }
 }
 export default SketchLayout;
 </script>
@@ -60,7 +87,6 @@ export default SketchLayout;
     width: 100%;
     height: 100%;
     text-align: left;
-    background-image: map-get($default, linear_primary_2);
   }
 
   .top-wapper,
@@ -78,21 +104,92 @@ export default SketchLayout;
 
   .main-wapper {
     flex: 1;
-    height: calc(100% - #{($size_64)});
-    min-height: calc(100% - #{($size_64)});
+    padding: 0 $size_12;
+    height: calc(100vh - #{($size_64)});
+    min-height: calc(100vh - #{($size_64)});
   }
 
   .popup {
     margin: auto;
     display: flex;
-    padding: $size_6;
     flex-direction: row;
     z-index: $zindex_dropdown;
-    box-shadow: $shadow_power;
-    background-color: map-get($default, glass);
+    transition: all $ease_in_out;
+
     & > div {
+      margin: auto;
+      cursor: pointer;
       padding: $size_6;
-      border: 1px dashed map-get($default, grey_4);
+      box-shadow: $shadow_power;
+      background-color: map-get($default, grey_2);
+
+      & > div {
+        padding: $size_6;
+        border: $size_2 dashed map-get($default, grey_4);
+      }
+    }
+
+    .visible-controller {
+      width: $size_32;
+      padding: $size_12 0;
+      display: flex;
+      background-color: map-get($default, primary);
+
+      p {
+        margin: auto;
+      }
+
+      &.left {
+        border-radius: 0 $size_12 $size_12 0;
+      }
+
+      &.right {
+        border-radius: $size_12 0 0 $size_12;
+      }
+
+      &:hover {
+        background-color: map-get($default, primary_light_1);
+        box-shadow: $shadow_strong;
+      }
+    }
+  }
+
+  .main-wapper {
+    .popup {
+      height: 96%;
+      width: 24%;
+      &.hide {
+        height: 48%;
+        width: 12%;
+        & > div.content {
+          opacity: 0.2;
+        }
+      }
+      &.left {
+        &.hide {
+          margin-left: calc(#{($size_32 - $size_12)} - 12%);
+        }
+      }
+      &.right {
+        &.hide {
+          margin-right: calc(#{($size_32 - $size_12)} - 12%);
+        }
+      }
+      & > div.content {
+        flex: 1;
+        height: 100%;
+        transition: opacity $ease_in;
+        & > div {
+          width: 100%;
+          height: 100%;
+          & > div {
+            width: 100%;
+            height: 100%;
+            min-height: 100%;
+            overflow-y: auto;
+          }
+        }
+      }
     }
   }
 }

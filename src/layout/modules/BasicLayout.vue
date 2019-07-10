@@ -17,6 +17,6 @@ export default BasicLayout;
   width: 100%;
   min-height: 100%;
   display: flex;
-  background-image: map-get($default, linear_background);
+  background-image: map-get($default, linear_primary_2);
 }
 </style>
