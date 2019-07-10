@@ -15,8 +15,14 @@
         <div class="radius">
           <slot name="left"></slot>
         </div>
+        <el-button class="visible-controller" type="primary" plain>
+          <p class="primary vertical">{{this.leftLabel}}</p>
+        </el-button>
       </div>
       <div class="right popup radius">
+        <el-button class="visible-controller" type="primary" plain>
+          <p class="primary vertical">{{this.rightLabel}}</p>
+        </el-button>
         <div class="radius">
           <slot name="right"></slot>
         </div>
@@ -78,7 +84,9 @@ export default SketchLayout;
 
   .popup {
     margin: auto;
+    display: flex;
     padding: $size_6;
+    flex-direction: row;
     z-index: $zindex_dropdown;
     box-shadow: $shadow_power;
     background-color: map-get($default, glass);

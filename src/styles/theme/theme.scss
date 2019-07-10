@@ -237,6 +237,10 @@ a,
 span,
 input,
 textarea {
+  &.vertical {
+    writing-mode: vertical-rl;
+  }
+
   &.primary {
     margin: auto 0;
     text-align: left;
