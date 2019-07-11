@@ -13,6 +13,7 @@ import store from '@/store'
 import {
   Pagination,
   Dialog,
+  Avatar,
   Autocomplete,
   Dropdown,
   DropdownMenu,
@@ -90,6 +91,8 @@ import {
 
 Vue.use(Pagination)
 Vue.use(Dialog)
+Vue.use(Avatar)
+Vue.use(Autocomplete)
 Vue.use(Autocomplete)
 Vue.use(Dropdown)
 Vue.use(DropdownMenu)

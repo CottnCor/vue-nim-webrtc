@@ -9,7 +9,9 @@ import FaceTimeInit from './face-time/FaceTimeInit.vue'
 import FaceTimeWaiting from './face-time/FaceTimeWaiting.vue'
 import FaceTimeCalling from './face-time/FaceTimeCalling.vue'
 import FaceTimeWorking from './face-time/FaceTimeWorking.vue'
-import FaceTimeError from './face-time/FaceTimeError.vue'
+import FaceTimeFailure from './face-time/FaceTimeFailure.vue'
+import FaceTimeHangup from './face-time/FaceTimeHangup.vue'
+import FacetimeUnLogged from './face-time/FacetimeUnLogged.vue'
 import FaceTimeTool from './face-time/FaceTimeTool.vue'
 import FaceTimeControl from './face-time/FaceTimeControl.vue'
 import FaceTimeInfo from './face-time/FaceTimeInfo.vue'
@@ -58,7 +60,9 @@ export {
   FaceTimeWaiting,
   FaceTimeCalling,
   FaceTimeWorking,
-  FaceTimeError,
+  FaceTimeFailure,
+  FaceTimeHangup,
+  FacetimeUnLogged,
   FaceTimeTool,
   FaceTimeControl,
   FaceTimeInfo,

@@ -1,11 +1,12 @@
 <template>
   <div v-if="content" class="spot-list-item radius">
-    <p class="primary strong primary-color">
-      <i :class="content.icon"></i>
-    </p>
+    <el-tooltip :content="content.state ? '可用' : '不可用'" placement="bottom">
+      <p :class="[content.state ? 'success' : 'disable', 'primary', 'strong', 'primary-color']"><i class="el-icon-success"></i></p>
+    </el-tooltip>
     <p class="primary strong center">{{ content.title }}</p>
     <span style="flex: 1;" />
-    <el-button class="motion" type="text" size="mini" round>上传<i class="el-icon-upload el-icon--right"></i></el-button>
+    <el-button class="motion" type="text" size="mini" round><i :class="[content.state ? 'primary-color' : 'disable', 'el-icon-location-outline']"></i></el-button>
+    <el-button class="motion" type="text" size="mini" round><i :class="[content.state ? 'primary-color' : 'disable', 'el-icon-video-camera']"></i></el-button>
   </div>
 </template>
 

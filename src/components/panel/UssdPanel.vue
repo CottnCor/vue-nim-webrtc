@@ -87,7 +87,7 @@ export default UssdPanel;
       }
 
       &:hover {
-        background-color: map-get($default, primary_1);
+        background-image: map-get($default, linear_background);
         box-shadow: $shadow_strong;
       }
 

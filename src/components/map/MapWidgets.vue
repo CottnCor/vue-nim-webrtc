@@ -1,27 +1,27 @@
 <template>
   <div class="wapper" v-show="this.show">
     <li>
-      <el-tooltip class="item" effect="light" content="全图" placement="left">
+      <el-tooltip content="全图" placement="left">
         <el-button class="map-tool-item" icon="md-globe"></el-button>
       </el-tooltip>
     </li>
     <li>
-      <el-tooltip class="item" effect="light" content="放大一级" placement="left">
+      <el-tooltip content="放大一级" placement="left">
         <el-button class="map-tool-item" icon="md-globe"></el-button>
       </el-tooltip>
     </li>
     <li>
-      <el-tooltip class="item" effect="light" content="缩小一级" placement="left">
+      <el-tooltip content="缩小一级" placement="left">
         <el-button class="map-tool-item" icon="md-globe"></el-button>
       </el-tooltip>
     </li>
     <li v-show="false">
-      <el-tooltip class="item" effect="light" content="全屏" placement="left">
+      <el-tooltip content="全屏" placement="left">
         <el-button class="map-tool-item" icon="md-globe"></el-button>
       </el-tooltip>
     </li>
     <li>
-      <el-tooltip class="item" effect="light" content="底图切换" placement="left">
+      <el-tooltip content="底图切换" placement="left">
         <el-button class="map-tool-item" icon="md-globe"></el-button>
       </el-tooltip>
     </li>

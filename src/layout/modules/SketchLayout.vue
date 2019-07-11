@@ -159,7 +159,7 @@ export default SketchLayout;
       }
 
       &:hover {
-        background-color: map-get($default, primary_light_1);
+        background-image: map-get($default, linear_background);
         box-shadow: $shadow_strong;
       }
     }
@@ -167,30 +167,32 @@ export default SketchLayout;
 
   .main-wapper {
     .popup {
-      width: 24%;
       height: 96%;
       &.left {
-        &.hide {
-          margin-left: calc(#{($size_32 - $size_12)} - 12%);
-        }
+        width: 24%;
       }
       &.right {
-        width: 36%;
-        &.hide {
-          margin-right: calc(#{($size_32 - $size_12)} - 12%);
-        }
+        width: 42%;
       }
       &.hide {
         height: 48%;
         width: 12%;
         & > div.content {
+          width: 0;
+          height: 0;
           opacity: 0.2;
+        }
+        &.left {
+          margin-left: calc(#{($size_32 - $size_12)} - 12%);
+        }
+        &.right {
+          margin-right: calc(#{($size_32 - $size_12)} - 12%);
         }
       }
       & > div.content {
         flex: 1;
         height: 100%;
-        transition: opacity $ease_in;
+        transition: all $ease_in;
         & > div {
           width: 100%;
           height: 100%;

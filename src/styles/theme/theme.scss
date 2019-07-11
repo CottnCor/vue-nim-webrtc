@@ -26,6 +26,7 @@ $size_360: 25.714rem; // 360px
 $size_300: 21.429rem; // 300px
 $size_240: 17.143rem; // 240px
 $size_180: 12.857rem; // 180px
+$size_160: 11.52rem; // 160px
 $size_120: 8.572rem; // 120px
 $size_108: 7.714rem; // 108px
 $size_96: 6.858rem; // 96px
@@ -44,7 +45,8 @@ $size_22: 1.584rem; // 22px
 $size_20: 1.429rem; // 20px
 $size_18: 1.286rem; // 18px
 $size_16: 1.143rem; // 16px
-$size_14: 1rem; // 14px
+$size_15: 1.143rem; // 16px
+$size_14: 1.08rem; // 15px
 $size_12: 0.857rem; // 12px
 $size_10: 0.714rem; // 10px
 $size_9: 0.643rem; // 9px
@@ -228,7 +230,7 @@ a,
 span,
 input,
 textarea {
-  font-size: $size_16;
+  font-size: $size_15;
   font-family: $font_family;
   font-weight: $font_weight;
   letter-spacing: 0.08em;
@@ -256,35 +258,35 @@ textarea {
   }
 
   &.max {
-    font-size: $size_48;
+    font-size: $size_36;
   }
 
   &.h1 {
-    font-size: $size_42;
+    font-size: $size_32;
     line-height: 1.667em;
     color: map-get($default, grey_7);
   }
 
   &.h2 {
-    font-size: $size_36;
+    font-size: $size_28;
     line-height: 4.667em;
     color: map-get($default, grey_7);
   }
 
   &.total {
-    font-size: $size_24;
+    font-size: $size_20;
     line-height: 2em;
     color: map-get($default, grey_7);
   }
 
   &.title {
-    font-size: $size_22;
+    font-size: $size_18;
     line-height: 1.45em;
     color: map-get($default, grey_7);
   }
 
   &.secondary {
-    font-size: $size_14;
+    font-size: $size_12;
     line-height: 1.667em;
     color: map-get($default, grey_6);
   }
@@ -429,22 +431,21 @@ a {
   }
 
   &.button {
-    margin: auto 0;
-    display: inline-block;
-    box-shadow: $shadow_base;
-    justify-content: space-between;
+    display: flex;
+    margin: auto;
+    padding: 0 $size_12;
+    flex-direction: row;
+    border-radius: $size_36;
+    border: $size_2 solid map-get($default, primary_1);
     background-color: map-get($default, glass);
 
     i {
-      z-index: $zindex_affix;
-      width: $size_32;
-      height: $size_32;
-      display: flex;
-      color: map-get($default, primary);
+      margin: auto $size_3;
+    }
 
-      svg {
-        margin: auto;
-      }
+    &:hover {
+      background-image: map-get($default, linear_background);
+      box-shadow: $shadow_strong;
     }
   }
 

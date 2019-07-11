@@ -1,16 +1,16 @@
 <template>
-  <div class="face-time-calling">
+  <div class="face-time-hangup">
     <a class="avatar button total">
       <i class="el-icon-user-solid"></i>
     </a>
-    <p class="tips total pure">
-      <i class="el-icon-loading"></i>
-      <span class="center secondary pure">{{this.tips}}</span>
-    </p>
     <div class="content">
       <a class="button">
         <i class="el-icon-close"></i>
-        <span class="strong primary center">挂断</span>
+        <span class="strong primary center">关闭</span>
+      </a>
+      <a class="button">
+        <i class="el-icon-phone-outline"></i>
+        <span class="strong primary center">重连</span>
       </a>
     </div>
   </div>
@@ -18,37 +18,26 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import router from "../../route/index";
 
 @Component({})
-class FaceTimeCalling extends Vue {
+class FaceTimeHangup extends Vue {
   @Prop({ default: "" })
   private tips!: string;
 }
-
-export default FaceTimeCalling;
+export default FaceTimeHangup;
 </script>
 
 <style lang="scss" scoped>
-.face-time-calling {
+.face-time-hangup {
   margin: auto;
   display: flex;
   flex-direction: column;
 
-    .tips {
-      margin: auto;
-      display: flex;
-      padding: 0 $size_12 0 0;
-      margin: $size_24 auto;
-      flex-direction: row;
-      i {
-        margin: auto $size_12 auto 0;
-      }
-    }
-
   .avatar {
-    margin: auto;
     width: $size_64;
     height: $size_64;
+    margin: $size_24 auto;
     border: $size_4 solid map-get($default, primary_1);
     i {
       margin: auto;
@@ -58,6 +47,10 @@ export default FaceTimeCalling;
   .content {
     display: flex;
     flex-direction: row;
+
+    & > a {
+      margin: auto $size_6;
+    }
   }
 }
 </style>

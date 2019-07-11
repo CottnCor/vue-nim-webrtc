@@ -8,7 +8,10 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({})
-class FaceTimeWaiting extends Vue {}
+class FaceTimeWaiting extends Vue {
+  @Prop({ default: "" })
+  private tips!: string;
+}
 
 export default FaceTimeWaiting;
 </script>

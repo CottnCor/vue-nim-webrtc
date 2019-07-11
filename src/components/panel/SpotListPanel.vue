@@ -4,7 +4,7 @@
       <spot-filter />
     </div>
     <div class="content">
-      <spot-list-item v-for="(item, index) in 24" :key="index" :content="{icon: 'el-icon-crop', title: '图斑列表'}" />
+      <spot-list-item v-for="(item, index) in 24" :key="index" :content="{state: item % 2 === 0, title: '图斑列表'}" />
     </div>
   </div>
 </template>
@@ -28,14 +28,14 @@ export default SpotListPanel;
   flex-direction: column;
 
   .header {
-    height: $size_64;
+    height: $size_84;
   }
 
   .content {
     flex: 1;
     overflow-y: auto;
     box-shadow: $shadow_strong_inset;
-    height: calc(100% - #{($size_64)});
+    height: calc(100% - #{($size_84)});
 
     .spot-list-item {
       &:nth-child(odd) {

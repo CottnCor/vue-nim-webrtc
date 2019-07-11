@@ -28,14 +28,14 @@ export default PeopleListPanel;
   flex-direction: column;
 
   .header {
-    height: $size_64;
+    height: $size_42;
   }
 
   .content {
-    flex: 1;
+    width: 100%;
     overflow-y: auto;
     box-shadow: $shadow_strong_inset;
-    height: calc(100% - #{($size_64)});
+    height: calc(100% - #{($size_42)});
 
     .people-list-item {
       &:nth-child(odd) {

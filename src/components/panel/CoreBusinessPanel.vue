@@ -29,9 +29,16 @@ export default CoreBusinessPanel;
   flex-direction: column;
 
   & > div {
-    height: 50%;
     width: 100%;
     box-shadow: $shadow_strong_inset;
+
+    &:nth-of-type(1) {
+      height: 64%;
+    }
+
+    &:nth-of-type(2) {
+      height: 36%;
+    }
   }
 }
 </style>

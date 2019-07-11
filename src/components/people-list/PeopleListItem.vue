@@ -1,16 +1,13 @@
 <template>
+
   <div v-if="content" class="people-list-item radius">
-    <el-tooltip :content="content.state ? '在线' : '离线'" placement="bottom">
-      <p :class="[content.state ? 'success' : 'disable', 'primary', 'strong', 'primary-color']"><i class="el-icon-link"></i></p>
+    <el-tooltip :content="content.state ? '在线' : '离线'" placement="right">
+      <p :class="[content.state ? 'success' : 'disable', 'primary', 'strong']"><i class="el-icon-link"></i></p>
     </el-tooltip>
     <p class="primary strong center">{{ content.title }}</p>
     <span style="flex: 1;" />
-    <el-tooltip content="定位" placement="bottom">
-      <el-button class="motion" type="text" size="mini" round><i class="el-icon-location-outline"></i></el-button>
-    </el-tooltip>
-    <el-tooltip content="呼叫" placement="bottom">
-      <el-button class="motion" type="text" size="mini" round><i class="el-icon-phone-outline"></i></el-button>
-    </el-tooltip>
+    <el-button class="motion" type="text" size="mini" round><i :class="[content.state ? 'primary-color' : 'disable', 'el-icon-location-outline']"></i></el-button>
+    <el-button class="motion" type="text" size="mini" round><i :class="[content.state ? 'primary-color' : 'disable', 'el-icon-video-camera']"></i></el-button>
   </div>
 </template>
 
