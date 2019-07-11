@@ -1,10 +1,10 @@
 <template>
-  <div class="wapper">
+  <div class="people-list-panel">
     <div class="header">
       <people-filter />
     </div>
     <div class="content">
-      <people-list-item v-for="(item, index) in 12" :key="index" :content="{icon: 'el-icon-position', title: '人员列表'}" />
+      <people-list-item v-for="(item, index) in 24" :key="index" :content="{state: item % 2 === 0, title: '人员列表'}" />
     </div>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default PeopleListPanel;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.people-list-panel {
   width: 100%;
   height: 100%;
   display: flex;
@@ -34,7 +34,17 @@ export default PeopleListPanel;
   .content {
     flex: 1;
     overflow-y: auto;
-    max-height: calc(100% - #{($size_64)});
+    box-shadow: $shadow_strong_inset;
+    height: calc(100% - #{($size_64)});
+
+    .people-list-item {
+      &:nth-child(odd) {
+        background-color: map-get($default, grey_3);
+      }
+      &:nth-child(even) {
+        background-color: map-get($default, grey_2);
+      }
+    }
   }
 }
 </style>

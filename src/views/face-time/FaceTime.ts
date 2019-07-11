@@ -6,26 +6,25 @@ const store = namespace('Common')
 
 import { SketchLayout } from '@/layout'
 
+import { getPeopleCoords } from '@/api/_mock-data'
+
 import {
+  ClusterMarkers,
+  SpinMarker,
   BaiscMap,
   UssdPanel,
-  PeopleListPanel,
-  SpotListPanel,
-  ClusterMarkers,
-  SpinMarker
-} from '@/components'
+  CoreBusinessPanel
 
-import { getPeopleCoords } from '@/api/_mock-data'
+} from '@/components'
 
 @Component({
   components: {
     SketchLayout,
-    UssdPanel,
-    PeopleListPanel,
-    SpotListPanel,
-    BaiscMap,
     ClusterMarkers,
-    SpinMarker
+    SpinMarker,
+    BaiscMap,
+    UssdPanel,
+    CoreBusinessPanel
   }
 })
 class FaceTime extends Vue {

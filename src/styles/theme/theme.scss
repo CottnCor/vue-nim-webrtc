@@ -178,11 +178,17 @@ $border_base: $size_1 solid map-get($default, grey_4);
 
 //shadow
 
-$shadow_base: 0 $size_1 $size_3 map-get($default, grey_2);
+$shadow_base: 0 $size_1 $size_3 map-get($default, grey_5);
 
-$shadow_strong: 0 $size_4 $size_4 map-get($default, grey_3);
+$shadow_strong: 0 $size_12 $size_20 map-get($default, grey_5);
 
-$shadow_power: 0 $size_12 $size_20 map-get($default, grey_3);
+$shadow_power: 0 $size_20 $size_42 map-get($default, grey_5);
+
+$shadow_base_inset: 0 $size_1 $size_3 0 map-get($default, grey_5) inset;
+
+$shadow_strong_inset: 0 $size_12 $size_20 0 map-get($default, grey_5) inset;
+
+$shadow_power_inset: 0 $size_20 $size_42 0 map-get($default, grey_5) inset;
 
 .shadow_base {
   box-shadow: $shadow_base;
@@ -322,10 +328,6 @@ textarea {
     white-space: nowrap;
   }
 
-  &.pure {
-    color: map-get($default, pure) !important;
-  }
-
   &.nowrap {
     white-space: nowrap;
   }
@@ -336,6 +338,10 @@ textarea {
 
   &.narrow {
     line-height: normal;
+  }
+
+  &.pure {
+    color: map-get($default, pure) !important;
   }
 
   &.primary-color {
@@ -360,6 +366,10 @@ textarea {
 
   &.warning {
     color: map-get($default, warning) !important;
+  }
+
+  &.disable {
+    color: map-get($default, grey_5) !important;
   }
 
   i {
@@ -546,7 +556,7 @@ mark {
 }
 
 ::selection {
-  background-color: map-get($default, strong);
+  background-color: map-get($default, primary_dark_1);
   color: map-get($default, pure);
 }
 

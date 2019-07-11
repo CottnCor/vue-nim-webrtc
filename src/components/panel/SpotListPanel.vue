@@ -1,10 +1,10 @@
 <template>
-  <div class="wapper">
+  <div class="spot-list-panel">
     <div class="header">
       <spot-filter />
     </div>
     <div class="content">
-      <spot-list-item v-for="(item, index) in 12" :key="index" :content="{icon: 'el-icon-crop', title: '图斑列表'}" />
+      <spot-list-item v-for="(item, index) in 24" :key="index" :content="{icon: 'el-icon-crop', title: '图斑列表'}" />
     </div>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default SpotListPanel;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.spot-list-panel {
   width: 100%;
   height: 100%;
   display: flex;
@@ -34,7 +34,17 @@ export default SpotListPanel;
   .content {
     flex: 1;
     overflow-y: auto;
-    max-height: calc(100% - #{($size_64)});
+    box-shadow: $shadow_strong_inset;
+    height: calc(100% - #{($size_64)});
+
+    .spot-list-item {
+      &:nth-child(odd) {
+        background-color: map-get($default, grey_3);
+      }
+      &:nth-child(even) {
+        background-color: map-get($default, grey_2);
+      }
+    }
   }
 }
 </style>

@@ -1,19 +1,19 @@
 <template>
-  <div class="panel radius">
+  <div class="spot-operat-panel radius">
     <div class="visible-controller">
       <div :class="[this.panelState[0].state ? 'active' : '']" @click="activatePanel(0)">
-        <p class="primary pure"><i class="el-icon-position"></i>人员列表</p>
+        <p class="primary pure">人员列表</p>
       </div>
       <div :class="[this.panelState[1].state ? 'active' : '']" @click="activatePanel(1)">
-        <p class="primary pure"><i class="el-icon-crop"></i>图斑列表</p>
+        <p class="primary pure">图斑列表</p>
       </div>
     </div>
     <div class="content radius">
       <div v-if="this.panelState[0].state" class="radius">
-        <people-list-panel />
+
       </div>
       <div v-else class="radius">
-        <spot-list-panel />
+
       </div>
     </div>
   </div>
@@ -27,7 +27,7 @@ import { Getter, Action, namespace } from "vuex-class";
 import { PeopleListPanel, SpotListPanel } from "@/components";
 
 @Component({ components: { PeopleListPanel, SpotListPanel } })
-class UssdPanel extends Vue {
+class SpotOperatPanel extends Vue {
   private panelState = [
     {
       tag: 0,
@@ -49,13 +49,14 @@ class UssdPanel extends Vue {
     }
   }
 }
-export default UssdPanel;
+export default SpotOperatPanel;
 </script>
 
 <style lang='scss' scoped>
-.panel {
+.spot-operat-panel {
   height: 100%;
   width: 100%;
+  padding: $size_6;
   display: flex;
   flex-direction: column;
 

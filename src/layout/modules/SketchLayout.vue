@@ -4,7 +4,7 @@
       <slot name="full"></slot>
     </div>
     <div class="top-wapper">
-      <div class="top popup radius">
+      <div v-if="false" class="top popup radius">
         <div class="content radius">
           <div class="radius">
             <slot name="top"></slot>
@@ -42,6 +42,15 @@
         </div>
       </div>
     </div>
+    <div class="buttom-wapper">
+      <div v-if="false" class="buttom popup radius">
+        <div class="content radius">
+          <div class="radius">
+            <slot name="buttom"></slot>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -55,7 +64,7 @@ class SketchLayout extends Vue {
   private popupState = [
     {
       tag: 0,
-      state: false
+      state: true
     },
     {
       tag: 1,
@@ -90,14 +99,16 @@ export default SketchLayout;
   }
 
   .top-wapper,
-  .main-wapper {
+  .main-wapper,
+  .buttom-wapper {
     margin: auto;
     display: flex;
     flex-direction: row;
     width: 100%;
   }
 
-  .top-wapper {
+  .top-wapper,
+  .buttom-wapper {
     height: $size_64;
     min-height: $size_64;
   }
@@ -105,8 +116,8 @@ export default SketchLayout;
   .main-wapper {
     flex: 1;
     padding: 0 $size_12;
-    height: calc(100vh - #{($size_64)});
-    min-height: calc(100vh - #{($size_64)});
+    height: calc(100vh - #{($size_64 * 2)});
+    min-height: calc(100vh - #{($size_64 * 2)});
   }
 
   .popup {
@@ -156,23 +167,24 @@ export default SketchLayout;
 
   .main-wapper {
     .popup {
-      height: 96%;
       width: 24%;
-      &.hide {
-        height: 48%;
-        width: 12%;
-        & > div.content {
-          opacity: 0.2;
-        }
-      }
+      height: 96%;
       &.left {
         &.hide {
           margin-left: calc(#{($size_32 - $size_12)} - 12%);
         }
       }
       &.right {
+        width: 36%;
         &.hide {
           margin-right: calc(#{($size_32 - $size_12)} - 12%);
+        }
+      }
+      &.hide {
+        height: 48%;
+        width: 12%;
+        & > div.content {
+          opacity: 0.2;
         }
       }
       & > div.content {
@@ -185,8 +197,6 @@ export default SketchLayout;
           & > div {
             width: 100%;
             height: 100%;
-            min-height: 100%;
-            overflow-y: auto;
           }
         }
       }

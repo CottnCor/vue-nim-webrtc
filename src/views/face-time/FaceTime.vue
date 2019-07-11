@@ -1,12 +1,8 @@
 <template>
   <sketch-layout>
     <div slot="top"></div>
-    <people-list-panel slot="left" />
-    <!-- <ussd-panel slot="left" leftLabel="人员列表" righLabel="图斑列表" leftIcon="el-icon-position" righIcon="el-icon-crop">
-      <people-list-panel slot="left" />
-      <spot-list-panel slot="righ" />
-    </ussd-panel> -->
-    <div slot="right"></div>
+    <ussd-panel slot="left" />
+    <core-business-panel slot="right" />
     <baisc-map slot="full">
       <cluster-markers slot="cluster-markers" :markers="mockMarkers" />
       <spin-marker slot="spin-marker" :latLng="currentLatLng" :rotationAngle="currentAngle" />
