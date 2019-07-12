@@ -20,7 +20,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import NimCall from "@/utils/nim-call";
+import NimCall from "@/utils/nimCall";
 
 import { namespace } from "vuex-class";
 
@@ -34,11 +34,14 @@ class FaceTimeFailure extends Vue {
   @Prop({ default: "" })
   private account!: string;
 
+  @Prop({ default: "" })
+  private tbid!: string;
+
   @store.Action("set_status")
   private setStatus!: (val: number) => void;
 
   private call() {
-    NimCall.getInstance().startCalling(this.account);
+    NimCall.getInstance().startCalling(this.account, this.tbid);
   }
 
   private close() {

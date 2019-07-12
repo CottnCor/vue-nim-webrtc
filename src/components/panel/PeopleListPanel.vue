@@ -4,7 +4,7 @@
       <people-filter />
     </div>
     <div class="content">
-      <people-list-item v-for="(item, index) in 16" :key="index" :content="{state: item % 2 === 0, title: '测试人员' + index, account: '01895eb024fc48e19218a41de7d714'}" />
+      <people-list-item v-for="(item, index) in 16" :key="index" :content="{state: item % 2 === 0, title: '测试人员' + index, account: to}" />
     </div>
   </div>
 </template>
@@ -12,10 +12,14 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
+import { NIM_CONFIG } from '@/config';
+
 import { PeopleFilter, PeopleListItem } from "@/components";
 
 @Component({ components: { PeopleFilter, PeopleListItem } })
-class PeopleListPanel extends Vue {}
+class PeopleListPanel extends Vue {
+  private to = NIM_CONFIG.to;
+}
 
 export default PeopleListPanel;
 </script>

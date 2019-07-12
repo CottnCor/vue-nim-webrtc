@@ -26,11 +26,12 @@ import MapLocalizer from './map/MapLocalizer.vue'
 import MapPopup from './map/MapPopup.vue'
 import ClusterMarkers from './map/ClusterMarkers.vue'
 import GeojsonLayer from './map/GeojsonLayer.vue'
+import WktLayer from './map/WktLayer.vue'
 import PeoplePinMarker from './map/PeoplePinMarker.vue'
 import PinMarker from './map/PinMarker.vue'
 import SpinMarker from './map/SpinMarker.vue'
 import MapWidgets from './map/MapWidgets.vue'
-import BaiscMap from './map/BaiscMap.vue'
+import BasicMap from './map/BasicMap.vue'
 
 import StatusFilter from './take-number-list/StatusFilter.vue'
 import CalendarFilter from './take-number-list/CalendarFilter.vue'
@@ -76,11 +77,12 @@ export {
   MapPopup,
   ClusterMarkers,
   GeojsonLayer,
+  WktLayer,
   PeoplePinMarker,
   PinMarker,
   SpinMarker,
   MapWidgets,
-  BaiscMap,
+  BasicMap,
   StatusFilter,
   CalendarFilter,
   TakeNumberItem,

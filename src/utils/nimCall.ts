@@ -16,6 +16,11 @@ export default class NimCall {
 
   private callback!: Function
 
+  private callbackType = {
+    status: 0,
+    track: 1
+  }
+
   private WebRTC: any = WebRTC
   private NIM: any = SDK.NIM
 
@@ -104,20 +109,11 @@ export default class NimCall {
           this.setStatus(this.nimCallStatusCode.waiting)
           console.log('同步完成')
         },
-        onmsg: (msg: object) => {
-          console.log('收到IM消息： ', msg)
-        },
-        oncustomsysmsg: (msg: object) => {
-          console.log('收到自定义通知： ', msg)
-        },
-        onroamingmsgs: (msg: object) => {
-          console.log('收到漫游消息： ', msg)
-        },
-        onofflinemsgs: (msg: object) => {
-          console.log('收到离线消息： ', msg)
-        },
-        ondisconnect: (error: object) => {
-          console.error('IM断开连接：', error)
+        onmsg: (msg: any) => { this.emit(this.callbackType.track, msg.text) },
+        oncustomsysmsg: (msg: any) => {},
+        onroamingmsgs: (msg: any) => {},
+        onofflinemsgs: (msg: any) => {},
+        ondisconnect: (error: any) => {
           this.nim = null
           this.setStatus(this.nimCallStatusCode.unLogged)
         }
@@ -127,10 +123,10 @@ export default class NimCall {
   }
 
   /**
-   * updateStatus
+   * emit
    */
-  private updateStatus(tag: number): any {
-    if (this.callback) this.callback(tag)
+  private emit(type: number, content: any): any {
+    if (this.callback) this.callback(type, content)
   }
 
   /**
@@ -140,7 +136,7 @@ export default class NimCall {
     for (const item of this.nimCallStatus) {
       if (item.tag === tag) {
         item.state = true
-        this.updateStatus(item.tag)
+        this.emit(this.callbackType.status, item.tag)
       } else {
         item.state = false
       }
@@ -160,13 +156,27 @@ export default class NimCall {
         debug: true,
         nim: this.nim
       })
-      this.netcall.on('remoteTrack', this.remoteTrackEventHandler)
-      this.netcall.on('beCalling', this.beCallingEventHandler)
-      this.netcall.on('callRejected', this.callRejectedEventHandler)
-      this.netcall.on('callAccepted', this.callAcceptedEventHandler)
-      this.netcall.on('hangup', this.hangupEventHandler)
-      this.netcall.on('joinChannel', this.joinChannelEventHandler)
-      this.netcall.on('leaveChannel', this.leaveChannelEventHandler)
+      this.netcall.on('remoteTrack', param => {
+        this.remoteTrackEventHandler(param)
+      })
+      this.netcall.on('beCalling', () => {
+        this.beCallingEventHandler()
+      })
+      this.netcall.on('callRejected', () => {
+        this.callRejectedEventHandler()
+      })
+      this.netcall.on('callAccepted', () => {
+        this.callAcceptedEventHandler()
+      })
+      this.netcall.on('hangup', () => {
+        this.hangupEventHandler()
+      })
+      this.netcall.on('joinChannel', () => {
+        this.joinChannelEventHandler()
+      })
+      this.netcall.on('leaveChannel', () => {
+        this.leaveChannelEventHandler()
+      })
       this.syncDeviceList()
     } else return this.netcall
   }
@@ -206,6 +216,7 @@ export default class NimCall {
       this.netcall.leaveChannel()
       // this.nim.disconnect()
       this.setStatus(this.nimCallStatusCode.hangup)
+      this.emit(this.callbackType.track, null)
     }
   }
 
@@ -262,9 +273,11 @@ export default class NimCall {
     this.nim.sendCustomSysMsg({
       scene: 'p2p',
       to: account,
-      apnsText: channelName,
-      content: content || channelName,
-      done: this.sendInvitationsDone
+      apnsText: content || channelName,
+      content: channelName,
+      done: (error, msg) => {
+        this.sendInvitationsDone(error, msg)
+      }
     })
   }
 
@@ -415,20 +428,22 @@ export default class NimCall {
    * 打开收音设备
    */
   private openTheMicro(): any {
-    this.netcall
-      .startDevice({
-        type: this.WebRTC.DEVICE_TYPE_AUDIO_IN,
-        enableEchoCancellation: true,
-        device: {
-          deviceId: this.deviceList.audio[0].deviceId
-        }
-      })
-      .then(data => {
-        console.log('打开 mic 成功')
-      })
-      .catch(error => {
-        console.log('打开 mic 出错: ', error)
-      })
+    if (this.deviceList.audio.length > 0) {
+      this.netcall
+        .startDevice({
+          type: this.WebRTC.DEVICE_TYPE_AUDIO_IN,
+          enableEchoCancellation: true,
+          device: {
+            deviceId: this.deviceList.audio[0].deviceId
+          }
+        })
+        .then(data => {
+          console.log('打开 mic 成功')
+        })
+        .catch(error => {
+          console.log('打开 mic 出错: ', error)
+        })
+    }
   }
 
   /**
@@ -449,20 +464,22 @@ export default class NimCall {
    * 打开摄像设备
    */
   private openTheCamera(): any {
-    this.netcall
-      .startDevice({
-        type: this.WebRTC.DEVICE_TYPE_VIDEO,
-        device: {
-          deviceId: this.deviceList.video[0].deviceId
-        }
-      })
-      .then(data => {
-        this.previewLocalVideo()
-        console.log('打开 camera 成功')
-      })
-      .catch(error => {
-        console.log('打开 camera 出错: ', error)
-      })
+    if (this.deviceList.video.length > 0) {
+      this.netcall
+        .startDevice({
+          type: this.WebRTC.DEVICE_TYPE_VIDEO,
+          device: {
+            deviceId: this.deviceList.video[0].deviceId
+          }
+        })
+        .then(data => {
+          this.previewLocalVideo()
+          console.log('打开 camera 成功')
+        })
+        .catch(error => {
+          console.log('打开 camera 出错: ', error)
+        })
+    }
   }
 
   /**

@@ -1,6 +1,6 @@
 <template>
   <div class="face-time-unLogged">
-    <a class="button" @click="login">
+    <a class="button">
       <i class="el-icon-thumb"></i>
       <span class="strong primary center">{{this.tips}}</span>
     </a>
@@ -10,7 +10,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import NimCall from "@/utils/nim-call";
+import NimCall from "@/utils/nimCall";
 
 @Component({})
 class FacetimeUnLogged extends Vue {

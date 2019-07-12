@@ -1,5 +1,5 @@
 <template>
-  <div v-if="markers && markers.length > 0">
+  <div v-if="false">
     <l-marker v-for="marker in markers" :key="marker.index" :lat-lng="marker.latLng">
       <l-icon :icon-anchor="staticAnchor" class-name="marker">
         <div class="marker shadow-strong radius">

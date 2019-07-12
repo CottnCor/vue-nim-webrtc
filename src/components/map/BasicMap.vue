@@ -1,9 +1,10 @@
 <template>
   <div class="map-container">
-    <l-map ref="map" class="leaflet-map" :zoom="zoom" :min-zoom="minZoom" :max-zoom="maxZoom" :crs="crs" :maxBounds="maxBounds" :center="center" :options="options" @update:center="centerUpdated">
+    <l-map ref="map" class="leaflet-map" :crs="crs" :zoom="zoom" :min-zoom="minZoom" :max-zoom="maxZoom" :center="center" :options="options" @update:center="centerUpdated">
       <l-tile-layer :url="imgLayer" />
       <l-tile-layer :url="wapperLayer" />
       <l-tile-layer :url="labelLayer" />
+      <slot name="wkt-layer"></slot>
       <slot name="cluster-markers"></slot>
       <slot name="spin-marker"></slot>
     </l-map>
@@ -22,16 +23,17 @@ import { namespace } from "vuex-class";
 
 import { MAP_URL, MAP_CENTER, MAP_BOUND } from "@/config";
 
+import { MapPopup } from '@/components';
+
 const store = namespace("Common");
 
 @Component({
-  components: { BaiscMap, LMap, LTileLayer, LMarker, LIcon }
+  components: { BasicMap, LMap, LTileLayer, LMarker, LIcon }
 })
-class BaiscMap extends Vue {
-  private interval?: any;
-  private map?: any;
+class BasicMap extends Vue {
+  private map!: any;
   private zoom = 6;
-  private minZoom = 5;
+  private minZoom = 1;
   private maxZoom = 18;
   private loading = false;
   private crs = CRS.EPSG3857;
@@ -63,12 +65,18 @@ class BaiscMap extends Vue {
     this.map = (this.$refs.map as LMap).mapObject;
   }
 
-  private zoomIn() {
+  public zoomIn() {
     this.map.zoomIn();
   }
 
-  private zoomOut() {
+  public zoomOut() {
     this.map.zoomOut();
+  }
+
+  public setCenter(center: number[]) {
+    if (center.length > 1) {
+      this.map.panTo(center);
+    }
   }
 
   private centerUpdated() {
@@ -78,7 +86,7 @@ class BaiscMap extends Vue {
   }
 }
 
-export default BaiscMap;
+export default BasicMap;
 </script>
 
 <style lang="scss" scoped>

@@ -19,7 +19,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import NimCall from "@/utils/nim-call";
+import NimCall from "@/utils/nimCall";
 
 @Component({})
 class FaceTimeCalling extends Vue {

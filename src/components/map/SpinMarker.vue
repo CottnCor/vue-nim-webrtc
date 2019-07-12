@@ -1,7 +1,7 @@
 <template>
-  <div v-if="latLng && latLng.length > 0">
-    <l-rotated-marker :lat-lng="latLng" :rotationAngle="rotationAngle">
-      <l-icon :icon-anchor="staticAnchor" class-name="spin-marker">
+  <div v-if="this.latLng && this.latLng.length > 0">
+    <l-rotated-marker :lat-lng="this.latLng" :rotationAngle="this.rotationAngle">
+      <l-icon :icon-anchor="this.staticAnchor" class-name="spin-marker">
         <div class="spin-marker no-bg">
           <img class="overstory bg" src="img/map/pin-marker.png" />
         </div>
@@ -17,6 +17,8 @@ import Vue2LeafletRotatedMarker from "vue2-leaflet-rotatedmarker";
 import { LIcon } from "vue2-leaflet";
 import { latLng, icon, CRS } from "leaflet";
 
+import ProjUtil from "@/utils/projUtil";
+
 @Component({
   components: { LIcon, "l-rotated-marker": Vue2LeafletRotatedMarker }
 })
@@ -30,8 +32,8 @@ class SpinMarker extends Vue {
   private staticAnchor = [0, 0];
 
   private get latLngfixed(): number[] {
-    if (this.latLng.length === 2) {
-      let latLngfixed = [60 + this.latLng[0] / 2, this.latLng[1]];
+    if (this.latLng.length > 1) {
+      let latLngfixed = ProjUtil.getInstance().transform(this.latLng);
       return latLngfixed;
     } else {
       return [];
@@ -44,13 +46,13 @@ export default SpinMarker;
 <style lang="scss" scoped>
 .spin-marker {
   padding: 0;
-    width: $size_120;
-    height: $size_120;
-    margin-top: -55px;
-    margin-left: -55px;
-    img {
-      width: 100%;
-      height: 100%;
-    }
+  width: $size_120;
+  height: $size_120;
+  margin-top: -55px;
+  margin-left: -55px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

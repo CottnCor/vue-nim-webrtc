@@ -57,10 +57,15 @@
 <script lang='ts'>
 import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 
-import { Getter, Action, namespace } from "vuex-class";
+import { namespace } from "vuex-class";
+
+const store = namespace("FaceTime");
 
 @Component({})
 class SketchLayout extends Vue {
+  @store.Getter("status")
+  private status!: string;
+
   private popupState = [
     {
       tag: 0,
@@ -71,6 +76,11 @@ class SketchLayout extends Vue {
       state: false
     }
   ];
+
+  @Watch("status", { immediate: true, deep: true })
+  private onStatusChanged(val: number, oldVal: number) {
+    if (val === 3) this.popupState[1].state = true;
+  }
 
   private activatePopup(tag: number) {
     for (const item of this.popupState) {

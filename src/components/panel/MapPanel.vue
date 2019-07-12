@@ -1,9 +1,10 @@
 <template>
   <div class="panel radius">
-    <baisc-map>
-      <cluster-markers slot="cluster-markers" :markers="this.mockMarkers" />
-      <spin-marker slot="spin-marker" :latLng="this.currentLatLng" :rotationAngle="this.currentAngle" />
-    </baisc-map>
+    <basic-map ref="basicMap">
+      <wkt-layer slot="wkt-layer" :wkt="this.wkt"/>
+      <cluster-markers slot="cluster-markers" markers="[]" />
+      <spin-marker v-if="this.track && this.track.currentLatLng" slot="spin-marker" :latLng="this.track.currentLatLng" :rotationAngle="this.track.currentAngle" />
+    </basic-map>
   </div>
 </template>
 
@@ -14,34 +15,35 @@ import { MAP_CENTER, MAP_BOUND } from "@/config";
 
 import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 
-import { Getter, Action, namespace } from "vuex-class";
+import { namespace } from "vuex-class";
 
-import { ClusterMarkers, SpinMarker, BaiscMap } from "@/components";
+const store = namespace("FaceTime");
+
+import { ClusterMarkers, SpinMarker, WktLayer, BasicMap } from "@/components";
 
 @Component({
   components: {
     ClusterMarkers,
     SpinMarker,
-    BaiscMap
+    WktLayer,
+    BasicMap
   }
 })
 class MapPanel extends Vue {
-  private interval!: number;
+  public $refs!: {
+    basicMap: BasicMap;
+  };
 
-  private mockMarkers = [];
+  @store.Getter("track")
+  private track!: any;
 
-  private currentLatLng = [MAP_CENTER.LAT, MAP_CENTER.LNG];
+  private wkt = "POLYGON ((20 10, 20 50, 30 50, 30 35, 40 35, 40 50, 50 50, 50 10, 40 10, 40 25, 30 25, 30 10, 20 10))";
 
-  private currentAngle = 135;
-
-  private mounted() {
-    this.interval = setInterval(() => {
-      this.currentAngle = Math.floor(Math.random() * (360 - 0) + 0);
-    }, 1000);
-  }
-
-  private beforeDestroy() {
-    if (this.interval) clearInterval(this.interval);
+  @Watch("track", { immediate: true, deep: true })
+  private onTrackChanged(val: any, oldVal: any) {
+    if (val && val.currentLatLng) {
+      this.$refs.basicMap.setCenter(val.currentLatLng);
+    }
   }
 }
 export default MapPanel;

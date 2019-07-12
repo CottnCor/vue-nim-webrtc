@@ -10,3 +10,5 @@ declare module '*.css';
 declare let WebRTC:any;
 
 declare let SDK:any;
+
+declare let L;

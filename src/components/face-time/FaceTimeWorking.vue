@@ -15,7 +15,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import NimCall from "@/utils/nim-call";
+import NimCall from "@/utils/nimCall";
 
 import { NIM_CONFIG } from "@/config";
 
@@ -68,6 +68,7 @@ export default FaceTimeWorking;
       right: 0;
       bottom: 0;
       left: 0;
+      background-image: map-get($default, linear_dark);
     }
   }
 }

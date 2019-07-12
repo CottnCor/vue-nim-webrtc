@@ -26,7 +26,7 @@ $light : (primary : #1890ff,
   linear_highlight : linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%),
   linear_warning : linear-gradient(to right, #f09819 0%, #ff5858 100%),
   linear_pure : linear-gradient(to left, #fdfbfb 0%, #ebedee 100%),
-  linear_dark : linear-gradient(to right, #434343 0%, black 100%),
+  linear_dark : linear-gradient(to right, rgba(0, 0, 0, .46) 0%, rgba(0, 0, 0, .85) 100%),
   linear_background: linear-gradient(to right, rgba(121, 88, 159, 0.2), rgba(121, 88, 159, 0.4)),
 
   primary_light_1: #40a9ff,

@@ -22,7 +22,7 @@
 
 ###### 3. Map
 
-- BaiscMap
+- BasicMap
 - MapWidgets
 - MapLocalizer
 - MapPopup
