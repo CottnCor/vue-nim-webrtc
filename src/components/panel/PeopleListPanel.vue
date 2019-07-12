@@ -4,7 +4,7 @@
       <people-filter />
     </div>
     <div class="content">
-      <people-list-item v-for="(item, index) in 24" :key="index" :content="{state: item % 2 === 0, title: '人员列表'}" />
+      <people-list-item v-for="(item, index) in 16" :key="index" :content="{state: item % 2 === 0, title: '测试人员' + index, account: '01895eb024fc48e19218a41de7d714'}" />
     </div>
   </div>
 </template>

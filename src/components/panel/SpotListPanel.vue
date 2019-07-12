@@ -4,7 +4,7 @@
       <spot-filter />
     </div>
     <div class="content">
-      <spot-list-item v-for="(item, index) in 24" :key="index" :content="{state: item % 2 === 0, title: '图斑列表'}" />
+      <spot-list-item v-for="(item, index) in 16" :key="index" :content="{state: item % 2 === 0, title: '测试图斑' + index}" />
     </div>
   </div>
 </template>

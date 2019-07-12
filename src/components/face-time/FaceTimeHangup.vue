@@ -4,11 +4,11 @@
       <i class="el-icon-user-solid"></i>
     </a>
     <div class="content">
-      <a class="button">
+      <a class="button" @click="this.close">
         <i class="el-icon-close"></i>
         <span class="strong primary center">关闭</span>
       </a>
-      <a class="button">
+      <a class="button" @click="this.call">
         <i class="el-icon-phone-outline"></i>
         <span class="strong primary center">重连</span>
       </a>
@@ -18,12 +18,31 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import router from "../../route/index";
+
+import NimCall from "@/utils/nim-call";
+
+import { namespace } from "vuex-class";
+
+const store = namespace("FaceTime");
 
 @Component({})
 class FaceTimeHangup extends Vue {
   @Prop({ default: "" })
   private tips!: string;
+
+  @Prop({ default: "" })
+  private account!: string;
+
+  @store.Action("set_status")
+  private setStatus!: (val: number) => void;
+
+  private call() {
+    NimCall.getInstance().startCalling(this.account);
+  }
+
+  private close() {
+    this.setStatus(2);
+  }
 }
 export default FaceTimeHangup;
 </script>

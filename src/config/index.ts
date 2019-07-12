@@ -36,7 +36,7 @@ export { FREQUENCY } from './modules/frequency-config'
 
 export { MAP_URL, MAP_CENTER, MAP_BOUND } from './modules/map-config'
 
-export { NIM } from './modules/nim-config'
+export { NIM_CONFIG } from './modules/nim-config'
 
 // 平台
 export const HOST_PLATFORM = 'WEB'

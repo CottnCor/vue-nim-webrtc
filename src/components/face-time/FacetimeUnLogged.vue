@@ -1,20 +1,24 @@
 <template>
   <div class="face-time-unLogged">
-    <a class="button">
+    <a class="button" @click="login">
       <i class="el-icon-thumb"></i>
-      <span class="strong primary center">需要登陆</span>
+      <span class="strong primary center">{{this.tips}}</span>
     </a>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import router from "../../route/index";
+
+import NimCall from "@/utils/nim-call";
 
 @Component({})
 class FacetimeUnLogged extends Vue {
   @Prop({ default: "" })
   private tips!: string;
+
+  @Prop({ default: "" })
+  private account!: string;
 }
 export default FacetimeUnLogged;
 </script>

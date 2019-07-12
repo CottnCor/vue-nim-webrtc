@@ -42,6 +42,7 @@ import PeopleListItem from './people-list/PeopleListItem.vue'
 import SpotFilter from './spot-list/SpotFilter.vue'
 import SpotListItem from './spot-list/SpotListItem.vue'
 
+import MapPanel from './panel/MapPanel.vue'
 import PeopleListPanel from './panel/PeopleListPanel.vue'
 import SpotListPanel from './panel/SpotListPanel.vue'
 import UssdPanel from './panel/UssdPanel.vue'
@@ -87,6 +88,7 @@ export {
   PeopleListItem,
   SpotFilter,
   SpotListItem,
+  MapPanel,
   PeopleListPanel,
   SpotListPanel,
   UssdPanel,

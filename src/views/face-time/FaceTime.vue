@@ -3,10 +3,7 @@
     <div slot="top"></div>
     <ussd-panel slot="left" />
     <core-business-panel slot="right" />
-    <baisc-map slot="full">
-      <cluster-markers slot="cluster-markers" :markers="mockMarkers" />
-      <spin-marker slot="spin-marker" :latLng="currentLatLng" :rotationAngle="currentAngle" />
-    </baisc-map>
+    <map-panel slot="full" />
   </sketch-layout>
 </template>
 

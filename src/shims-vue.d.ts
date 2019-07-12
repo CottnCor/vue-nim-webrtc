@@ -6,3 +6,7 @@ declare module '*.vue' {
 declare module '*.json';
 
 declare module '*.css';
+
+declare let WebRTC:any;
+
+declare let SDK:any;

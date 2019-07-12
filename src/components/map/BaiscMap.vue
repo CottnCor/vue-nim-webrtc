@@ -5,7 +5,7 @@
       <l-tile-layer :url="wapperLayer" />
       <l-tile-layer :url="labelLayer" />
       <slot name="cluster-markers"></slot>
-      <slot name="pin-marker"></slot>
+      <slot name="spin-marker"></slot>
     </l-map>
     <img class="logo-tdt" src="img/map/logo-tdt.png" />
   </div>

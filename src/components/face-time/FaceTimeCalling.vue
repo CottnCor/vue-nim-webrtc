@@ -8,7 +8,7 @@
       <span class="center secondary pure">{{this.tips}}</span>
     </p>
     <div class="content">
-      <a class="button">
+      <a class="button" @click="this.hangup">
         <i class="el-icon-close"></i>
         <span class="strong primary center">挂断</span>
       </a>
@@ -19,10 +19,16 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
+import NimCall from "@/utils/nim-call";
+
 @Component({})
 class FaceTimeCalling extends Vue {
   @Prop({ default: "" })
   private tips!: string;
+
+  private hangup() {
+    NimCall.getInstance().hangup();
+  }
 }
 
 export default FaceTimeCalling;

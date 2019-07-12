@@ -1,9 +1,9 @@
 <template>
   <div v-if="latLng && latLng.length > 0">
-    <l-rotated-marker :lat-lng="latLngfixed" :rotationAngle="rotationAngle">
-      <l-icon :icon-anchor="staticAnchor" class-name="marker">
-        <div class="marker no-bg">
-          <img class="overstory bg" src="img/icon/pin-marker.png" />
+    <l-rotated-marker :lat-lng="latLng" :rotationAngle="rotationAngle">
+      <l-icon :icon-anchor="staticAnchor" class-name="spin-marker">
+        <div class="spin-marker no-bg">
+          <img class="overstory bg" src="img/map/pin-marker.png" />
         </div>
       </l-icon>
     </l-rotated-marker>
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
 import Vue2LeafletRotatedMarker from "vue2-leaflet-rotatedmarker";
 import { LIcon } from "vue2-leaflet";
@@ -38,22 +38,19 @@ class SpinMarker extends Vue {
     }
   }
 }
-
 export default SpinMarker;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
-  .marker {
-    padding: 0;
+.spin-marker {
+  padding: 0;
     width: $size_120;
     height: $size_120;
-    margin-top: -$size_60;
-    margin-left: -$size_60;
+    margin-top: -55px;
+    margin-left: -55px;
     img {
       width: 100%;
       height: 100%;
     }
-  }
 }
 </style>

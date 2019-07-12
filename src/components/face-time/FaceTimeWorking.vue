@@ -1,10 +1,10 @@
 <template>
   <div class="face-time-working">
-    <div ref="remote-container" class="remote video-container" />
-    <div ref="local-container" class="local video-container" />
+    <div :id="this.remoteContainer" class="remote video-container" />
+    <div :id="this.localContainer" class="local video-container" />
     <div style="flex: 1;"></div>
     <div class="content">
-      <a class="button">
+      <a class="button" @click="this.hangup">
         <i class="el-icon-close"></i>
         <span class="strong primary center">挂断</span>
       </a>
@@ -15,10 +15,20 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
+import NimCall from "@/utils/nim-call";
+
+import { NIM_CONFIG } from "@/config";
+
 @Component({})
 class FaceTimeWorking extends Vue {
   @Prop({ default: "" })
   private tips!: string;
+  private localContainer = NIM_CONFIG.localContainer;
+  private remoteContainer = NIM_CONFIG.remoteContainer;
+
+  private hangup() {
+    NimCall.getInstance().hangup();
+  }
 }
 
 export default FaceTimeWorking;
@@ -47,8 +57,8 @@ export default FaceTimeWorking;
       height: $size_84;
       top: $size_12;
       left: $size_12;
-      box-shadow: $shadow_power;
-      background-image: map-get($default, linear_primary_2);
+      // box-shadow: $shadow_power;
+      // background-image: map-get($default, linear_primary_2);
     }
 
     &.remote {

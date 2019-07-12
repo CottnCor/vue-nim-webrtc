@@ -6,18 +6,45 @@
     </el-tooltip>
     <p class="primary strong center">{{ content.title }}</p>
     <span style="flex: 1;" />
-    <el-button class="motion" type="text" size="mini" round><i :class="[content.state ? 'primary-color' : 'disable', 'el-icon-location-outline']"></i></el-button>
-    <el-button class="motion" type="text" size="mini" round><i :class="[content.state ? 'primary-color' : 'disable', 'el-icon-video-camera']"></i></el-button>
+    <el-button @click="location" class="motion" type="text" size="mini" round><i :class="[content.state ? 'primary-color' : 'disable', 'el-icon-location-outline']"></i></el-button>
+    <el-button @click="call" class="motion" type="text" size="mini" round><i :class="[content.state ? 'primary-color' : 'disable', 'el-icon-video-camera']"></i></el-button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
+import { namespace } from "vuex-class";
+
+const store = namespace("FaceTime");
+
 @Component({})
 class PeopleListItem extends Vue {
   @Prop({ default: null })
   private content!: any;
+
+  @store.Getter("status")
+  private status!: number;
+
+  @store.Action("add_times")
+  private addTimes!: () => void;
+
+  @store.Action("set_account")
+  private setAccount!: (val: string) => void;
+
+  private location() {}
+
+  private call() {
+    this.setAccount(this.content.account);
+    this.$confirm("即将发起视频呼叫, 是否继续?", "提示", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
+      center: true
+    }).then(() => {
+      this.addTimes();
+    });
+  }
 }
 
 export default PeopleListItem;
