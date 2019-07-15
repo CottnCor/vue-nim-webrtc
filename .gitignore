@@ -1,10 +1,21 @@
 .DS_Store
+.idea
+.mvn
+target
 node_modules
 node_modules_back
+mvnw.cmd
+HELP.md
+mvnw
+lib
+target
 /dist
 *.zip
 *.7z
 *.rar
+*.iml
+auth.properties
+application-*.properties
 
 # local env files
 .env.local
@@ -23,3 +34,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+
+/tests/e2e/videos/
+/tests/e2e/screenshots/
