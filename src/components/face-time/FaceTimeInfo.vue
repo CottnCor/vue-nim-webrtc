@@ -6,7 +6,7 @@
     </p>
     <p class="tips secondary pure right radius">
       <i class="el-icon-info"></i>
-      <span class="right secondary pure">{{this.tips}}</span>
+      <span class="right secondary pure">{{this.to.username}}</span>
     </p>
   </div>
 </template>
@@ -21,6 +21,12 @@ class FaceTimeInfo extends Vue {
 
   @Prop({ default: "" })
   private time!: string;
+
+  @Prop({ default: null })
+  private from!: any;
+
+  @Prop({ default: null })
+  private to!: any;
 }
 
 export default FaceTimeInfo;

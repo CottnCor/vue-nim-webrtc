@@ -33,11 +33,11 @@ export default CoreBusinessPanel;
     box-shadow: $shadow_strong_inset;
 
     &:nth-of-type(1) {
-      height: 64%;
+      height: 60%;
     }
 
     &:nth-of-type(2) {
-      height: 36%;
+      height: 40%
     }
   }
 }

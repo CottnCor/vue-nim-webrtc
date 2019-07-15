@@ -1,9 +1,10 @@
 <template>
   <div class="map-container">
-    <l-map ref="map" class="leaflet-map" :crs="crs" :zoom="zoom" :min-zoom="minZoom" :max-zoom="maxZoom" :center="center" :options="options" @update:center="centerUpdated">
-      <l-tile-layer :url="imgLayer" />
-      <l-tile-layer :url="wapperLayer" />
-      <l-tile-layer :url="labelLayer" />
+    <l-map ref="map" class="leaflet-map" :crs="crs" :maxBounds="maxBounds" :zoom="zoom" :min-zoom="minZoom" :max-zoom="maxZoom" :center="center" :options="options" @update:center="centerUpdated">
+      <l-tile-layer :url="defaultLayer" />
+      <!-- <l-tile-layer :url="imgLayer" /> -->
+      <!-- <l-tile-layer :url="wapperLayer" />
+      <l-tile-layer :url="labelLayer" /> -->
       <slot name="wkt-layer"></slot>
       <slot name="cluster-markers"></slot>
       <slot name="spin-marker"></slot>
@@ -15,15 +16,15 @@
 <script lang="ts">
 import { LMap, LTileLayer, LLayerGroup, LMarker, LIcon } from "vue2-leaflet";
 
-import { latLng, latLngBounds, CRS } from "leaflet";
+import { latLng, LatLng, latLngBounds, LatLngBounds, CRS } from "leaflet";
 
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
 import { namespace } from "vuex-class";
 
-import { MAP_URL, MAP_CENTER, MAP_BOUND } from "@/config";
+import { MAP_URL, MAP_ZOOM, MAP_CENTER, MAP_BOUND } from "@/config";
 
-import { MapPopup } from '@/components';
+import { MapPopup } from "@/components";
 
 const store = namespace("Common");
 
@@ -32,12 +33,13 @@ const store = namespace("Common");
 })
 class BasicMap extends Vue {
   private map!: any;
-  private zoom = 6;
-  private minZoom = 1;
+  private zoom = MAP_ZOOM;
+  private minZoom = 4;
   private maxZoom = 18;
   private loading = false;
   private crs = CRS.EPSG3857;
   private center = latLng(MAP_CENTER.LAT, MAP_CENTER.LNG);
+  private defaultLayer = MAP_URL.STREETS;
   private imgLayer = MAP_URL.IMG;
   private vecLayer = MAP_URL.VEC;
   private cavLayer = MAP_URL.CVA;
@@ -65,6 +67,12 @@ class BasicMap extends Vue {
     this.map = (this.$refs.map as LMap).mapObject;
   }
 
+  private centerUpdated() {
+    console.log(this.map.getZoom());
+    console.log(this.map.getCenter());
+    console.log(this.map.getBounds());
+  }
+
   public zoomIn() {
     this.map.zoomIn();
   }
@@ -73,16 +81,16 @@ class BasicMap extends Vue {
     this.map.zoomOut();
   }
 
-  public setCenter(center: number[]) {
-    if (center.length > 1) {
+  public setCenter(center: LatLng) {
+    if (center) {
+      let zoom = 12;
       this.map.panTo(center);
+      this.map.setZoom(zoom);
     }
   }
 
-  private centerUpdated() {
-    console.log(this.map.getZoom());
-    console.log(this.map.getCenter());
-    console.log(this.map.getBounds());
+  public getBounds(): LatLngBounds {
+    return this.map.getBounds();
   }
 }
 
@@ -107,8 +115,8 @@ export default BasicMap;
     position: absolute;
     bottom: $size_10;
     left: $size_16;
-    width: calc(#{($size_120 + size_20)});
-    height: calc(#{($size_36 + size_2)});
+    width: calc(#{($size_120 + $size_20)});
+    height: calc(#{($size_36 + $size_2)});
   }
 }
 </style>

@@ -12,7 +12,8 @@
       </div>
     </div>
     <div class="content radius">
-      <component :is="this.visiblePanel" />
+      <component v-if="false" :is="this.visiblePanel.component" />
+      <content-none v-else :tips="`无${this.visiblePanel.label}信息`" />
     </div>
   </div>
 </template>
@@ -23,13 +24,14 @@ import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 import { Getter, Action, namespace } from "vuex-class";
 
 import {
+  ContentNone,
   SpotInfoBasic,
   SpotMultimedia,
   SpotSupervisedInfo
 } from "@/components";
 
 @Component({
-  components: { SpotInfoBasic, SpotMultimedia, SpotSupervisedInfo }
+  components: { ContentNone, SpotInfoBasic, SpotMultimedia, SpotSupervisedInfo }
 })
 class SpotOperatPanel extends Vue {
   private panelMax = 3;
@@ -82,7 +84,7 @@ class SpotOperatPanel extends Vue {
     }
   }
 
-  public get visiblePanelTab(): any {
+  private get visiblePanelTab(): any {
     let tabs: any = null;
     if (this.panelSurplus) {
       tabs = this.panelState.filter((item, index) => index > this.panelMax - 1);
@@ -97,11 +99,10 @@ class SpotOperatPanel extends Vue {
     });
   }
 
-  public get visiblePanel(): any {
+  private get visiblePanel(): any {
     for (const item of this.panelState) {
       if (item.state) {
-        item.state = true;
-        return item.component;
+        return item;
       }
     }
   }

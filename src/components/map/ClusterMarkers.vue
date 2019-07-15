@@ -25,7 +25,9 @@ class ClusterMarkers extends Vue {
   @Prop({ default: null })
   private markers!: any;
 
-  private staticAnchor = [0, 25];
+  private anchorValue = 25;
+
+  private staticAnchor = [0, this.anchorValue];
 }
 
 export default ClusterMarkers;

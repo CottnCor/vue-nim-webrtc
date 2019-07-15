@@ -1,24 +1,37 @@
 <template>
   <div class="people-list-panel">
     <div class="header">
-      <people-filter />
+      <people-filter v-if="false" />
     </div>
-    <div class="content">
-      <people-list-item v-for="(item, index) in 16" :key="index" :content="{state: item % 2 === 0, title: '测试人员' + index, account: to}" />
+    <div class="content" v-if="this.peopleList && this.peopleList.length > 0">
+      <people-list-item v-for="(item, index) in this.peopleList" :key="index" :content="{state: true, title: item.username, value: item.userid}" />
     </div>
+    <content-none v-else tips="未找到相关人员"/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import { NIM_CONFIG } from '@/config';
+import { PeopleFilter, PeopleListItem, ContentNone } from "@/components";
 
-import { PeopleFilter, PeopleListItem } from "@/components";
+import { getPeopleTree } from "@/api/face-time";
 
-@Component({ components: { PeopleFilter, PeopleListItem } })
+@Component({ components: { PeopleFilter, PeopleListItem, ContentNone } })
 class PeopleListPanel extends Vue {
-  private to = NIM_CONFIG.to;
+  private peopleList = null;
+
+  private mounted() {
+    getPeopleTree()
+      .then(result => {
+        if (result && result.length > 0) {
+          this.peopleList = result;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 }
 
 export default PeopleListPanel;

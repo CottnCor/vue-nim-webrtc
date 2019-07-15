@@ -182,15 +182,15 @@ $border_base: $size_1 solid map-get($default, grey_4);
 
 $shadow_base: 0 $size_1 $size_3 map-get($default, grey_5);
 
-$shadow_strong: 0 $size_12 $size_20 map-get($default, grey_5);
+$shadow_strong: 0 $size_6 $size_12 map-get($default, grey_5);
 
-$shadow_power: 0 $size_20 $size_42 map-get($default, grey_5);
+$shadow_power: 0 $size_12 $size_24 map-get($default, grey_5);
 
 $shadow_base_inset: 0 $size_1 $size_3 0 map-get($default, grey_5) inset;
 
-$shadow_strong_inset: 0 $size_12 $size_20 0 map-get($default, grey_5) inset;
+$shadow_strong_inset: 0 $size_6 $size_12 0 map-get($default, grey_5) inset;
 
-$shadow_power_inset: 0 $size_20 $size_42 0 map-get($default, grey_5) inset;
+$shadow_power_inset: 0 $size_12 $size_24 0 map-get($default, grey_5) inset;
 
 .shadow_base {
   box-shadow: $shadow_base;
@@ -396,7 +396,7 @@ a {
 
   &.hover {
     &:hover {
-      background-color: map-get($default, grey_2);
+      background-color: map-get($default, bg);
       color: map-get($default, primary_dark_2);
     }
   }

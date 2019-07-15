@@ -15,7 +15,10 @@ const rootRouter = [
     path: ROOT_PATH + ROOT_ROUTER.faceTime.name,
     name: ROOT_ROUTER.faceTime.name,
     component: () => import('@/views/face-time/FaceTime.vue'),
-    props: route => ({}),
+    props: route => ({
+      token: route.query.token,
+      userid: route.query.userid
+    }),
     meta: {
       icon: '',
       keepAlive: true,
@@ -27,7 +30,10 @@ const rootRouter = [
     path: ROOT_PATH + ROOT_ROUTER.takeNumber.name,
     name: ROOT_ROUTER.takeNumber.name,
     component: () => import('@/views/take-number/TakeNumber.vue'),
-    props: route => ({}),
+    props: route => ({
+      token: route.query.token,
+      userid: route.query.userid
+    }),
     meta: {
       icon: '',
       keepAlive: true,

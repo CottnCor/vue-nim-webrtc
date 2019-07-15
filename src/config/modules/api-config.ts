@@ -6,10 +6,11 @@
 export const IS_MOCK = false
 
 // 线上环境
-export const ONLINE_HOST = 'https://127.0.0.1:8062/'
+export const ONLINE_HOST = 'https://zhjg.yndlr.gov.cn:8097/'
+// export const ONLINE_HOST = '/'
 
 // 测试环境
-export const QA_HOST = 'http://127.0.0.1:8080/'
+export const QA_HOST = 'https://127.0.0.1:8097/'
 
 // mock
 export const MOCK_HOST = './mock/'

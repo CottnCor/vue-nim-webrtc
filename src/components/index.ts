@@ -1,3 +1,4 @@
+import ContentNone from './widgets/ContentNone.vue'
 import ExceptionCard from './widgets/ExceptionCard.vue'
 import MultimediaViewer from './widgets/MultimediaViewer.vue'
 import InfoEditer from './widgets/InfoEditer.vue'
@@ -52,6 +53,7 @@ import SpotOperatPanel from './panel/SpotOperatPanel.vue'
 import CoreBusinessPanel from './panel/CoreBusinessPanel.vue'
 
 export {
+  ContentNone,
   ExceptionCard,
   MultimediaViewer,
   InfoEditer,

@@ -30,17 +30,17 @@ class FaceTimeHangup extends Vue {
   @Prop({ default: "" })
   private tips!: string;
 
-  @Prop({ default: "" })
-  private account!: string;
+  @Prop({ default: null })
+  private from!: any;
 
-  @Prop({ default: "" })
-  private tbid!: string;
+  @Prop({ default: null })
+  private to!: any;
 
   @store.Action("set_status")
   private setStatus!: (val: number) => void;
 
   private call() {
-    NimCall.getInstance().startCalling(this.account, this.tbid);
+    NimCall.getInstance().startCalling(this.to, "");
   }
 
   private close() {

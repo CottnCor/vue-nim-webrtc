@@ -1,7 +1,7 @@
 <template>
   <div class="panel radius">
     <basic-map ref="basicMap">
-      <wkt-layer slot="wkt-layer" :wkt="this.wkt"/>
+      <wkt-layer v-for="(item, index) in this.jctb" slot="wkt-layer" :wkt="item.wkt" />
       <cluster-markers slot="cluster-markers" markers="[]" />
       <spin-marker v-if="this.track && this.track.currentLatLng" slot="spin-marker" :latLng="this.track.currentLatLng" :rotationAngle="this.track.currentAngle" />
     </basic-map>
@@ -9,7 +9,9 @@
 </template>
 
 <script lang='ts'>
-import { getPeopleCoords } from "@/api/_mock-data";
+import { latLng, LatLng } from "leaflet";
+
+import { getVisibleJctb } from "@/api/map-api";
 
 import { MAP_CENTER, MAP_BOUND } from "@/config";
 
@@ -17,7 +19,7 @@ import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 
 import { namespace } from "vuex-class";
 
-const store = namespace("FaceTime");
+const store = namespace("Map");
 
 import { ClusterMarkers, SpinMarker, WktLayer, BasicMap } from "@/components";
 
@@ -37,12 +39,62 @@ class MapPanel extends Vue {
   @store.Getter("track")
   private track!: any;
 
-  private wkt = "POLYGON ((20 10, 20 50, 30 50, 30 35, 40 35, 40 50, 50 50, 50 10, 40 10, 40 25, 30 25, 30 10, 20 10))";
+  @store.Getter("panto")
+  private panto!: boolean;
+
+  @store.Getter("coord")
+  private coord!: LatLng;
+
+  @store.Action("set_coord")
+  private setCoord!: (val: LatLng) => void;
+
+  @store.Action("set_panto")
+  private setPanto!: (val: boolean) => void;
+
+  private wkt = [
+    "POLYGON ((20 10, 20 50, 30 50, 30 35, 40 35, 40 50, 50 50, 50 10, 40 10, 40 25, 30 25, 30 10, 20 10))",
+    "POLYGON ((10 10, 30 50, 70 50, 30 35, 50 35, 40 50, 50 50, 50 10, 80 10, 40 25, 30 85, 30 10, 30 10))"
+  ];
+
+  private jctb: any[] = [];
 
   @Watch("track", { immediate: true, deep: true })
   private onTrackChanged(val: any, oldVal: any) {
     if (val && val.currentLatLng) {
-      this.$refs.basicMap.setCenter(val.currentLatLng);
+      if (this.panto) {
+        this.setCoord(latLng(val.currentLatLng[0], val.currentLatLng[1]));
+        this.setPanto(false);
+      }
+    }
+  }
+
+  @Watch("coord", { immediate: true, deep: true })
+  private onCoordChanged(val: LatLng, oldVal: LatLng) {
+    if (val && this.$refs.basicMap) {
+      this.$refs.basicMap.setCenter(val);
+      // this.visibleJctb();
+    }
+  }
+
+  public visibleJctb() {
+    let bounds = this.$refs.basicMap.getBounds();
+    if (bounds) {
+      let west = bounds.getWest();
+      let south = bounds.getSouth();
+      let east = bounds.getEast();
+      let north = bounds.getNorth();
+      getVisibleJctb({
+        minx: west,
+        miny: south,
+        maxx: east,
+        maxy: north
+      })
+        .then(result => {
+          this.jctb = result;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 }

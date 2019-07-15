@@ -3,7 +3,6 @@
  */
 
 import Cookies from "js-cookie";
-import { COOKIE_EXPIRES } from "@/config"; // cookie保存的天数
 
 /**
  * @msg: 存取token
@@ -11,7 +10,7 @@ import { COOKIE_EXPIRES } from "@/config"; // cookie保存的天数
  * @param {string} value
  */
 export const setToken = (key: string, value: string) => {
-  Cookies.set(key, value, { expires: COOKIE_EXPIRES || 1 });
+  Cookies.set(key, value, { expires: 1 });
 };
 
 /**

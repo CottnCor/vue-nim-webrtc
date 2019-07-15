@@ -87,9 +87,9 @@ export default class NimCall {
    */
   public login(
     callback: Function,
-    appkey?: string,
-    account?: string,
-    token?: string
+    account: string,
+    token: string,
+    appkey?: string
   ): any {
     if (!this.nim) {
       this.setStatus(this.nimCallStatusCode.initing)
@@ -97,9 +97,9 @@ export default class NimCall {
       this.nim = this.NIM.getInstance({
         debug: true,
         promise: true,
+        account,
+        token,
         appKey: appkey || NIM_CONFIG.appkey,
-        account: account || NIM_CONFIG.account,
-        token: token || NIM_CONFIG.token,
         syncTeamMembers: false,
         onconnect: () => {
           console.log('im连接认证成功')
@@ -109,7 +109,10 @@ export default class NimCall {
           this.setStatus(this.nimCallStatusCode.waiting)
           console.log('同步完成')
         },
-        onmsg: (msg: any) => { this.emit(this.callbackType.track, msg.text) },
+        onmsg: (msg: any) => {
+          this.emit(this.callbackType.track, msg.text)
+          console.log(msg.text)
+        },
         oncustomsysmsg: (msg: any) => {},
         onroamingmsgs: (msg: any) => {},
         onofflinemsgs: (msg: any) => {},
@@ -190,9 +193,9 @@ export default class NimCall {
   /**
    * createChannel
    */
-  public startCalling(account: string, content?: any): any {
+  public startCalling(to: any, content?: any): any {
     let channelName = guid()
-    this.createChannel(channelName, account, content)
+    this.createChannel(channelName, to, content)
   }
 
   /**
@@ -223,18 +226,14 @@ export default class NimCall {
   /**
    * createChannel
    */
-  private createChannel(
-    channelName: string,
-    account: string,
-    content: any
-  ): any {
+  private createChannel(channelName: string, to: any, content: any): any {
     this.netcall
       .createChannel({
         channelName,
         webrtcEnable: true
       })
       .then(obj => {
-        this.joinChannel(channelName, account, content)
+        this.joinChannel(channelName, to, content)
       })
       .then(obj => {
         this.setStatus(this.nimCallStatusCode.calling)
@@ -248,7 +247,7 @@ export default class NimCall {
   /**
    * joinChannel
    */
-  private joinChannel(channelName: string, account: string, content: any): any {
+  private joinChannel(channelName: string, to: any, content: any): any {
     this.netcall
       .joinChannel({
         channelName,
@@ -261,7 +260,7 @@ export default class NimCall {
         }
       })
       .then(obj => {
-        this.sendInvitations(channelName, account, content)
+        this.sendInvitations(channelName, to, content)
         this.setDevice(obj)
       })
   }
@@ -269,10 +268,10 @@ export default class NimCall {
   /**
    * sendInvitations
    */
-  private sendInvitations(channelName: string, account: string, content: any) {
+  private sendInvitations(channelName: string, to: any, content: any) {
     this.nim.sendCustomSysMsg({
       scene: 'p2p',
-      to: account,
+      to: to.account,
       apnsText: content || channelName,
       content: channelName,
       done: (error, msg) => {

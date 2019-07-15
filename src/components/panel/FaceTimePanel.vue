@@ -1,15 +1,16 @@
 <template>
   <div class="face-time-panel">
-    <component :is="this.visibleState.component" :tips="this.visibleState.tips" :account="this.account" :tbid="this.tbid"/>
+    <component v-if="this.from" :is="this.visibleState.component" :tips="this.visibleState.tips" :from="this.from" :to="this.to" :updateStore="this.updateStore" />
+    <face-time-failure v-else tips="未挂接通话账号" />
     <face-time-tool v-if="this.visibleState.tag === this.faceTimeeStateCode.working" />
-    <face-time-info v-if="this.visibleState.tag === this.faceTimeeStateCode.working" :time="this.mockTime" tips="我是一个提示" />
+    <face-time-info v-if="this.visibleState.tag === this.faceTimeeStateCode.working" :time="this.mockTime" :tips="this.visibleState.tips" :from="this.from" :to="this.to" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
-import { MAP_CENTER, NIM_CONFIG } from "@/config";
+import { MAP_CENTER } from "@/config";
 
 import { formatDate } from "@/utils/common";
 
@@ -17,7 +18,9 @@ import NimCall from "@/utils/nimCall";
 
 import { namespace } from "vuex-class";
 
-const store = namespace("FaceTime");
+const faceTimeStore = namespace("FaceTime");
+
+const mapStore = namespace("Map");
 
 import {
   FaceTimeInit,
@@ -65,7 +68,7 @@ class FaceTimePanel extends Vue {
   private faceTimeState = [
     {
       state: false,
-      tips: "登录",
+      tips: "刷新",
       component: "FacetimeUnLogged",
       tag: this.faceTimeeStateCode.unLogged
     },
@@ -107,31 +110,54 @@ class FaceTimePanel extends Vue {
     }
   ];
 
-  @store.Action("set_status")
+  private mockTime = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss");
+
+  @faceTimeStore.Action("set_status")
   private setStatus!: (val: number) => void;
 
-  @store.Action("set_track")
+  @mapStore.Action("set_panto")
+  private setPanto!: (val: boolean) => void;
+
+  @mapStore.Action("set_track")
   private setTrack!: (val: any) => void;
 
-  @store.Getter("account")
-  private account!: string;
+  @faceTimeStore.Getter("status")
+  private status!: number;
 
-  @Prop({ default: NIM_CONFIG.tbid })
-  private tbid!: string;
+  @faceTimeStore.Getter("from")
+  private from!: any;
 
-  @store.Getter("times")
+  @faceTimeStore.Getter("to")
+  private to!: any;
+
+  @faceTimeStore.Getter("times")
   private times!: number;
 
-  @Watch("times", { immediate: true, deep: true })
-  private onTimesChanged(val: number, oldVal: number) {
-    if (this.account) {
-      NimCall.getInstance().startCalling(this.account, this.tbid);
+  @Watch("status", { immediate: true, deep: true })
+  private onStatusChanged(val: number, oldVal: number) {
+    if (val !== this.faceTimeeStateCode.working) {
+      this.setTrack(null);
+      this.setPanto(false);
+    } else {
+      this.setPanto(true);
     }
   }
 
-  private mockTime = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss");
+  @Watch("times", { immediate: true, deep: true })
+  private onTimesChanged(val: number, oldVal: number) {
+    if (this.from && this.to) {
+      NimCall.getInstance().startCalling(this.to, "");
+    }
+  }
 
-  public get visibleState(): any {
+  @Watch("from", { immediate: true, deep: true })
+  private onFromChanged(val: any, oldVal: any) {
+    if (val) {
+      NimCall.getInstance().login(this.updateStore, val.account, val.token);
+    }
+  }
+
+  private get visibleState(): any {
     for (const item of this.faceTimeState) {
       if (item.state) {
         return item;
@@ -151,17 +177,14 @@ class FaceTimePanel extends Vue {
   }
 
   private updateTrack(trackJson: string) {
-    if (trackJson) {
+    if (trackJson && this.status === this.faceTimeeStateCode.working) {
       let track = JSON.parse(trackJson);
       this.setTrack({
-        currentLatLng: [Number(track.x), Number(track.y)],
+        currentLatLng: [Number(track.y), Number(track.x)],
         currentAngle: Number(track.mAzimuthDeg)
       });
     } else {
-      this.setTrack({
-        currentLatLng: null,
-        currentAngle: 0
-      });
+      this.setTrack(null);
     }
   }
 
@@ -171,10 +194,6 @@ class FaceTimePanel extends Vue {
     } else if (type === this.storeType.track) {
       this.updateTrack(content);
     }
-  }
-
-  private mounted() {
-    NimCall.getInstance().login(this.updateStore);
   }
 }
 

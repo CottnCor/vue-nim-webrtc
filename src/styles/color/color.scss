@@ -12,9 +12,9 @@ $light : (primary : #1890ff,
   pure : #fff,
   dark : #000,
   none : transparent,
-  grey-glass : rgba(245, 245, 245, 0.9),
-  glass : rgba(255, 255, 255, 0.9),
-  ice : rgba(255, 255, 255, 0.3),
+  bg:  rgba(239, 243, 246, 1),
+  glass : rgba(239, 243, 246, 0.93),
+  ice : rgba(239, 243, 246, 0.3),
 
   linear_primary : linear-gradient(to right, #66a6ff 0%, #4481eb 100%),
   linear_primary_2 : linear-gradient(135deg, #ac8ece, #79589f),
@@ -35,7 +35,7 @@ $light : (primary : #1890ff,
   primary_dark_2: #0050b3,
 
   grey_1: rgba(0, 0, 0, .02), // 用于 table header
-  grey_2: #EFF3F6, // 用于 background
+  grey_2: rgba(0, 0, 0, .04), // 用于 background
   grey_3: rgba(0, 0, 0, .09), // 用于 dividers
   grey_4: rgba(0, 0, 0, .15), // 用于 border
   grey_5: rgba(0, 0, 0, .25), // 用于 disable, shadw

@@ -1,5 +1,5 @@
 <template>
-  <l-marker :lat-lng="latLngfixed" :icon="icon">
+  <l-marker :lat-lng="latLng" :icon="icon">
     <l-icon class-name="marker">
       <div class="marker no-bg">
         <img class="overstory bg" src="img/icon/marker.png" />
@@ -23,15 +23,6 @@ import { MapPopup } from "@/components";
 class PinMarker extends Vue {
   @Prop({ default: [] })
   private latLng!: number[];
-
-  private get latLngfixed(): number[] {
-    if (this.latLng.length === 2) {
-      let latLngfixed = [60 + this.latLng[0] / 2, this.latLng[1]];
-      return latLngfixed;
-    } else {
-      return [];
-    }
-  }
 }
 
 export default PinMarker;

@@ -1,13 +1,15 @@
 <template>
   <div class="contronl-wapper exception">
-    <div class="content-wapper img">
-      <img :src="this.config[code].img" />
-    </div>
-    <div class="content-wapper content">
-      <h1 class="content-wapper">{{ this.config[code].title }}</h1>
-      <div class="content-wapper desc">{{ msg ? msg : this.config[code].desc }}</div>
-      <div class="content-wapper action">
-        <el-button type="primary" @click="this.back">返回上一页</el-button>
+    <div>
+      <div class="content-wapper img">
+        <img :src="this.config[code].img" />
+      </div>
+      <div class="content-wapper content">
+        <h1 class="content-wapper">{{ this.config[code].title }}</h1>
+        <div class="content-wapper desc">{{ msg ? msg : this.config[code].desc }}</div>
+        <div class="content-wapper action">
+          <el-button type="primary" @click="this.back">返回上一页</el-button>
+        </div>
       </div>
     </div>
   </div>
@@ -56,6 +58,15 @@ export default ExceptionCard;
 .exception {
   align-items: center;
   text-align: center;
+
+  box-shadow: $shadow_power;
+  background-color: map-get($default, bg);
+
+  & > div {
+    padding: $size_6;
+    border: $size_2 dashed map-get($default, grey_4);
+  }
+
   .img {
     zoom: 1;
   }

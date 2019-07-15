@@ -119,15 +119,17 @@ export default SketchLayout;
 
   .top-wapper,
   .buttom-wapper {
-    height: $size_64;
-    min-height: $size_64;
+    // height: $size_64;
+    // min-height: $size_64;
   }
 
   .main-wapper {
     flex: 1;
     padding: 0 $size_12;
-    height: calc(100vh - #{($size_64 * 2)});
-    min-height: calc(100vh - #{($size_64 * 2)});
+    // height: calc(100vh - #{($size_64 * 2)});
+    // min-height: calc(100vh - #{($size_64 * 2)});
+    height: 100vh;
+    min-height: 100vh;
   }
 
   .popup {
@@ -142,7 +144,7 @@ export default SketchLayout;
       cursor: pointer;
       padding: $size_6;
       box-shadow: $shadow_power;
-      background-color: map-get($default, grey_2);
+      background-color: map-get($default, glass);
 
       & > div {
         padding: $size_6;
@@ -182,7 +184,7 @@ export default SketchLayout;
         width: 24%;
       }
       &.right {
-        width: 42%;
+        width: 32%;
       }
       &.hide {
         height: 48%;

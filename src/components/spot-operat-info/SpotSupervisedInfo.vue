@@ -26,7 +26,7 @@ export default SpotSupervisedInfo;
       background-color: map-get($default, grey_3);
     }
     &:nth-child(even) {
-      background-color: map-get($default, grey_2);
+      background-color: map-get($default, bg);
     }
   }
 }
