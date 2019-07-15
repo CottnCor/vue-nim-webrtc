@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author CottnCor
@@ -107,7 +106,7 @@ public class PeopleServiceImpl implements IPeopleService {
     }
 
     @Override
-    public Map getYxInfo(Long userid) {
+    public Map getYxInfo(String userid) {
         try {
             return peopleMapper.selectYxInfo(userid);
         } catch (Exception ex) {
@@ -116,7 +115,7 @@ public class PeopleServiceImpl implements IPeopleService {
     }
 
     @Override
-    public Map getUserInfo(Long userid) {
+    public Map getUserInfo(String userid) {
         try {
             return peopleMapper.selectUserInfo(userid);
         } catch (Exception ex) {
@@ -125,7 +124,7 @@ public class PeopleServiceImpl implements IPeopleService {
     }
 
     @Override
-    public Map getUserState(Long userid) {
+    public Map getUserState(String userid) {
         try {
             return peopleMapper.selectUserState(userid);
         } catch (Exception ex) {
@@ -134,7 +133,7 @@ public class PeopleServiceImpl implements IPeopleService {
     }
 
     @Override
-    public Map getUserCoords(Long userid) {
+    public Map getUserCoords(String userid) {
         try {
             return peopleMapper.selectUserCoords(userid);
         } catch (Exception ex) {

@@ -5,13 +5,13 @@ import java.util.Map;
 
 public interface IPeopleService {
 
-    Map getYxInfo(Long userid);
+    Map getYxInfo(String userid);
 
-    Map getUserInfo(Long userid);
+    Map getUserInfo(String userid);
 
-    Map getUserState(Long userid);
+    Map getUserState(String userid);
 
-    Map getUserCoords(Long userid);
+    Map getUserCoords(String userid);
 
     List<Map> getPeopleTree(String xzqdm);
 

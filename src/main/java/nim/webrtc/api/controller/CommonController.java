@@ -15,9 +15,6 @@ import java.util.Map;
 public class CommonController {
 
     @Resource
-    private IAuthService authService;
-
-    @Resource
     private ICommonService commonService;
 
     @GetMapping("/region/getRegionByLevel")
