@@ -16,7 +16,7 @@ export {
 
 export { ROOT_PATH, ROOT_ROUTER, ASSIST_ROUTER } from './modules/router-config'
 
-export { MAP_URL, MAP_ZOOM, MAP_CENTER, MAP_BOUND } from './modules/map-config'
+export { MAP_URL, MAP_ZOOM, MAX_PANTO_TIMES, MAP_CENTER, MAP_BOUND } from './modules/map-config'
 
 export { NIM_CONFIG } from './modules/nim-config'
 

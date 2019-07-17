@@ -80,9 +80,16 @@ class BasicMap extends Vue {
     this.map.zoomOut();
   }
 
-  public setCenter(center: LatLng) {
+  public flyTo(center: LatLng) {
     if (center) {
-      let zoom = 16;
+      let zoom = 17;
+      this.map.flyTo(center, zoom);
+    }
+  }
+
+  public panTo(center: LatLng) {
+    if (center) {
+      let zoom = 17;
       this.map.panTo(center);
       this.map.setZoom(zoom);
     }

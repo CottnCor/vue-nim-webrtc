@@ -10,7 +10,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
-import { MAP_CENTER } from "@/config";
+import { MAP_CENTER, MAX_PANTO_TIMES } from "@/config";
 
 import { formatDate } from "@/utils/common";
 
@@ -116,13 +116,16 @@ class FaceTimePanel extends Vue {
   private setStatus!: (val: number) => void;
 
   @mapStore.Action("set_panto")
-  private setPanto!: (val: boolean) => void;
+  private setPanto!: (val: number) => void;
 
   @mapStore.Action("set_track")
   private setTrack!: (val: any) => void;
 
   @faceTimeStore.Getter("status")
   private status!: number;
+
+  @faceTimeStore.Getter("panto")
+  private panto!: number;
 
   @faceTimeStore.Getter("from")
   private from!: any;
@@ -137,9 +140,9 @@ class FaceTimePanel extends Vue {
   private onStatusChanged(val: number, oldVal: number) {
     if (val !== this.faceTimeeStateCode.working) {
       this.setTrack(null);
-      this.setPanto(false);
+      this.setPanto(MAX_PANTO_TIMES);
     } else {
-      this.setPanto(true);
+      this.setPanto(0);
     }
   }
 

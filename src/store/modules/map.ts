@@ -2,10 +2,10 @@ import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
 import { LatLng, latLng } from "leaflet";
 
-import { MAP_CENTER } from "@/config";
+import { MAX_PANTO_TIMES } from "@/config";
 
 interface MapStore {
-  panto: boolean,
+  panto: number,
   track: any,
   coord: LatLng
 }
@@ -13,7 +13,7 @@ interface MapStore {
 const namespaced = true
 
 const state: MapStore = {
-  panto: false,
+  panto: MAX_PANTO_TIMES,
   track: null,
   coord: latLng(0, 0)
 }
@@ -25,7 +25,7 @@ const getters: GetterTree<MapStore, any> = {
 }
 
 const actions: ActionTree<MapStore, any> = {
-  set_panto({ commit }, data: boolean) {
+  set_panto({ commit }, data: number) {
     commit('update_panto', data)
   },
   set_track({ commit }, data: any) {
@@ -37,7 +37,7 @@ const actions: ActionTree<MapStore, any> = {
 }
 
 const mutations: MutationTree<MapStore> = {
-  update_panto(state: MapStore, data: boolean) {
+  update_panto(state: MapStore, data: number) {
     state.panto = data
   },
   update_track(state: MapStore, data: any) {

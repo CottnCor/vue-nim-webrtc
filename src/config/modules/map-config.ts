@@ -15,6 +15,8 @@ export const MAP_URL = {
 
 export const MAP_ZOOM = 12
 
+export const MAX_PANTO_TIMES = 6
+
 export const MAP_CENTER = {
   LAT: 25.047191912417052,
   LNG: 102.68783569335939
