@@ -48,7 +48,7 @@ class SpotOperatPanel extends Vue {
     {
       tag: 1,
       state: false,
-      label: "现象照片",
+      label: "现场照片",
       component: "SpotMultimedia"
     },
     {

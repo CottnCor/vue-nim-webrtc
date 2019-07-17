@@ -1,10 +1,10 @@
 <template>
   <div class="map-container">
-    <l-map ref="map" class="leaflet-map" :crs="crs" :maxBounds="maxBounds" :zoom="zoom" :min-zoom="minZoom" :max-zoom="maxZoom" :center="center" :options="options" @update:center="centerUpdated">
-      <l-tile-layer :url="defaultLayer" />
-      <!-- <l-tile-layer :url="imgLayer" /> -->
-      <!-- <l-tile-layer :url="wapperLayer" />
-      <l-tile-layer :url="labelLayer" /> -->
+    <l-map ref="map" class="leaflet-map" :crs="crs" :zoom="zoom" :min-zoom="minZoom" :max-zoom="maxZoom" :center="center" :options="options" @update:center="centerUpdated">
+      <!-- <l-tile-layer :url="defaultLayer" /> -->
+      <l-tile-layer :url="imgLayer" />
+      <l-tile-layer :url="iboLayer" />
+      <l-tile-layer :url="ciaLayer" />
       <slot name="wkt-layer"></slot>
       <slot name="cluster-markers"></slot>
       <slot name="spin-marker"></slot>
@@ -34,7 +34,7 @@ const store = namespace("Common");
 class BasicMap extends Vue {
   private map!: any;
   private zoom = MAP_ZOOM;
-  private minZoom = 4;
+  private minZoom = 0;
   private maxZoom = 18;
   private loading = false;
   private crs = CRS.EPSG3857;
@@ -43,9 +43,8 @@ class BasicMap extends Vue {
   private imgLayer = MAP_URL.IMG;
   private vecLayer = MAP_URL.VEC;
   private cavLayer = MAP_URL.CVA;
-  private boundaryUrl = MAP_URL.BOUNDARY;
-  private wapperLayer = MAP_URL.WAPPER;
-  private labelLayer = MAP_URL.LABEL;
+  private ciaLayer = MAP_URL.CIA;
+  private iboLayer = MAP_URL.IBO;
   private maxBounds = latLngBounds(
     latLng(MAP_BOUND.MAX_LAT, MAP_BOUND.MAX_LNG),
     latLng(MAP_BOUND.MIN_LAT, MAP_BOUND.MIN_LNG)
