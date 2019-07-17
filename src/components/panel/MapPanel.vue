@@ -76,7 +76,7 @@ class MapPanel extends Vue {
       } else {
         this.$refs.basicMap.flyTo(val);
       }
-      //this.visibleJctb();
+      // this.visibleJctb();
     }
   }
 
