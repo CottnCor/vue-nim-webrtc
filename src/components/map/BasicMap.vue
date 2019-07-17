@@ -83,7 +83,7 @@ class BasicMap extends Vue {
 
   public setCenter(center: LatLng) {
     if (center) {
-      let zoom = 12;
+      let zoom = 16;
       this.map.panTo(center);
       this.map.setZoom(zoom);
     }
