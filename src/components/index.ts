@@ -4,6 +4,7 @@ import MultimediaViewer from './widgets/MultimediaViewer.vue'
 import InfoEditer from './widgets/InfoEditer.vue'
 import InfoViewBar from './widgets/InfoViewBar.vue'
 import PeekabooWapper from './widgets/PeekabooWapper.vue'
+import Pagination from './widgets/Pagination.vue'
 
 import FaceTimeUtil from './face-time/FaceTimeUtil.vue'
 import FaceTimeInit from './face-time/FaceTimeInit.vue'
@@ -60,6 +61,7 @@ export {
   InfoEditer,
   InfoViewBar,
   PeekabooWapper,
+  Pagination,
   FaceTimeUtil,
   FaceTimeInit,
   FaceTimeWaiting,

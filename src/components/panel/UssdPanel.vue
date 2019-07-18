@@ -80,7 +80,7 @@ export default UssdPanel;
       margin: 0 $size_1;
       padding: 0 $size_12;
       border-radius: $size_12 $size_12 0 0;
-      background-color: map-get($default, primary_light_1);
+      background-color: map-get($default, primary_light_2);
 
       p {
         margin: auto;

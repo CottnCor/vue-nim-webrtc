@@ -19,13 +19,13 @@ class CallNumber extends Vue {
   private token!: string
 
   @Prop({ default: null })
-  private userid!: string
+  private userid!: number
 
   @store.Action("set_token")
   private setToken!: (val: string) => void;
 
   @store.Action("set_userid")
-  private setUserid!: (val: string) => void;
+  private setUserid!: (val: number) => void;
 
   @Watch('token', { immediate: true, deep: true })
   private onTokenChanged(val: string, oldVal: string) {
@@ -35,7 +35,7 @@ class CallNumber extends Vue {
   }
 
   @Watch('userid', { immediate: true, deep: true })
-  private onUseridChanged(val: string, oldVal: string) {
+  private onUseridChanged(val: number, oldVal: number) {
     if (val) {
       this.setUserid(val);
     }

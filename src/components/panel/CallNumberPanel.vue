@@ -12,8 +12,11 @@
       </div>
     </div>
     <div class="content radius">
-      <component v-if="false" :is="this.visiblePanel.component" />
-      <content-none v-else :tips="`无${this.visiblePanel.label}信息`" />
+      <call-number-layout>
+        <component slot="main" v-if="false" :is="this.visiblePanel.component" />
+        <content-none slot="main" v-else :tips="`无${this.visiblePanel.label}信息`" />
+        <pagination slot="buttom" :total="96" :current="1"	/>
+      </call-number-layout>
     </div>
   </div>
 </template>
@@ -23,7 +26,10 @@ import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 
 import { Getter, Action, namespace } from "vuex-class";
 
+import { CallNumberLayout } from "@/layout";
+
 import {
+  Pagination,
   ContentNone,
   SpotInfoBasic,
   SpotMultimedia,
@@ -31,7 +37,7 @@ import {
 } from "@/components";
 
 @Component({
-  components: { ContentNone, SpotInfoBasic, SpotMultimedia, SpotSupervisedInfo }
+  components: { Pagination, CallNumberLayout, ContentNone, SpotInfoBasic, SpotMultimedia, SpotSupervisedInfo }
 })
 class CallNumberPanel extends Vue {
   private panelMax = 3;
@@ -102,7 +108,7 @@ export default CallNumberPanel;
 .call-number-panel {
   height: 100%;
   width: 100%;
-  padding: $size_6;
+  padding: $size_24;
   display: flex;
   flex-direction: column;
 
@@ -123,7 +129,7 @@ export default CallNumberPanel;
       margin: 0 $size_1;
       padding: 0 $size_12;
       border-radius: $size_12 $size_12 0 0;
-      background-color: map-get($default, primary_light_1);
+      background-color: map-get($default, primary_light_2);
 
       p {
         margin: auto;

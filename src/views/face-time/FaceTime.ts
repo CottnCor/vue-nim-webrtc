@@ -23,7 +23,7 @@ class FaceTime extends Vue {
   private token!: string
 
   @Prop({ default: null })
-  private userid!: string
+  private userid!: number
 
   @store.Action("set_token")
   private setToken!: (val: string) => void;
@@ -39,7 +39,7 @@ class FaceTime extends Vue {
   }
 
   @Watch('userid', { immediate: true, deep: true })
-  private onUseridChanged(val: string, oldVal: string) {
+  private onUseridChanged(val: number, oldVal: number) {
     if (val) {
       getYxInfo({userid: val}).then((result) => {
         if(result){

@@ -2,14 +2,14 @@ import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
 interface CallNumberStore {
   token: string,
-  userid: string
+  userid: number
 }
 
 const namespaced = true
 
 const state: CallNumberStore = {
   token: "",
-  userid: "",
+  userid: -1,
 }
 
 const getters: GetterTree<CallNumberStore, any> = {
@@ -21,7 +21,7 @@ const actions: ActionTree<CallNumberStore, any> = {
   set_token({ commit }, data?: string) {
     commit('update_token', data)
   },
-  set_userid({ commit }, data?: string) {
+  set_userid({ commit }, data?: number) {
     commit('update_userid', data)
   }
 }
@@ -30,7 +30,7 @@ const mutations: MutationTree<CallNumberStore> = {
   update_token(state: CallNumberStore, data: string) {
     state.token = data
   },
-  update_userid(state: CallNumberStore, data: string) {
+  update_userid(state: CallNumberStore, data: number) {
     state.userid = data
   }
 }
