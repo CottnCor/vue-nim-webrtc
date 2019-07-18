@@ -1,6 +1,6 @@
 import { Component, Watch, Prop, Vue } from 'vue-property-decorator'
 
-import { SketchLayout } from '@/layout'
+import { MapSketchLayout } from '@/layout'
 
 import { MapPanel, UssdPanel, CoreBusinessPanel } from '@/components'
 
@@ -12,7 +12,7 @@ const store = namespace("FaceTime");
 
 @Component({
   components: {
-    SketchLayout,
+    MapSketchLayout,
     MapPanel,
     UssdPanel,
     CoreBusinessPanel
@@ -34,7 +34,7 @@ class FaceTime extends Vue {
   @Watch('token', { immediate: true, deep: true })
   private onTokenChanged(val: string, oldVal: string) {
     if (val) {
-      this.setToken(this.token);
+      this.setToken(val);
     }
   }
 

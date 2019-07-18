@@ -1,14 +1,14 @@
 import BasicLayout from './modules/BasicLayout.vue'
-import SketchLayout from './modules/SketchLayout.vue'
+import MapSketchLayout from './modules/MapSketchLayout.vue'
 
 import FaceTimeLayout from './modules/FaceTimeLayout.vue'
-import TakeNumberLayout from './modules/TakeNumberLayout.vue'
+import CallNumberLayout from './modules/CallNumberLayout.vue'
 import CheckSupervisedLayout from './modules/CheckSupervisedLayout.vue'
 
 export {
   BasicLayout,
-  SketchLayout,
+  MapSketchLayout,
   FaceTimeLayout,
-  TakeNumberLayout,
+  CallNumberLayout,
   CheckSupervisedLayout
 }

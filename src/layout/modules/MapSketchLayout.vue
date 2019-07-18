@@ -62,7 +62,7 @@ import { namespace } from "vuex-class";
 const store = namespace("FaceTime");
 
 @Component({})
-class SketchLayout extends Vue {
+class MapSketchLayout extends Vue {
   @store.Getter("status")
   private status!: string;
 
@@ -90,7 +90,7 @@ class SketchLayout extends Vue {
     }
   }
 }
-export default SketchLayout;
+export default MapSketchLayout;
 </script>
 
 <style lang='scss' scoped>

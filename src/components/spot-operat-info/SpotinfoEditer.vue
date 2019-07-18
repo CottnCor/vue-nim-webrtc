@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="spotinfo-editer">
 
   </div>
 </template>
@@ -14,6 +14,8 @@ export default SpotinfoEditer;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.spotinfo-editer {
+  margin: auto;
+  display: flex;
 }
 </style>

@@ -6,8 +6,8 @@ export const ROOT_PATH = '/'
  * 主菜单路由配置
  */
 export const ROOT_ROUTER = {
-  takeNumber: {
-    name: 'take-number',
+  callNumber: {
+    name: 'call-number',
     label: '',
     icon: 'smile',
     title: APP_PRAMS.title

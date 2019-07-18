@@ -5,7 +5,7 @@
 // app基本信息
 export const APP_PRAMS = {
   version: '0.1',
-  nane: 'vue-nim-webrtc',
+  nane: 'nim-webrtc',
   title: '',
   slogan: ''
 }

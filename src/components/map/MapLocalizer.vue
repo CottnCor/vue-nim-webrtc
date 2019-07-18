@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="map-localizer">
 
   </div>
 </template>
@@ -14,6 +14,8 @@ export default MapLocalizer;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.map-localizer {
+  margin: auto;
+  display: flex;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="map-popup">
     <v-popup :content="this.content"></v-popup>
   </div>
 </template>
@@ -21,6 +21,8 @@ export default MapPopup;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.map-popup {
+  margin: auto;
+  display: flex;
 }
 </style>

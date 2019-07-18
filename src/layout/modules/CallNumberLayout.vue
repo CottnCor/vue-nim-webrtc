@@ -8,8 +8,8 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
-class TakeNumberLayout extends Vue {}
-export default TakeNumberLayout;
+class CallNumberLayout extends Vue {}
+export default CallNumberLayout;
 </script>
 
 <style lang='scss' scoped>

@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="spotinfo-upload">
 
   </div>
 </template>
@@ -14,6 +14,8 @@ export default SpotinfoUpload;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.spotinfo-upload {
+  margin: auto;
+  display: flex;
 }
 </style>

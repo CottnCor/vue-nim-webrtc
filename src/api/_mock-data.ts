@@ -8,10 +8,3 @@ const request = new Request();
 export const getLawWorks = (param?: any) => {
     return request.get('law-works.json', param);
 };
-
-/**
- * @param  {any} param?
- */
-export const getPeopleCoords = (param?: any) => {
-  return request.get('api/people/getPeopleCoords', param);
-};

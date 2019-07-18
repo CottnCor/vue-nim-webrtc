@@ -27,7 +27,7 @@ const getters: GetterTree<FaceTimeStore, any> = {
 }
 
 const actions: ActionTree<FaceTimeStore, any> = {
-  set_token({ commit }, data?: any) {
+  set_token({ commit }, data?: string) {
     commit('update_token', data)
   },
   set_from({ commit }, data?: any) {

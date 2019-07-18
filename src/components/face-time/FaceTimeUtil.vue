@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="face-time-util">
 
   </div>
 </template>
@@ -14,6 +14,8 @@ export default FaceTimeUtil;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.face-time-util {
+  margin: auto;
+  display: flex;
 }
 </style>

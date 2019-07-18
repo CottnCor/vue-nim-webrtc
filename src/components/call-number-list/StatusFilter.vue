@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="status-filter">
 
   </div>
 </template>
@@ -8,12 +8,14 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({})
-class CalendarFilter extends Vue {}
+class StatusFilter extends Vue {}
 
-export default CalendarFilter;
+export default StatusFilter;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.status-filter {
+  margin: auto;
+  display: flex;
 }
 </style>

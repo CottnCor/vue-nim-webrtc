@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="call-number-item">
 
   </div>
 </template>
@@ -8,12 +8,14 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({})
-class StatusFilter extends Vue {}
+class CallNumberItem extends Vue {}
 
-export default StatusFilter;
+export default CallNumberItem;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.call-number-item {
+  margin: auto;
+  display: flex;
 }
 </style>

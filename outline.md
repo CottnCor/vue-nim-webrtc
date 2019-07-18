@@ -32,11 +32,11 @@
 - PinMarker
 - SpinMarker
 
-##### 4. TakeNumberList
+##### 4. CallNumberList
 
 - StatusFilter
 - CalendarFilter
-- TakeNumberItem
+- CallNumberItem
 
 ##### 5. PeopleList
 
@@ -58,5 +58,5 @@
 ##### 7. Layout
 
 - FaceTimeLayout
-- TakeNumberLayout
+- CallNumberLayout
 - CheckSupervisedLayout

@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper" v-show="this.show">
+  <div class="map-widgets" v-show="this.show">
     <li>
       <el-tooltip content="全图" placement="left">
         <el-button class="map-tool-item" icon="md-globe"></el-button>
@@ -48,6 +48,8 @@ export default MapWidgets;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.map-widgets {
+  margin: auto;
+  display: flex;
 }
 </style>

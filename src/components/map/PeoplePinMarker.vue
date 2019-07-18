@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="people-pin-marker">
 
   </div>
 </template>
@@ -14,6 +14,8 @@ export default PeoplePinMarker;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.people-pin-marker {
+  margin: auto;
+  display: flex;
 }
 </style>

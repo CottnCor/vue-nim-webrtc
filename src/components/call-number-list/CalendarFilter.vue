@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="calendar-filter">
 
   </div>
 </template>
@@ -8,12 +8,14 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({})
-class TakeNumberItem extends Vue {}
+class CalendarFilter extends Vue {}
 
-export default TakeNumberItem;
+export default CalendarFilter;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.calendar-filter {
+  margin: auto;
+  display: flex;
 }
 </style>

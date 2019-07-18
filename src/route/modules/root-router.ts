@@ -27,9 +27,9 @@ const rootRouter = [
     }
   },
   {
-    path: ROOT_PATH + ROOT_ROUTER.takeNumber.name,
-    name: ROOT_ROUTER.takeNumber.name,
-    component: () => import('@/views/take-number/TakeNumber.vue'),
+    path: ROOT_PATH + ROOT_ROUTER.callNumber.name,
+    name: ROOT_ROUTER.callNumber.name,
+    component: () => import('@/views/call-number/CallNumber.vue'),
     props: route => ({
       token: route.query.token,
       userid: route.query.userid
@@ -38,7 +38,7 @@ const rootRouter = [
       icon: '',
       keepAlive: true,
       navigable: true,
-      title: ROOT_ROUTER.takeNumber.title
+      title: ROOT_ROUTER.callNumber.title
     }
   }
 ]

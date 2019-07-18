@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="multimedia-viewer">
 
   </div>
 </template>
@@ -14,6 +14,8 @@ export default MultimediaViewer;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.multimedia-viewer {
+  margin: auto;
+  display: flex;
 }
 </style>

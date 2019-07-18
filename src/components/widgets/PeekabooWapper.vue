@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="peekaboo-wapper">
 
   </div>
 </template>
@@ -14,6 +14,8 @@ export default PeekabooWapper;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.peekaboo-wapper {
+  margin: auto;
+  display: flex;
 }
 </style>

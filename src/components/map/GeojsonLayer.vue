@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="geojson-layer">
 
   </div>
 </template>
@@ -14,6 +14,8 @@ export default GeojsonLayer;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.geojson-layer {
+  margin: auto;
+  display: flex;
 }
 </style>

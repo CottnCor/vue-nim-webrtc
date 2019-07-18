@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="info-editer">
 
   </div>
 </template>
@@ -14,6 +14,8 @@ export default InfoEditer;
 </script>
 
 <style lang="scss" scoped>
-.wapper {
+.info-editer {
+  margin: auto;
+  display: flex;
 }
 </style>
