@@ -10,7 +10,7 @@
         FROM
             tb_user2yx t1 LEFT JOIN tb_yxuser t2 ON t1.f_accid = t2.f_accid
         WHERE
-            f_userid = '${userid}'
+            f_userid = ${userid}
     </select>
     <select id="selectUserInfo" resultType="java.util.Map" statementType="STATEMENT">
         SELECT T.f_userid                                             as userid,
@@ -70,7 +70,7 @@
                                                                  ON h1.f_roleid = h2.f_roleid) z2
                                              ON z1.f_userid = z2.f_userid) T
                     WHERE T.f_userid IS NOT NULL) t1) T
-        WHERE T.f_userid = '${userid}'
+        WHERE T.f_userid = ${userid}
     </select>
     <select id="selectPeopleTree" resultType="java.util.Map" statementType="STATEMENT">
         SELECT f_id AS userid, f_username AS username FROM tb_reguser WHERE f_id IN (SELECT f_userid FROM tb_user2yx)
@@ -80,13 +80,13 @@
         FROM tbsys_user
         WHERE f_updatetime > (now() - '00:01:01' :: INTERVAL)
           AND f_islogin = 1
-          AND f_userid = '${userid}'
+          AND f_userid = ${userid}
     </select>
     <select id="selectUserCoords" resultType="java.util.Map" statementType="STATEMENT">
         SELECT f_lon AS lng,
                f_lat AS lat
         FROM tb_devicetrack
-        WHERE f_userid = '${userid}'
+        WHERE f_userid = ${userid}
     </select>
     <select id="selectPeopleCoords" resultType="java.util.Map" statementType="STATEMENT">
         WITH RESULT AS (

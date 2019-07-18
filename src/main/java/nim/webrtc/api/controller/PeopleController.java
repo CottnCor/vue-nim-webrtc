@@ -28,25 +28,25 @@ public class PeopleController {
     }
 
     @GetMapping("/getYxInfo")
-    public String getYxAccount(@RequestParam(name="userid")String userid) {
+    public String getYxAccount(@RequestParam(name="userid")Long userid) {
         Map map = peopleService.getYxInfo(userid);
         return GlobalUtil.PackResponse(map);
     }
 
     @GetMapping("/getUserInfo")
-    public String getUserInfo(@RequestParam(name="userid")String userid) {
+    public String getUserInfo(@RequestParam(name="userid")Long userid) {
         Map map = peopleService.getUserInfo(userid);
         return GlobalUtil.PackResponse(map);
     }
 
     @GetMapping("/getUserState")
-    public String getUserState(@RequestParam(name="userid")String userid) {
+    public String getUserState(@RequestParam(name="userid")Long userid) {
         Map map = peopleService.getUserState(userid);
         return GlobalUtil.PackResponse(map);
     }
 
     @GetMapping("/getUserCoords")
-    public String getUserLocation(@RequestParam(name="userid")String userid) {
+    public String getUserLocation(@RequestParam(name="userid")Long userid) {
         Map map = peopleService.getUserCoords(userid);
         return GlobalUtil.PackResponse(map);
     }

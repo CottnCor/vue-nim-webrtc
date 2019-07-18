@@ -19,36 +19,18 @@ public class FaceTimeServiceImpl implements IFaceTimeService {
     private CommonMapper commonMapper;
 
     @Override
-    public List<Map> getObjectType(){
+    public List<Map> getTaskType(){
         try {
-            return FaceTimeMapper.selectObjectType();
+            return FaceTimeMapper.selectTaskType();
         } catch (Exception ex){
             return null;
         }
     }
 
     @Override
-    public Map getOrderDate(String bizId, String date){
+    public List<Map> getFaceTimeOverview(String taskid){
         try {
-            return FaceTimeMapper.selectOrderDate(bizId, date);
-        } catch (Exception ex){
-            return null;
-        }
-    }
-
-    @Override
-    public List<Map> getTimeSegments(String dateId){
-        try {
-            return FaceTimeMapper.selectTimeSegments(dateId);
-        } catch (Exception ex){
-            return null;
-        }
-    }
-
-    @Override
-    public List<Map> getFaceTimeOverview(String bizId){
-        try {
-            return FaceTimeMapper.selectFaceTimeOverview(bizId);
+            return FaceTimeMapper.selectFaceTimeOverview(taskid);
         } catch (Exception ex){
             return null;
         }
@@ -71,9 +53,9 @@ public class FaceTimeServiceImpl implements IFaceTimeService {
     }
 
     @Override
-    public List<Map> getFaceTimeList(Short state, String segmentId, Short limit, Short page){
+    public List<Map> getFaceTimeList(Short state, String taskid, Short limit, Short page){
         try {
-            return FaceTimeMapper.selectFaceTimeList(state, segmentId, limit, page);
+            return FaceTimeMapper.selectFaceTimeList(state, taskid, limit, page);
         } catch (Exception ex){
             return null;
         }
@@ -94,8 +76,8 @@ public class FaceTimeServiceImpl implements IFaceTimeService {
     }
 
     @Override
-    public void editFaceTimeState(String id, Short state, Short connState) throws Exception{
-        FaceTimeMapper.updateFaceTimeState(id, state, connState);
+    public void editFaceTimeState(String id, Short state) throws Exception{
+        FaceTimeMapper.updateFaceTimeState(id, state);
     }
 
     @Override

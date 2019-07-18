@@ -1,6 +1,5 @@
 package nim.webrtc.api.service.impl;
 
-import nim.webrtc.api.properties.*;
 import nim.webrtc.api.mapper.CommonMapper;
 import nim.webrtc.api.mapper.PeopleMapper;
 import nim.webrtc.api.service.IPeopleService;
@@ -19,12 +18,6 @@ import java.util.Map;
  */
 @Service
 public class PeopleServiceImpl implements IPeopleService {
-
-    @Autowired
-    private AuthProperties auth;
-
-    @Autowired
-    private BusinessProperties business;
 
     @Autowired
     private PeopleMapper peopleMapper;
@@ -106,7 +99,7 @@ public class PeopleServiceImpl implements IPeopleService {
     }
 
     @Override
-    public Map getYxInfo(String userid) {
+    public Map getYxInfo(Long userid) {
         try {
             return peopleMapper.selectYxInfo(userid);
         } catch (Exception ex) {
@@ -115,7 +108,7 @@ public class PeopleServiceImpl implements IPeopleService {
     }
 
     @Override
-    public Map getUserInfo(String userid) {
+    public Map getUserInfo(Long userid) {
         try {
             return peopleMapper.selectUserInfo(userid);
         } catch (Exception ex) {
@@ -124,7 +117,7 @@ public class PeopleServiceImpl implements IPeopleService {
     }
 
     @Override
-    public Map getUserState(String userid) {
+    public Map getUserState(Long userid) {
         try {
             return peopleMapper.selectUserState(userid);
         } catch (Exception ex) {
@@ -133,7 +126,7 @@ public class PeopleServiceImpl implements IPeopleService {
     }
 
     @Override
-    public Map getUserCoords(String userid) {
+    public Map getUserCoords(Long userid) {
         try {
             return peopleMapper.selectUserCoords(userid);
         } catch (Exception ex) {

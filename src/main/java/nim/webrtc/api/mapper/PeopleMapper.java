@@ -11,13 +11,13 @@ public interface PeopleMapper {
 
     List<Map> selectPeopleTree();
 
-    Map selectYxInfo(@Param("userid")String userid);
+    Map selectYxInfo(@Param("userid")Long userid);
 
-    Map selectUserInfo(@Param("userid")String userid);
+    Map selectUserInfo(@Param("userid")Long userid);
 
-    Map selectUserState(@Param("userid")String userid);
+    Map selectUserState(@Param("userid")Long userid);
 
-    Map selectUserCoords(@Param("userid")String userid);
+    Map selectUserCoords(@Param("userid")Long userid);
 
     List<Map> selectPeopleCoords(@Param("wkt")String wkt);
 

@@ -1,7 +1,6 @@
 package nim.webrtc.api.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import nim.webrtc.api.service.IAuthService;
 import nim.webrtc.api.service.IFaceTimeService;
 import nim.webrtc.api.util.GlobalUtil;
 import org.springframework.web.bind.annotation.*;
@@ -15,32 +14,17 @@ import java.util.Map;
 public class FaceTimeController {
 
     @Resource
-    private IAuthService authService;
-
-    @Resource
     private IFaceTimeService FaceTimeService;
 
-    @GetMapping("/getObjectType")
-    public String getObjectType(@RequestParam(name="appkey")String appkey, @RequestParam(name="appkey")String token) throws Exception{
-        List<Map> maps = FaceTimeService.getObjectType();
-        return GlobalUtil.PackResponse(maps);
-    }
-
-    @GetMapping("/getOrderDate")
-    public String getOrderDate(@RequestParam(name="bizId")String bizId, @RequestParam(name="date")String date) throws Exception{
-        Map map = FaceTimeService.getOrderDate(bizId, date);
-        return GlobalUtil.PackResponse(map);
-    }
-
-    @GetMapping("/getTimeSegments")
-    public String getTimeSegments(@RequestParam(name="dateId")String dateId) throws Exception{
-        List<Map> maps = FaceTimeService.getTimeSegments(dateId);
+    @GetMapping("/getTaskType")
+    public String getTaskType() throws Exception{
+        List<Map> maps = FaceTimeService.getTaskType();
         return GlobalUtil.PackResponse(maps);
     }
 
     @GetMapping("/getFaceTimeOverview")
-    public String getFaceTimeOverview(@RequestParam(name="bizId")String bizId) throws Exception{
-        List<Map> maps = FaceTimeService.getFaceTimeOverview(bizId);
+    public String getFaceTimeOverview(@RequestParam(name="taskid")String taskid) throws Exception{
+        List<Map> maps = FaceTimeService.getFaceTimeOverview(taskid);
         return GlobalUtil.PackResponse(maps);
     }
 
@@ -51,8 +35,8 @@ public class FaceTimeController {
     }
 
     @GetMapping("/getFaceTimeList")
-    public String getFaceTimeList(@RequestParam(name="state")Short state, @RequestParam(name="segmentId")String segmentId, @RequestParam(name="limit")Short limit, @RequestParam(name="page")Short page) throws Exception{
-        List<Map> maps = FaceTimeService.getFaceTimeList(state, segmentId, limit, page);
+    public String getFaceTimeList(@RequestParam(name="state")Short state, @RequestParam(name="taskid")String taskid, @RequestParam(name="limit")Short limit, @RequestParam(name="page")Short page) throws Exception{
+        List<Map> maps = FaceTimeService.getFaceTimeList(state, taskid, limit, page);
         return GlobalUtil.PackResponse(maps);
     }
 
@@ -68,8 +52,8 @@ public class FaceTimeController {
     }
 
     @PostMapping("/editFaceTimeState")
-    public void editFaceTimeState(@RequestParam(name="id")String id, @RequestParam(name="state")Short state, @RequestParam(name="connState")Short connState) throws Exception{
-        FaceTimeService.editFaceTimeState(id, state, connState);
+    public void editFaceTimeState(@RequestParam(name="id")String id, @RequestParam(name="state")Short state) throws Exception{
+        FaceTimeService.editFaceTimeState(id, state);
     }
 
     @PostMapping("/lockFaceTime")

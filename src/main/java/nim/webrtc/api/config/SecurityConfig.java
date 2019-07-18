@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(authSuccessHandler)
                 .failureHandler(authFailureHandler);
         http.authorizeRequests()
-                .antMatchers("/auth/login/info", "/auth/login", "/auth/logout", "/**")
+                .antMatchers("/auth/login/info", "/auth/login", "/auth/logout", "/api/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
