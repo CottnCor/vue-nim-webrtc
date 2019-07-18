@@ -5,13 +5,9 @@
       <span class="center secondary pure">{{this.tips}}</span>
     </p>
     <div class="content">
-      <a class="button motion" @click="this.close">
-        <i class="el-icon-close"></i>
-        <span class="strong primary center">关闭</span>
-      </a>
-      <a class="button motion" @click="this.call">
-        <i class="el-icon-phone-outline"></i>
-        <span class="strong primary center">重连</span>
+      <a class="button motion" @click="this.refresh">
+        <i class="el-icon-refresh"></i>
+        <span class="strong primary center">刷新</span>
       </a>
     </div>
   </div>
@@ -40,11 +36,7 @@ class FaceTimeFailure extends Vue {
   @store.Action("set_status")
   private setStatus!: (val: number) => void;
 
-  private call() {
-    NimCall.getInstance().startCalling(this.to, "");
-  }
-
-  private close() {
+  private refresh() {
     this.setStatus(2);
   }
 }
@@ -72,7 +64,7 @@ export default FaceTimeFailure;
     flex-direction: row;
 
     & > a {
-      margin: auto $size_6;
+      margin: auto;
     }
   }
 }
