@@ -8,7 +8,7 @@
       <span class="center secondary pure">{{this.tips}}</span>
     </p>
     <div class="content">
-      <a class="button" @click="this.hangup">
+      <a class="button motion" @click="this.hangup">
         <i class="el-icon-close"></i>
         <span class="strong primary center">挂断</span>
       </a>

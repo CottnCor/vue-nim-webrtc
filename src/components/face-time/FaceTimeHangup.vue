@@ -4,11 +4,11 @@
       <i class="el-icon-user-solid"></i>
     </a>
     <div class="content">
-      <a class="button" @click="this.close">
+      <a class="button motion" @click="this.close">
         <i class="el-icon-close"></i>
         <span class="strong primary center">关闭</span>
       </a>
-      <a class="button" @click="this.call">
+      <a class="button motion" @click="this.call">
         <i class="el-icon-phone-outline"></i>
         <span class="strong primary center">重连</span>
       </a>

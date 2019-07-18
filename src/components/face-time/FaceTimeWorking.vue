@@ -4,7 +4,7 @@
     <div :id="this.localContainer" class="local video-container" />
     <div style="flex: 1;"></div>
     <div class="content">
-      <a class="button" @click="this.hangup">
+      <a class="button motion" @click="this.hangup">
         <i class="el-icon-close"></i>
         <span class="strong primary center">挂断</span>
       </a>

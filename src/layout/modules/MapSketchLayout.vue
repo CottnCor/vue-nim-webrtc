@@ -19,7 +19,7 @@
             <slot name="left"></slot>
           </div>
         </div>
-        <div class="visible-controller left" @click="activatePopup(0)">
+        <div class="visible-controller left motion" @click="activatePopup(0)">
           <p class="primary vertical pure">
             <i v-if="this.popupState[0].state" class="el-icon-d-arrow-left"></i>
             <i v-else class="el-icon-arrow-right"></i>
@@ -29,7 +29,7 @@
       <div style="flex: 1;"></div>
       <div style="flex: 1;"></div>
       <div :class="[this.popupState[1].state ? '' : 'hide', 'right', 'popup', 'radius']">
-        <div class="visible-controller right" @click="activatePopup(1)">
+        <div class="visible-controller right motion" @click="activatePopup(1)">
           <p class="primary vertical pure">
             <i v-if="this.popupState[1].state" class="el-icon-d-arrow-right"></i>
             <i v-else class="el-icon-arrow-left"></i>
@@ -141,7 +141,6 @@ export default MapSketchLayout;
 
     & > div {
       margin: auto;
-      cursor: pointer;
       padding: $size_6;
       box-shadow: $shadow_power;
       background-color: map-get($default, glass);

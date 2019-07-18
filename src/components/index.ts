@@ -44,13 +44,14 @@ import PeopleListItem from './people-list/PeopleListItem.vue'
 import SpotFilter from './spot-list/SpotFilter.vue'
 import SpotListItem from './spot-list/SpotListItem.vue'
 
-import MapPanel from './panel/MapPanel.vue'
 import PeopleListPanel from './panel/PeopleListPanel.vue'
 import SpotListPanel from './panel/SpotListPanel.vue'
-import UssdPanel from './panel/UssdPanel.vue'
-import FaceTimePanel from './panel/FaceTimePanel.vue'
 import SpotOperatPanel from './panel/SpotOperatPanel.vue'
+import FaceTimePanel from './panel/FaceTimePanel.vue'
+import MapPanel from './panel/MapPanel.vue'
+import UssdPanel from './panel/UssdPanel.vue'
 import CoreBusinessPanel from './panel/CoreBusinessPanel.vue'
+import CallNumberPanel from './panel/CallNumberPanel.vue'
 
 export {
   ContentNone,
@@ -92,11 +93,12 @@ export {
   PeopleListItem,
   SpotFilter,
   SpotListItem,
-  MapPanel,
   PeopleListPanel,
   SpotListPanel,
-  UssdPanel,
-  FaceTimePanel,
   SpotOperatPanel,
-  CoreBusinessPanel
+  FaceTimePanel,
+  MapPanel,
+  UssdPanel,
+  CoreBusinessPanel,
+  CallNumberPanel
 }

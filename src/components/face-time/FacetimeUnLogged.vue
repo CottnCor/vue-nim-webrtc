@@ -1,6 +1,6 @@
 <template>
   <div class="face-time-unLogged">
-    <a class="button" @click="this.login">
+    <a class="button motion" @click="this.login">
       <i class="el-icon-thumb"></i>
       <span class="strong primary center">{{this.tips}}</span>
     </a>

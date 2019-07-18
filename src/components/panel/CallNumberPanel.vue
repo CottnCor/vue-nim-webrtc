@@ -1,5 +1,5 @@
 <template>
-  <div class="spot-operat-panel radius">
+  <div class="call-number-panel radius">
     <div class="visible-controller">
       <div v-for="item in this.visiblePanelTab" :key="item.tag" :class="[item.state ? 'active' : '', 'motion']" @click="activatePanel(item.tag)">
         <p class="primary pure">{{item.label}}</p>
@@ -33,7 +33,7 @@ import {
 @Component({
   components: { ContentNone, SpotInfoBasic, SpotMultimedia, SpotSupervisedInfo }
 })
-class SpotOperatPanel extends Vue {
+class CallNumberPanel extends Vue {
   private panelMax = 3;
 
   private panelSurplus = false;
@@ -42,32 +42,20 @@ class SpotOperatPanel extends Vue {
     {
       tag: 0,
       state: true,
-      label: "图斑信息",
+      label: "待呼叫",
       component: "SpotInfoBasic"
     },
     {
       tag: 1,
       state: false,
-      label: "现场照片",
+      label: "已呼叫",
       component: "SpotMultimedia"
     },
     {
       tag: 2,
       state: false,
-      label: "现场视频",
+      label: "已过期",
       component: "SpotMultimedia"
-    },
-    {
-      tag: 3,
-      state: false,
-      label: "扫描件",
-      component: "SpotMultimedia"
-    },
-    {
-      tag: 4,
-      state: false,
-      label: "监管信息",
-      component: "SpotSupervisedInfo"
     }
   ];
 
@@ -107,11 +95,11 @@ class SpotOperatPanel extends Vue {
     }
   }
 }
-export default SpotOperatPanel;
+export default CallNumberPanel;
 </script>
 
 <style lang='scss' scoped>
-.spot-operat-panel {
+.call-number-panel {
   height: 100%;
   width: 100%;
   padding: $size_6;

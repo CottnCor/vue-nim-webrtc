@@ -1,10 +1,10 @@
 <template>
   <div class="panel radius">
     <div class="visible-controller">
-      <div :class="[this.panelState[0].state ? 'active' : '']" @click="activatePanel(0)">
+      <div :class="[this.panelState[0].state ? 'active' : '', 'motion']" @click="activatePanel(0)">
         <p class="primary pure"><i class="el-icon-position"></i>人员列表</p>
       </div>
-      <div :class="[this.panelState[1].state ? 'active' : '']" @click="activatePanel(1)">
+      <div :class="[this.panelState[1].state ? 'active' : '', 'motion']" @click="activatePanel(1)">
         <p class="primary pure"><i class="el-icon-crop"></i>图斑列表</p>
       </div>
     </div>

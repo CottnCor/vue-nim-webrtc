@@ -1,7 +1,7 @@
 <template>
-  <call-number-layout>
-
-  </call-number-layout>
+  <basic-layout>
+    <call-number-panel slot="main" />
+  </basic-layout>
 </template>
 
 <script lang="ts" src="./CallNumber.ts"></script>

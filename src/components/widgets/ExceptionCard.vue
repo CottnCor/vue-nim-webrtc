@@ -8,7 +8,7 @@
         <h1 class="content-wapper">{{ this.config[code].title }}</h1>
         <div class="content-wapper desc">{{ msg ? msg : this.config[code].desc }}</div>
         <div class="content-wapper action">
-          <el-button type="primary" @click="this.back">返回上一页</el-button>
+          <el-button type="primary" class="motion" @click="this.back">返回</el-button>
         </div>
       </div>
     </div>

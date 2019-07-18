@@ -1,8 +1,8 @@
 import { Component, Watch, Prop, Vue } from 'vue-property-decorator'
 
-import { CallNumberLayout } from '@/layout'
+import { BasicLayout } from '@/layout'
 
-import { CoreBusinessPanel } from '@/components'
+import { CallNumberPanel } from '@/components'
 
 import { namespace } from "vuex-class";
 
@@ -10,8 +10,8 @@ const store = namespace("CallNumber");
 
 @Component({
   components: {
-    CallNumberLayout,
-    CoreBusinessPanel
+    BasicLayout,
+    CallNumberPanel
   }
 })
 class CallNumber extends Vue {
