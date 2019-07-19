@@ -6,11 +6,11 @@ const MapboxToken =
 export const MAP_URL = {
   STREETS: `https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=${MapboxToken}`,
   SATELLITE: `https://api.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=${MapboxToken}`,
-  IMG: `https://t0.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${TdtKey}`,
-  VEC: `https://t0.tianditu.gov.cn/vec_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${TdtKey}`,
-  CVA: `https://t0.tianditu.gov.cn/cva_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cva&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${TdtKey}`,
-  CIA: `https://t0.tianditu.gov.cn/cia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${TdtKey}`,
-  IBO: `https://t0.tianditu.gov.cn/ibo_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ibo&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${TdtKey}`,
+  IMG: `https://maps.ynmap.cn/services/img/map/3857/WMTS?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%252fpng`,
+  VEC: `https://maps.ynmap.cn/services/vec/map/3857/WMTS?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%252fpng`,
+  CVA: `https://maps.ynmap.cn/services/cva/map/3857/WMTS?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%252fpng`,
+  CIA: `https://maps.ynmap.cn/services/cia/map/3857/WMTS?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%252fpng`,
+  IBO: `https://maps.ynmap.cn/services/ibo/map/3857/WMTS?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%252fpng`,
 }
 
 export const MAP_ZOOM = 12
@@ -28,3 +28,5 @@ export const MAP_BOUND = {
   MIN_LAT: 3.86,
   MIN_LNG: 73.66
 }
+
+export const MAP_DEFINITION = "https://maps.ynmap.cn/services/img/map/3857?f=pjson"
