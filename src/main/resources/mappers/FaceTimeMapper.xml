@@ -5,7 +5,13 @@
         SELECT f_id AS id, f_name AS name FROM tb_task_biz WHERE 1 = 1
     </select>
     <select id="selectFaceTimeOverview" resultType="java.util.Map" statementType="STATEMENT">
-        SELECT COUNT(*), f_state AS state FROM tb_video_call WHERE f_bizid = '${taskid}' GROUP BY f_state ORDER BY f_state
+        SELECT COUNT(*), f_state AS state FROM tb_video_call WHERE f_bizid = '${taskid}'
+        <choose>
+            <when test="state!=-1">
+                AND f_state = ${state}
+            </when>
+        </choose>
+        GROUP BY f_state ORDER BY f_state
     </select>
     <select id="selectFaceTimeRecord" resultType="java.util.Map" statementType="STATEMENT">
 
@@ -30,43 +36,20 @@
         AND f_state = ${state}
         ORDER BY
         f_createtime
-          <choose>
-              <when test="limit>0 and page>0">
-                  LIMIT ${limit} OFFSET ${limit} * (${page} - 1)
-              </when>
-          </choose>
+        <choose>
+            <when test="limit>0 and page>0">
+                LIMIT ${limit} OFFSET ${limit} * (${page} - 1)
+            </when>
+        </choose>
         ),
-        t2 AS ( SELECT f_updatetime AS userid, f_updatetime AS updatetime FROM tb_devicetrack WHERE f_updatetime > ( now() - '00:01:01' :: INTERVAL ) ),
-        t3 AS ( SELECT t1.*, t2.updatetime FROM t1 LEFT JOIN t2 ON t1.userid = t2.userid ) SELECT
+        t2 AS ( SELECT f_userid AS userid, f_lon AS lon, f_lat AS lat FROM tb_devicetrack WHERE f_updatetime > ( now() - '00:01:01' :: INTERVAL ) ),
+        t3 AS ( SELECT t1.*, t2.lon, t2.lat FROM t1 LEFT JOIN t2 ON t1.userid = t2.userid ) SELECT
         t3.*,
-        ( CASE WHEN t3.userid IS NULL THEN 0 ELSE 1 END ) AS online
+        ( CASE WHEN (t3.lon IS NULL AND t3.lat IS NULL) THEN 0 ELSE 1 END ) AS online
         FROM
         t3
     </select>
-    <select id="selectFaceTimeCoords" resultType="java.util.Map" statementType="STATEMENT">
-        SELECT
-            f_x AS x,
-            f_y AS y,
-            f_angel AS angel,
-            f_userid AS userid,
-            f_createtime AS createtime
-        FROM
-            tb_video_devicestate
-        WHERE
-            f_recordid = '${id}'
-        ORDER BY
-            f_createtime
-    </select>
-    <insert id="insertFaceTimeRecord" statementType="STATEMENT">
-
-    </insert>
     <update id="updateFaceTimeState" statementType="STATEMENT">
-        UPDATE tb_video_takenumber SET f_state = ${state} WHERE f_id = '${id}';
-    </update>
-    <update id="lockFaceTime" statementType="STATEMENT">
-        UPDATE tb_video_takenumber SET f_islock = 1 WHERE f_id = '${id}';
-    </update>
-    <update id="unlockFaceTime" statementType="STATEMENT">
-        UPDATE tb_video_takenumber SET f_islock = 0 WHERE f_id = '${id}';
+        UPDATE tb_video_call SET f_state = ${state} WHERE f_id = '${id}';
     </update>
 </mapper>

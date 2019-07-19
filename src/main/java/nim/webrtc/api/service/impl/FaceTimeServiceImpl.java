@@ -28,9 +28,9 @@ public class FaceTimeServiceImpl implements IFaceTimeService {
     }
 
     @Override
-    public List<Map> getFaceTimeOverview(String taskid){
+    public List<Map> getFaceTimeOverview(Short state, String taskid){
         try {
-            return FaceTimeMapper.selectFaceTimeOverview(taskid);
+            return FaceTimeMapper.selectFaceTimeOverview(state, taskid);
         } catch (Exception ex){
             return null;
         }
@@ -62,31 +62,8 @@ public class FaceTimeServiceImpl implements IFaceTimeService {
     }
 
     @Override
-    public List<Map> getFaceTimeCoords(String id){
-        try {
-            return FaceTimeMapper.selectFaceTimeCoords(id);
-        } catch (Exception ex){
-            return null;
-        }
-    }
-
-    @Override
-    public void addFaceTimeRecord(Map record) throws Exception{
-        FaceTimeMapper.insertFaceTimeRecord(record);
-    }
-
-    @Override
     public void editFaceTimeState(String id, Short state) throws Exception{
         FaceTimeMapper.updateFaceTimeState(id, state);
     }
 
-    @Override
-    public void lockFaceTime(String id) throws Exception{
-        FaceTimeMapper.lockFaceTime(id);
-    }
-
-    @Override
-    public void unlockFaceTime(String id) throws Exception{
-        FaceTimeMapper.unlockFaceTime(id);
-    }
 }
