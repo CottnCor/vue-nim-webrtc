@@ -6,14 +6,13 @@
 export const IS_MOCK = false
 
 // 线上环境
-export const ONLINE_HOST = 'https://zhjg.yndlr.gov.cn:8097/'
+export const ONLINE_HOST = 'https://gl.landcloud.org.cn:4443/'
 // export const ONLINE_HOST = '/'
 
 // 测试环境
-export const QA_HOST = 'https://127.0.0.1:8097/'
+export const QA_HOST = 'https://192.168.1.3:8095/'
 
 // mock
 export const MOCK_HOST = './mock/'
-
 // 当前的host ONLINE_HOST | QA_HOST | MOCK_HOST
-export const CURRENT_HOST = ONLINE_HOST
+export const CURRENT_HOST = QA_HOST
