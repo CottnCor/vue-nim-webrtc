@@ -1,18 +1,27 @@
 <template>
   <div class="pagination">
-    <el-pagination background layout="prev, pager, next" :total="this.total" :current-page="this.current" :page-count="12" />
+    <el-pagination background layout="prev, pager, next" :total="this.total" :page-size="this.limit" @current-change="this.pageChanged"/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Emit, Watch } from "vue-property-decorator";
 
 @Component({})
 class Pagination extends Vue {
   @Prop({ default: 0 })
   private total!: number;
+
   @Prop({ default: 0 })
-  private current!: number;
+  private limit!: number;
+
+  @Emit()
+  private pageChanged(val: number) {
+    debugger
+    return val;
+  }
+
+  private page!: number;
 }
 
 export default Pagination;

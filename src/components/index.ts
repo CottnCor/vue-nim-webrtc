@@ -1,4 +1,5 @@
 import ContentNone from './widgets/ContentNone.vue'
+import SwitchTab from './widgets/SwitchTab.vue'
 import ExceptionCard from './widgets/ExceptionCard.vue'
 import MultimediaViewer from './widgets/MultimediaViewer.vue'
 import InfoEditer from './widgets/InfoEditer.vue'
@@ -56,6 +57,7 @@ import CallNumberPanel from './panel/CallNumberPanel.vue'
 
 export {
   ContentNone,
+  SwitchTab,
   ExceptionCard,
   MultimediaViewer,
   InfoEditer,

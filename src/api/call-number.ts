@@ -6,7 +6,7 @@ const request = new Request();
  * @param  {any} param?
  */
 export const getTaskType = (param?: any) => {
-  return request.get('api/people/getUserInfo', param);
+  return request.get('api/face-time/getTaskType', param);
 };
 
 /**

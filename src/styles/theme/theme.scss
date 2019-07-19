@@ -561,6 +561,10 @@ mark {
   color: map-get($default, pure);
 }
 
+.flex{
+  display: flex;
+}
+
 .order-center {
   margin: auto !important;
 }

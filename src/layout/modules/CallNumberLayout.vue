@@ -86,17 +86,13 @@ export default CallNumberLayout;
     flex-direction: row;
   }
 
-  .top-wapper {
-    height: $size_120;
-  }
-
   .buttom-wapper {
     height: $size_84;
   }
 
   .main-wapper {
     flex: 1;
-    height: calc(100% - #{($size_120 + $size_84)});
+    height: calc(100% - #{($size_84 * 2)});
   }
 
   .popup {

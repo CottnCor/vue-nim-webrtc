@@ -13,9 +13,10 @@
     </div>
     <div class="content radius">
       <call-number-layout>
+        <calendar-filter slot="top" @task-changed="this.taskChanged" />
         <component slot="main" v-if="false" :is="this.visiblePanel.component" />
-        <content-none slot="main" v-else :tips="`无${this.visiblePanel.label}信息`" />
-        <pagination slot="buttom" :total="96" :current="1"	/>
+        <content-none slot="main" v-else :tips="`无${this.visiblePanel.label}任务`" />
+        <pagination slot="buttom" @page-changed="this.pageChanged" :total="96" :limit="this.pageSize" />
       </call-number-layout>
     </div>
   </div>
@@ -28,8 +29,11 @@ import { Getter, Action, namespace } from "vuex-class";
 
 import { CallNumberLayout } from "@/layout";
 
+import { getFaceTimeOverview } from "@/api/call-number";
+
 import {
   Pagination,
+  CalendarFilter,
   ContentNone,
   SpotInfoBasic,
   SpotMultimedia,
@@ -37,9 +41,19 @@ import {
 } from "@/components";
 
 @Component({
-  components: { Pagination, CallNumberLayout, ContentNone, SpotInfoBasic, SpotMultimedia, SpotSupervisedInfo }
+  components: {
+    Pagination,
+    CalendarFilter,
+    CallNumberLayout,
+    ContentNone,
+    SpotInfoBasic,
+    SpotMultimedia,
+    SpotSupervisedInfo
+  }
 })
 class CallNumberPanel extends Vue {
+  private pageSize = 6;
+
   private panelMax = 3;
 
   private panelSurplus = false;
@@ -47,36 +61,26 @@ class CallNumberPanel extends Vue {
   private panelState = [
     {
       tag: 0,
+      param: [0, 4],
       state: true,
       label: "待呼叫",
       component: "SpotInfoBasic"
     },
     {
       tag: 1,
+      param: [1, 2, 3],
       state: false,
       label: "已呼叫",
       component: "SpotMultimedia"
     },
     {
       tag: 2,
+      param: [5],
       state: false,
       label: "已过期",
       component: "SpotMultimedia"
     }
   ];
-
-  private activatePanel(tag: number) {
-    for (const item of this.panelState) {
-      if (tag === item.tag) {
-        item.state = true;
-      } else {
-        item.state = false;
-      }
-      if (tag < 0) {
-        this.panelSurplus = !this.panelSurplus;
-      }
-    }
-  }
 
   private get visiblePanelTab(): any {
     let tabs: any = null;
@@ -97,6 +101,45 @@ class CallNumberPanel extends Vue {
     for (const item of this.panelState) {
       if (item.state) {
         return item;
+      }
+    }
+  }
+
+  @Watch("visiblePanel", { immediate: true, deep: true })
+  private onTaskChanged(val: any, oldVal: any) {
+    if (val) {
+      getFaceTimeOverview({ taskid: this.taskid, state: val.param })
+        .then(result => {
+          if (result && result.length > 0) {
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
+
+  private taskid!: string;
+
+  private page!: string;
+
+  private taskChanged(val: string) {
+    debugger;
+  }
+
+  private pageChanged(val: string) {
+    debugger;
+  }
+
+  private activatePanel(tag: number) {
+    for (const item of this.panelState) {
+      if (tag === item.tag) {
+        item.state = true;
+      } else {
+        item.state = false;
+      }
+      if (tag < 0) {
+        this.panelSurplus = !this.panelSurplus;
       }
     }
   }
