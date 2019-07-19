@@ -23,11 +23,9 @@ public interface CommonMapper {
 
     Map selectRegionTagByXzqdm(@Param("xzqdm") String xzqdm);
 
-    Map selectJctbInfo(@Param("layerId") String layerId, @Param("jctbId") String jctbId);
+    Map selectJctbInfo(@Param("taskid") String taskid, @Param("jctbId") String jctbId);
 
-    List<Map> selectVisibleJctb(@Param("minx") Double minx, @Param("miny") Double miny, @Param("maxx") Double maxx, @Param("maxy") Double maxy, @Param("layerId") String layerId);
-
-    List<Map> selectJctbAffix(@Param("layerId") String layerId, @Param("jctbId") String jctbId);
+    List<Map> selectJctbAffix(@Param("taskid") String taskid, @Param("jctbId") String jctbId);
 
     void insertJctbAffix(@Param("record") Map record);
 

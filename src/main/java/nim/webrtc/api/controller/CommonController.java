@@ -66,20 +66,14 @@ public class CommonController {
     }
 
     @GetMapping("/spot/getJctbInfo")
-    public String getJctbInfo(@RequestParam(name="layerId")String layerId, @RequestParam(name="jctbId")String jctbId) throws Exception {
-        Map map = commonService.getJctbInfo(layerId, jctbId);
+    public String getJctbInfo(@RequestParam(name="taskid")String taskid, @RequestParam(name="jctbId")String jctbId) throws Exception {
+        Map map = commonService.getJctbInfo(taskid, jctbId);
         return GlobalUtil.PackResponse(map);
     }
 
-    @GetMapping("/spot/getVisibleJctb")
-    public String getVisibleJctb(@RequestParam(name="minx")Double minx, @RequestParam(name="miny")Double miny, @RequestParam(name="maxx")Double maxx, @RequestParam(name="maxy")Double maxy) throws Exception {
-        List<Map> maps = commonService.getVisibleJctb(minx, miny, maxx, maxy);
-        return GlobalUtil.PackResponse(maps);
-    }
-
     @GetMapping("/spot/getJctbAffix")
-    public String getJctbAffix(@RequestParam(name="layerId")String layerId, @RequestParam(name="jctbId")String jctbId) throws Exception {
-        List<Map> maps = commonService.getJctbAffix(layerId, jctbId);
+    public String getJctbAffix(@RequestParam(name="taskid")String taskid, @RequestParam(name="jctbId")String jctbId) throws Exception {
+        List<Map> maps = commonService.getJctbAffix(taskid, jctbId);
         return GlobalUtil.PackResponse(maps);
     }
 

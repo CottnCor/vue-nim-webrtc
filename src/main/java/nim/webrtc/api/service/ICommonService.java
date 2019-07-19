@@ -22,11 +22,9 @@ public interface ICommonService {
 
     Map getRegionTagByXzqdm(String xzqdm);
 
-    Map getJctbInfo(String layerId, String jctbId);
+    Map getJctbInfo(String taskid, String jctbId);
 
-    List<Map> getVisibleJctb(Double minx, Double miny, Double maxx, Double maxy);
-
-    List<Map> getJctbAffix(String layerId, String jctbId);
+    List<Map> getJctbAffix(String taskid, String jctbId);
 
     void addJctbAffix(Map record) throws Exception;
 

@@ -129,7 +129,7 @@
         f_qsdwmc as qsdwmc,
         st_astext(f_shape) AS wkt,
         <choose>
-            <when test="layerId=='1014'">
+            <when test="taskid=='1'">
                 f_ybdl as ybdl,
                 f_ybms as ybms,
                 f_bz as bz,
@@ -150,82 +150,26 @@
         </choose>
         from
         <choose>
-            <when test="layerId=='1014'">
-                tb_sd_ybjz
+            <when test="taskid=='1'">
+                tb_app_task
             </when>
-            <when test="layerId=='1015'">
-                tb_sd_ccjz
+            <when test="taskid=='2'">
+                tb_app_task_wjbs
             </when>
-            <when test="layerId=='1016'">
-                tb_sd_bcjz
+            <when test="taskid=='3'">
+                tb_app_task_rcxc
             </when>
-            <when test="layerId=='1017'">
-                tb_sd_zxjz
+            <when test="taskid=='4'">
+                tb_app_task_xmjg
             </when>
-            <when test="layerId=='1018'">
-                tb_bgdc_jctb
+            <when test="taskid=='5'">
+                tb_app_task_complaint
             </when>
-            <when test="layerId=='1019'">
-                tb_bgdc_zddl
+            <when test="taskid=='6'">
+                tb_app_task_dczf
             </when>
         </choose>
         WHERE f_id = '${jctbId}'
-    </select>
-    <select id="selectVisibleJctb" resultType="java.util.Map" statementType="STATEMENT">
-        select
-        f_id as id,
-        f_pid as pid,
-        f_tbybh as tbybh,
-        f_dcbz as dcbz,
-        f_xzqdm as xzqdm,
-        f_xzqmc as xzqmc,
-        f_tbmj as tbmj,
-        f_tblb as tblb,
-        f_qsdwmc as qsdwmc,
-        st_astext(f_shape) AS wkt,
-        <choose>
-            <when test="layerId=='1014'">
-                f_ybdl as ybdl,
-                f_ybms as ybms,
-                f_bz as bz,
-                f_bzsm as bzsm
-            </when>
-            <otherwise>
-                f_wyrddl as wyrddl,
-                f_sfjz as sfjz,
-                f_wjzlx as wjzlx,
-                f_wybz as wybz,
-                f_jzsm as jzsm,
-                f_jkbsm as jkbsm,
-                f_qsxz as qsxz,
-                f_dlbm as dlbm,
-                f_ypdl as ypdl,
-                f_nybz as nybz
-            </otherwise>
-        </choose>
-        from
-        <choose>
-            <when test="layerId=='1014'">
-                tb_sd_ybjz
-            </when>
-            <when test="layerId=='1015'">
-                tb_sd_ccjz
-            </when>
-            <when test="layerId=='1016'">
-                tb_sd_bcjz
-            </when>
-            <when test="layerId=='1017'">
-                tb_sd_zxjz
-            </when>
-            <when test="layerId=='1018'">
-                tb_bgdc_jctb
-            </when>
-            <when test="layerId=='1019'">
-                tb_bgdc_zddl
-            </when>
-        </choose>
-        where (f_centerx <![CDATA[ >= ]]> ${minx} and f_centerx <![CDATA[ <= ]]> ${maxx}) and (f_centery
-        <![CDATA[ >= ]]> ${miny} and f_centery <![CDATA[ <= ]]> ${maxy})
     </select>
     <select id="selectJctbAffix" resultType="java.util.Map" statementType="STATEMENT">
         SELECT
@@ -244,7 +188,7 @@
         FROM
             tb_multimediadata t1 left join tbcm_servers t2 on t1.f_serverid = t2.f_id
         WHERE
-            t1.f_jctbid = '${jctbId}' and t1.f_layerid = '${layerId}'
+            t1.f_jctbid = '${jctbId}' and t1.f_layerid = '${taskid}'
     </select>
     <insert id="insertJctbAffix" statementType="STATEMENT">
 
@@ -252,22 +196,22 @@
     <update id="updateJctbInfo" statementType="STATEMENT">
         UPDATE
         <choose>
-            <when test="record.layerId=='1014'">
+            <when test="record.taskid=='1014'">
                 tb_sd_ybjz
             </when>
-            <when test="record.layerId=='1015'">
+            <when test="record.taskid=='1015'">
                 tb_sd_ccjz
             </when>
-            <when test="record.layerId=='1016'">
+            <when test="record.taskid=='1016'">
                 tb_sd_bcjz
             </when>
-            <when test="record.layerId=='1017'">
+            <when test="record.taskid=='1017'">
                 tb_sd_zxjz
             </when>
-            <when test="record.layerId=='1018'">
+            <when test="record.taskid=='1018'">
                 tb_bgdc_jctb
             </when>
-            <when test="record.layerId=='1019'">
+            <when test="record.taskid=='1019'">
                 tb_bgdc_zddl
             </when>
         </choose>
