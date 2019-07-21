@@ -1,7 +1,7 @@
 <template>
   <div class="panel radius">
     <basic-map ref="basicMap">
-      <wkt-layer v-for="(item, index) in this.jctb" slot="wkt-layer" :wkt="item.wkt" />
+      <wkt-layer v-for="(item, index) in this.jctb" :key="index" slot="wkt-layer" :wkt="item.wkt" />
       <cluster-markers slot="cluster-markers" markers="[]" />
       <spin-marker v-if="this.track && this.track.currentLatLng" slot="spin-marker" :latLng="this.track.currentLatLng" :rotationAngle="this.track.currentAngle" />
     </basic-map>
@@ -109,5 +109,6 @@ export default MapPanel;
 .panel {
   height: 100%;
   width: 100%;
+  margin-left: $size_2;
 }
 </style>

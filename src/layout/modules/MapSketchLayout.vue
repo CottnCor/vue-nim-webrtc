@@ -27,7 +27,6 @@
         </div>
       </div>
       <div style="flex: 1;"></div>
-      <div style="flex: 1;"></div>
       <div :class="[this.popupState[1].state ? '' : 'hide', 'right', 'popup', 'radius']">
         <div class="visible-controller right motion" @click="activatePopup(1)">
           <p class="primary vertical pure">

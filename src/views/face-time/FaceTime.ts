@@ -1,21 +1,27 @@
 import { Component, Watch, Prop, Vue } from 'vue-property-decorator'
 
-import { MapSketchLayout } from '@/layout'
+import { FaceTimeLayout } from '@/layout'
 
-import { MapPanel, UssdPanel, CoreBusinessPanel } from '@/components'
+import {
+  FlowControlBar,
+  NavBar,
+  UssdPanel,
+  CoreBusinessPanel
+} from '@/components'
 
-import { getYxInfo } from "@/api/face-time";
+import { getYxInfo } from '@/api/face-time'
 
-import { namespace } from "vuex-class";
+import { namespace } from 'vuex-class'
 
-const store = namespace("FaceTime");
+const store = namespace('FaceTime')
 
 @Component({
   components: {
-    MapSketchLayout,
-    MapPanel,
+    FaceTimeLayout,
     UssdPanel,
-    CoreBusinessPanel
+    CoreBusinessPanel,
+    FlowControlBar,
+    NavBar
   }
 })
 class FaceTime extends Vue {
@@ -25,34 +31,36 @@ class FaceTime extends Vue {
   @Prop({ default: null })
   private userid!: number
 
-  @store.Action("set_token")
-  private setToken!: (val: string) => void;
+  @store.Action('set_token')
+  private setToken!: (val: string) => void
 
-  @store.Action("set_from")
-  private setFrom!: (val: any) => void;
+  @store.Action('set_from')
+  private setFrom!: (val: any) => void
 
   @Watch('token', { immediate: true, deep: true })
   private onTokenChanged(val: string, oldVal: string) {
     if (val) {
-      this.setToken(val);
+      this.setToken(val)
     }
   }
 
   @Watch('userid', { immediate: true, deep: true })
   private onUseridChanged(val: number, oldVal: number) {
     if (val) {
-      getYxInfo({userid: val}).then((result) => {
-        if(result){
-          this.setFrom({
-            userid: result.userid,
-            account: result.account,
-            token: result.token,
-            status: result.status,
-          });
-        }
-      }).catch((err) => {
-        console.log(err);
-      });
+      getYxInfo({ userid: val })
+        .then(result => {
+          if (result) {
+            this.setFrom({
+              userid: result.userid,
+              account: result.account,
+              token: result.token,
+              status: result.status
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

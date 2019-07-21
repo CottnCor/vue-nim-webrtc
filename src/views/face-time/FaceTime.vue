@@ -1,10 +1,10 @@
 <template>
-  <map-sketch-layout>
-    <div slot="top"></div>
-    <ussd-panel slot="left" />
-    <core-business-panel slot="right" />
-    <map-panel slot="full" />
-  </map-sketch-layout>
+  <face-time-layout>
+    <nav-bar slot="top"></nav-bar>
+    <ussd-panel slot="right" />
+    <core-business-panel slot="left" />
+    <flow-control-bar slot="buttom" />
+  </face-time-layout>
 </template>
 
 <script lang="ts" src="./FaceTime.ts"></script>

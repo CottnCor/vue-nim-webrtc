@@ -1,6 +1,8 @@
 import ContentNone from './widgets/ContentNone.vue'
 import SwitchTab from './widgets/SwitchTab.vue'
 import ExceptionCard from './widgets/ExceptionCard.vue'
+import NavBar from './widgets/NavBar.vue'
+import FlowControlBar from './widgets/FlowControlBar.vue'
 import MultimediaViewer from './widgets/MultimediaViewer.vue'
 import InfoEditer from './widgets/InfoEditer.vue'
 import InfoViewBar from './widgets/InfoViewBar.vue'
@@ -38,7 +40,9 @@ import BasicMap from './map/BasicMap.vue'
 
 import StatusFilter from './call-number-list/StatusFilter.vue'
 import CalendarFilter from './call-number-list/CalendarFilter.vue'
-import CallNumberItem from './call-number-list/CallNumberItem.vue'
+import CallNumberWaiting from './call-number-list/CallNumberWaiting.vue'
+import CallNumberUnderway from './call-number-list/CallNumberUnderway.vue'
+import CallNumberExpired from './call-number-list/CallNumberExpired.vue'
 
 import PeopleFilter from './people-list/PeopleFilter.vue'
 import PeopleListItem from './people-list/PeopleListItem.vue'
@@ -59,6 +63,8 @@ export {
   ContentNone,
   SwitchTab,
   ExceptionCard,
+  NavBar,
+  FlowControlBar,
   MultimediaViewer,
   InfoEditer,
   InfoViewBar,
@@ -92,7 +98,9 @@ export {
   BasicMap,
   StatusFilter,
   CalendarFilter,
-  CallNumberItem,
+  CallNumberWaiting,
+  CallNumberUnderway,
+  CallNumberExpired,
   PeopleFilter,
   PeopleListItem,
   SpotFilter,

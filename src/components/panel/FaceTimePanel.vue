@@ -209,6 +209,7 @@ export default FaceTimePanel;
   width: 100%;
   display: flex;
   position: relative;
+  margin-right: $size_2;
   background-image: map-get($default, linear_primary_2);
 }
 </style>

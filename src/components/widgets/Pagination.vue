@@ -1,6 +1,6 @@
 <template>
   <div class="pagination">
-    <el-pagination background layout="prev, pager, next" :total="this.total" :page-size="this.limit" @current-change="this.pageChanged"/>
+    <el-pagination background layout="prev, pager, next" :total="this.total" :page-size="this.pageSize" @current-change="this.pageChanged"/>
   </div>
 </template>
 
@@ -13,11 +13,10 @@ class Pagination extends Vue {
   private total!: number;
 
   @Prop({ default: 0 })
-  private limit!: number;
+  private pageSize!: number;
 
   @Emit()
   private pageChanged(val: number) {
-    debugger
     return val;
   }
 
