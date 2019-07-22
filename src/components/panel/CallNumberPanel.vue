@@ -14,7 +14,7 @@
     <div class="content radius">
       <call-number-layout>
         <calendar-filter slot="top" @task-changed="this.taskChanged" />
-        <component slot="main" v-if="this.totalCount < 1 && this.taskid" :is="this.visiblePanel.component" :state="this.visiblePanel.param" :taskid="this.taskid" :current-page="this.currentPage" :page-size="this.pageSize" />
+        <call-number-list ref="callNumberList" slot="main" v-if="this.totalCount > 1 && this.taskid" :state="this.visiblePanel.param" :taskid="this.taskid" :page-size="this.pageSize" />
         <content-none slot="main" v-else :tips="`无${this.visiblePanel.label}任务`" />
         <pagination slot="buttom" @page-changed="this.pageChanged" :total="this.totalCount" :page-size="this.pageSize" />
       </call-number-layout>
@@ -35,9 +35,7 @@ import {
   Pagination,
   CalendarFilter,
   ContentNone,
-  CallNumberWaiting,
-  CallNumberUnderway,
-  CallNumberExpired
+  CallNumberList
 } from "@/components";
 
 @Component({
@@ -46,12 +44,14 @@ import {
     CalendarFilter,
     CallNumberLayout,
     ContentNone,
-    CallNumberWaiting,
-    CallNumberUnderway,
-    CallNumberExpired
+    CallNumberList
   }
 })
 class CallNumberPanel extends Vue {
+  public $refs!: {
+    callNumberList: CallNumberList;
+  };
+
   private panelMax = 3;
 
   private panelSurplus = false;
@@ -82,11 +82,9 @@ class CallNumberPanel extends Vue {
 
   private taskid = "";
 
-  private pageSize = 6;
+  private pageSize = 5;
 
   private totalCount = 0;
-
-  private currentPage = 1;
 
   private get visiblePanelTab(): any {
     let tabs: any = null;
@@ -126,9 +124,8 @@ class CallNumberPanel extends Vue {
   }
 
   private pageChanged(val: number) {
-    if (val) {
-      this.currentPage = val;
-      this.refreshOverview();
+    if (val && this.$refs.callNumberList) {
+      this.$refs.callNumberList.refresh(val);
     }
   }
 
@@ -153,12 +150,12 @@ class CallNumberPanel extends Vue {
     ) {
       this.totalCount = 0;
       for (const state of this.visiblePanel.param) {
-        this.getFacatimeOverview(this.taskid, state);
+        this.getOverview(this.taskid, state);
       }
     }
   }
 
-  private getFacatimeOverview(taskid: string, state: number) {
+  private getOverview(taskid: string, state: number) {
     getFaceTimeOverview({
       taskid: taskid,
       state: state

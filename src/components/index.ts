@@ -40,9 +40,7 @@ import BasicMap from './map/BasicMap.vue'
 
 import StatusFilter from './call-number-list/StatusFilter.vue'
 import CalendarFilter from './call-number-list/CalendarFilter.vue'
-import CallNumberWaiting from './call-number-list/CallNumberWaiting.vue'
-import CallNumberUnderway from './call-number-list/CallNumberUnderway.vue'
-import CallNumberExpired from './call-number-list/CallNumberExpired.vue'
+import CallNumberList from './call-number-list/CallNumberList.vue'
 
 import PeopleFilter from './people-list/PeopleFilter.vue'
 import PeopleListItem from './people-list/PeopleListItem.vue'
@@ -98,9 +96,7 @@ export {
   BasicMap,
   StatusFilter,
   CalendarFilter,
-  CallNumberWaiting,
-  CallNumberUnderway,
-  CallNumberExpired,
+  CallNumberList,
   PeopleFilter,
   PeopleListItem,
   SpotFilter,
