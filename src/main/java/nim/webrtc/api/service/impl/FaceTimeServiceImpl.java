@@ -2,6 +2,7 @@ package nim.webrtc.api.service.impl;
 
 import nim.webrtc.api.mapper.CommonMapper;
 import nim.webrtc.api.mapper.FaceTimeMapper;
+import nim.webrtc.api.mapper.PeopleMapper;
 import nim.webrtc.api.service.IFaceTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class FaceTimeServiceImpl implements IFaceTimeService {
     private FaceTimeMapper FaceTimeMapper;
 
     @Autowired
+    private PeopleMapper PeopleMapper;
+
+    @Autowired
     private CommonMapper commonMapper;
 
     @Override
@@ -28,7 +32,7 @@ public class FaceTimeServiceImpl implements IFaceTimeService {
     }
 
     @Override
-    public List<Map> getFaceTimeOverview(Short state, String taskid){
+    public List<Map> getFaceTimeOverview(List<Short> state, String taskid){
         try {
             return FaceTimeMapper.selectFaceTimeOverview(state, taskid);
         } catch (Exception ex){
@@ -53,7 +57,7 @@ public class FaceTimeServiceImpl implements IFaceTimeService {
     }
 
     @Override
-    public List<Map> getFaceTimeList(Short state, String taskid, Short limit, Short page){
+    public List<Map> getFaceTimeList(List<Short> state, String taskid, Short limit, Short page){
         try {
             return FaceTimeMapper.selectFaceTimeList(state, taskid, limit, page);
         } catch (Exception ex){
@@ -66,4 +70,9 @@ public class FaceTimeServiceImpl implements IFaceTimeService {
         FaceTimeMapper.updateFaceTimeState(id, state);
     }
 
+    @Override
+    public void setFaceTimeStaff(String id, Long userid) throws Exception{
+        String username = PeopleMapper.selectUserInfo(userid).get("username").toString();
+        FaceTimeMapper.updateFaceTimeStaff(id, userid, username);
+    }
 }

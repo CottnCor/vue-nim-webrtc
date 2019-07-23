@@ -7,14 +7,13 @@
     <select id="selectFaceTimeOverview" resultType="java.util.Map" statementType="STATEMENT">
         SELECT COUNT(*), f_state AS state FROM tb_video_call WHERE f_bizid = '${taskid}'
         <choose>
-            <when test="state!=-1">
-                AND f_state = ${state}
+            <when test="state!=null">
+                <foreach item="item" collection="state" open=" AND (" close=")" separator=" OR ">
+                    f_state = ${item}
+                </foreach>
             </when>
         </choose>
         GROUP BY f_state ORDER BY f_state
-    </select>
-    <select id="selectFaceTimeRecord" resultType="java.util.Map" statementType="STATEMENT">
-
     </select>
     <select id="selectFaceTimeList" resultType="java.util.Map" statementType="STATEMENT">
         WITH t1 AS (
@@ -28,12 +27,22 @@
         f_createtime AS createtime,
         f_userid AS userid,
         f_state AS STATE,
-        f_username AS username
+        f_username AS username,
+        f_staffuser AS staffuser,
+        f_staffname AS staffname,
+        f_begintime AS begintime,
+        f_endtime AS endtime
         FROM
         tb_video_call
         WHERE
         f_bizid = '${taskid}'
-        AND f_state = ${state}
+        <choose>
+            <when test="state!=null">
+                <foreach item="item" collection="state" open=" AND (" close=")" separator=" OR ">
+                    f_state = ${item}
+                </foreach>
+            </when>
+        </choose>
         ORDER BY
         f_createtime
         <choose>
@@ -49,7 +58,22 @@
         FROM
         t3
     </select>
+    <select id="selectFaceTimeRecord" resultType="java.util.Map" statementType="STATEMENT">
+
+    </select>
     <update id="updateFaceTimeState" statementType="STATEMENT">
-        UPDATE tb_video_call SET f_state = ${state} WHERE f_id = '${id}';
+        UPDATE tb_video_call SET f_state = ${state}
+        <choose>
+            <when test="state==2">
+              , f_begintime = now()
+            </when>
+            <when test="state==5">
+              , f_endtime = now()
+            </when>
+        </choose>
+        WHERE f_id = '${id}' ;
+    </update>
+    <update id="updateFaceTimeStaff" statementType="STATEMENT">
+        UPDATE tb_video_call SET f_staffuser = ${userid}, f_staffname = '${username}' WHERE f_id = '${id}' ;
     </update>
 </mapper>

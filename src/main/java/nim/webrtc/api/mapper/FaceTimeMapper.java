@@ -11,12 +11,14 @@ public interface FaceTimeMapper {
 
     List<Map> selectTaskType();
 
-    List<Map> selectFaceTimeOverview(@Param("state") Short state, @Param("taskid") String taskid);
+    List<Map> selectFaceTimeOverview(@Param("state") List<Short> state, @Param("taskid") String taskid);
+
+    List<Map> selectFaceTimeList(@Param("state") List<Short> state, @Param("taskid") String taskid, @Param("limit") Short limit, @Param("page") Short page);
 
     List<Map> selectFaceTimeRecord(@Param("limit") Short limit, @Param("page") Short page);
 
-    List<Map> selectFaceTimeList(@Param("state") Short state, @Param("taskid") String taskid, @Param("limit") Short limit, @Param("page") Short page);
-
     Boolean updateFaceTimeState(@Param("id") String id, @Param("state") Short state);
+
+    Boolean updateFaceTimeStaff(@Param("id") String id, @Param("userid") Long userid, @Param("username") String username);
     
 }

@@ -7,12 +7,13 @@ public interface IFaceTimeService {
 
     List<Map> getTaskType();
 
-    List<Map> getFaceTimeOverview(Short state, String taskid);
+    List<Map> getFaceTimeOverview(List<Short> state, String taskid);
 
     List<Map> getFaceTimeRecord(Short limit, Short page);
 
-    List<Map> getFaceTimeList(Short state, String taskid, Short limit, Short page);
+    List<Map> getFaceTimeList(List<Short> state, String taskid, Short limit, Short page);
 
     void editFaceTimeState(String id, Short state) throws Exception;
 
+    void setFaceTimeStaff(String id, Long userid) throws Exception;
 }

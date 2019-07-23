@@ -13,74 +13,25 @@
             f_userid = ${userid}
     </select>
     <select id="selectUserInfo" resultType="java.util.Map" statementType="STATEMENT">
-        SELECT T.f_userid                                             as userid,
-               T.f_rname                                              AS name,
-               T.f_email                                              AS email,
-               T.f_phonework                                          AS phone,
-               ''                                                     AS desc,
-               T.f_userposid                                          AS agent,
-               T.f_create_date :: timestamptz                         AS createtime,
-               T.f_create_date :: timestamptz                         AS updatetime,
-               "substring"((T.f_regregion || '000000') :: TEXT, 1, 6) AS xzqdm,
-               ''                                                     AS deviceid,
-               T.f_rolename                                           AS role
-        FROM (SELECT t1.*
-              FROM (SELECT T
-                               .f_userid,
-                           T.f_rname,
-                           T.f_email,
-                           T.f_phonework,
-                           T.f_userposid,
-                           T.f_create_date,
-                           T.f_regregion AS f_regregion,
-                           T.f_rolename
-                    FROM (SELECT z1.f_userid,
-                                 z1.f_rname,
-                                 z1.f_email,
-                                 z1.f_phonework,
-                                 z1.f_userposid,
-                                 z1.f_create_date,
-                                 z1.f_regregion,
-                                 z2.f_rolename
-                          FROM (SELECT e1.f_userid,
-                                       e1.f_rname,
-                                       e1.f_email,
-                                       e1.f_phonework,
-                                       e1.f_userposid,
-                                       e1.f_create_date,
-                                       string_agg(e1.f_regioncode, ',') AS f_regregion
-                                FROM (SELECT c1.f_userid,
-                                             c1.f_rname,
-                                             c1.f_email,
-                                             c1.f_phonework,
-                                             c1.f_userposid,
-                                             c1.f_create_date,
-                                             c2.f_regioncode
-                                      FROM tbsys_user c1
-                                               LEFT JOIN tbsys_user_area c2 ON c1.f_userid = c2.f_userid) e1
-                                GROUP BY e1.f_userid,
-                                         e1.f_rname,
-                                         e1.f_email,
-                                         e1.f_phonework,
-                                         e1.f_userposid,
-                                         e1.f_create_date) z1
-                                   LEFT JOIN (SELECT h1.*, h2.f_rolename
-                                              FROM tbsys_user_role h1
-                                                       LEFT JOIN tbsys_role h2
-                                                                 ON h1.f_roleid = h2.f_roleid) z2
-                                             ON z1.f_userid = z2.f_userid) T
-                    WHERE T.f_userid IS NOT NULL) t1) T
-        WHERE T.f_userid = ${userid}
+        SELECT
+            f_userid AS userid,
+            f_username AS username,
+            f_email AS email,
+            f_create_date AS createtime
+        FROM
+            tbsys_user
     </select>
     <select id="selectPeopleTree" resultType="java.util.Map" statementType="STATEMENT">
-        SELECT f_id AS userid, f_username AS username FROM tb_reguser WHERE f_id IN (SELECT f_userid FROM tb_user2yx)
+        SELECT f_id AS userid, f_username AS username FROM tbsys_user WHERE f_id IN (SELECT f_userid FROM tb_user2yx)
     </select>
     <select id="selectUserState" resultType="java.util.Map" statementType="STATEMENT">
-        SELECT COUNT(f_userid)
-        FROM tbsys_user
-        WHERE f_updatetime > (now() - '00:01:01' :: INTERVAL)
-          AND f_islogin = 1
-          AND f_userid = ${userid}
+        SELECT COUNT
+                   ( f_userid )
+        FROM
+            tb_devicetrack
+        WHERE
+            f_updatetime > ( now() - '00:01:01' :: INTERVAL )
+          AND f_userid = 20057
     </select>
     <select id="selectUserCoords" resultType="java.util.Map" statementType="STATEMENT">
         SELECT f_lon AS lng,
