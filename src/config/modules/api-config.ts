@@ -11,7 +11,7 @@ export const ONLINE_HOST = 'https://gl.landcloud.org.cn:4443/'
 // export const ONLINE_HOST = '/'
 
 // 测试环境
-export const QA_HOST = 'https://127.0.0.1:8095/'
+export const QA_HOST = 'http://127.0.0.1:8095/'
 
 // mock
 export const MOCK_HOST = './mock/'

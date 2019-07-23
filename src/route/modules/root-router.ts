@@ -17,7 +17,9 @@ const rootRouter = [
     component: () => import('@/views/face-time/FaceTime.vue'),
     props: route => ({
       token: route.query.token,
-      userid: route.query.userid
+      callnumer: route.query.callnumer,
+      userid: route.query.userid,
+      staffuser: route.query.staffuser
     }),
     meta: {
       icon: '',

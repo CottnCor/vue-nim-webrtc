@@ -436,6 +436,7 @@ a {
     padding: 0 $size_12;
     flex-direction: row;
     border-radius: $size_36;
+    box-shadow: $shadow_base;
     border: $size_2 solid map-get($default, primary_1);
     background-color: map-get($default, glass);
 
@@ -561,7 +562,7 @@ mark {
   color: map-get($default, pure);
 }
 
-.flex{
+.flex {
   display: flex;
 }
 

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import rootRouter from './modules/root-router'
-import { ROOT_PATH, ASSIST_ROUTER } from '@/config'
+import { ROOT_PATH, ASSIST_ROUTER, ROOT_ROUTER } from '@/config'
 
 Vue.use(Router)
 
@@ -33,14 +33,28 @@ router.beforeEach((to: any, from: any, next: any) => {
   if (to.name === ASSIST_ROUTER.error.name) {
     next()
   } else {
-    const verify = to.query.token && to.query.userid ? true : false
+    let verify = true
+    let message = ''
+    if (to.name === ROOT_ROUTER.callNumber.name) {
+      message = '检查 token | userid 参数'
+      verify = to.query.token && to.query.userid ? true : false
+    } else if (to.name === ROOT_ROUTER.faceTime.name) {
+      message = '检查 token | userid | callnumer | staffuser 参数'
+      verify =
+        to.query.token &&
+        to.query.userid &&
+        to.query.staffuser &&
+        to.query.callnumer
+          ? true
+          : false
+    }
     if (!verify) {
       next({
         name: ASSIST_ROUTER.error.name
       })
       Vue.prototype.$notify.error({
-        title: "无权限访问",
-        message: "检查 token | userid 参数",
+        title: '无权限访问',
+        message: '检查 token | userid 参数',
         duration: 0
       })
     } else {

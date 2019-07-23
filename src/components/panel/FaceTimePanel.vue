@@ -17,6 +17,7 @@ import { formatDate } from "@/utils/common";
 import NimCall from "@/utils/nimCall";
 
 import { namespace } from "vuex-class";
+import CallNumber from "../../views/call-number/CallNumber";
 
 const faceTimeStore = namespace("FaceTime");
 
@@ -124,17 +125,14 @@ class FaceTimePanel extends Vue {
   @faceTimeStore.Getter("status")
   private status!: number;
 
-  @faceTimeStore.Getter("panto")
-  private panto!: number;
-
   @faceTimeStore.Getter("from")
   private from!: any;
 
   @faceTimeStore.Getter("to")
   private to!: any;
 
-  @faceTimeStore.Getter("times")
-  private times!: number;
+  @faceTimeStore.Getter("callnumber")
+  private callnumber!: string;
 
   @Watch("status", { immediate: true, deep: true })
   private onStatusChanged(val: number, oldVal: number) {
@@ -144,12 +142,11 @@ class FaceTimePanel extends Vue {
     } else {
       this.setPanto(0);
     }
-  }
 
-  @Watch("times", { immediate: true, deep: true })
-  private onTimesChanged(val: number, oldVal: number) {
-    if (this.from && this.to) {
-      NimCall.getInstance().startCalling(this.to, "");
+    if(val === this.faceTimeeStateCode.waiting){
+      if (this.from && this.to) {
+        NimCall.getInstance().startCalling(this.to, this.callnumber);
+      }
     }
   }
 

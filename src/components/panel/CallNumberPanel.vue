@@ -14,8 +14,8 @@
     <div class="content radius">
       <call-number-layout>
         <calendar-filter slot="top" @task-changed="this.taskChanged" />
-        <call-number-list ref="callNumberList" slot="main" v-if="this.totalCount > 1 && this.taskid" :state="this.visiblePanel.param" :taskid="this.taskid" :page-size="this.pageSize" />
-        <content-none slot="main" v-else :tips="`无${this.visiblePanel.label}任务`" />
+        <call-number-list ref="callNumberList" slot="main" :state="this.visiblePanel.param" :taskid="this.taskid" :page-size="this.pageSize" />
+        <!-- <content-none slot="main" v-else :tips="`无${this.visiblePanel.label}任务`" /> -->
         <pagination slot="buttom" @page-changed="this.pageChanged" :total="this.totalCount" :page-size="this.pageSize" />
       </call-number-layout>
     </div>
@@ -59,21 +59,21 @@ class CallNumberPanel extends Vue {
   private panelState = [
     {
       tag: 0,
-      param: [0, 4],
+      param: [0, 3],
       state: true,
       label: "待呼叫",
       component: "CallNumberWaiting"
     },
     {
       tag: 1,
-      param: [1, 2, 3],
+      param: [5],
       state: false,
       label: "已呼叫",
       component: "CallNumberUnderway"
     },
     {
       tag: 2,
-      param: [5],
+      param: [4],
       state: false,
       label: "已过期",
       component: "CallNumberExpired"
@@ -113,6 +113,7 @@ class CallNumberPanel extends Vue {
   private onVisiblePanelChanged(val: any, oldVal: any) {
     if (val) {
       this.refreshOverview();
+      this.pageChanged(1);
     }
   }
 
@@ -120,12 +121,13 @@ class CallNumberPanel extends Vue {
     if (val) {
       this.taskid = val;
       this.refreshOverview();
+      this.pageChanged(1, this.taskid);
     }
   }
 
-  private pageChanged(val: number) {
-    if (val && this.$refs.callNumberList) {
-      this.$refs.callNumberList.refresh(val);
+  private pageChanged(page: number, taskid?: string) {
+    if (page && this.$refs.callNumberList) {
+      this.$refs.callNumberList.refresh(page, taskid);
     }
   }
 
@@ -148,26 +150,23 @@ class CallNumberPanel extends Vue {
       this.visiblePanel &&
       this.visiblePanel.param.length > 0
     ) {
-      this.totalCount = 0;
-      for (const state of this.visiblePanel.param) {
-        this.getOverview(this.taskid, state);
-      }
-    }
-  }
-
-  private getOverview(taskid: string, state: number) {
-    getFaceTimeOverview({
-      taskid: taskid,
-      state: state
-    })
-      .then(result => {
-        if (result && result.length > 0) {
-          this.totalCount += result[0].count;
-        }
-      })
-      .catch(err => {
-        console.log(err);
+      let param = JSON.stringify({
+        taskid: this.taskid,
+        state: this.visiblePanel.param
       });
+      getFaceTimeOverview({ filter: encodeURI(param) })
+        .then(result => {
+          if (result) {
+            this.totalCount = 0;
+            for (const item of result) {
+              this.totalCount += item.count;
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 }
 export default CallNumberPanel;

@@ -1,18 +1,21 @@
 <template>
   <div class="flow-control-bar">
-    <p class="primary strong left"><i class="el-icon-thumb success"></i></p>
-    <p class="primary strong left">任务类型:</p>
-    <el-select class="filter" v-if="this.taskType.length > 0" v-model="currentTask" size="small" placeholder="请选择">
-      <el-option class="flex" v-for="item in this.taskType" :key="item.id" :label="item.name" :value="item.id">
-        <p class="primary strong left"><i class="el-icon-finished success"></i></p>
-        <p class="primary left">{{ item.name }}</p>
-      </el-option>
-    </el-select>
-    <p class="primary strong left"><i class="el-icon-date success"></i></p>
-    <p class="primary strong left">任务日期:</p>
-    <p class="primary strong left primary-color motion">{{this.currentDate}}</p>
-    <span style="flex: 1;" />
-    <el-input class="filter input" size="small" placeholder="输入预约用户名进行搜索" suffix-icon="el-icon-search" v-model="this.filterText" />
+    <a class="button motion" @click="this.prev">
+      <i class="el-icon-d-arrow-left pure"></i>
+      <span class="strong primary center pure">上一个</span>
+    </a>
+    <a class="button motion" @click="this.next">
+      <span class="strong primary center pure">下一个</span>
+      <i class="el-icon-d-arrow-right pure"></i>
+    </a>
+    <div style="margin: auto; display: flex;">
+      <p class="primary strong left"><i class="el-icon-phone-outline success"></i></p>
+      <p class="primary strong left">在线等待人数：{{this.count}}人</p>
+    </div>
+    <a class="button motion" @click="this.return">
+      <i class="el-icon-finished pure"></i>
+      <span class="strong primary center pure">结束</span>
+    </a>
   </div>
 </template>
 
@@ -23,40 +26,78 @@ import { getTaskType } from "@/api/call-number";
 
 import { formatDate } from "@/utils/common";
 
+import NimCall from "@/utils/nimCall";
+
+import { ROOT_ROUTER } from "@/config";
+
+import { namespace } from "vuex-class";
+
+const store = namespace("FaceTime");
+
 @Component({})
 class FlowControlBar extends Vue {
-  private taskType = [];
+  @store.Getter("token")
+  private token!: string;
 
-  private currentTask = "";
+  @store.Getter("from")
+  private from!: any;
 
-  private filterText = "";
+  @store.Action("set_callnumber")
+  private setCallnumber!: (val: string) => void;
 
-  private get currentDate(): string {
-    return formatDate(new Date(), "yyyy-MM-dd");
+  @store.Action("set_from")
+  private setFrom!: (val: any) => void;
+
+  @store.Action("set_to")
+  private setTo!: (val: any) => void;
+
+  @Prop({ default: 0 })
+  private count!: number;
+
+  private return() {
+    this.$confirm("即将返回, 是否继续?", "提示", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
+      center: true
+    }).then(() => {
+      if (this.token && this.from) {
+        let userid = this.from.userid;
+        NimCall.getInstance().hangup();
+        this.setCallnumber("");
+        this.setFrom(null);
+        this.setTo(null);
+        this.$router.push({
+          name: ROOT_ROUTER.callNumber.name,
+          query: {
+            token: this.token,
+            userid
+          }
+        });
+      } else {
+        this.$notify.error({
+          title: "参数错误",
+          message: "检查 token | userid 参数",
+          duration: 0
+        });
+      }
+    });
   }
 
-  @Emit()
-  private taskChanged(val: string) {
-    return val;
+  private prev() {
+    this.$notify.error({
+      title: "无指向事件",
+      message: "",
+      duration: 0
+    });
   }
 
-  @Watch("currentTask", { immediate: true, deep: true })
-  private onTaskChanged(val: string, oldVal: string) {
-    if (val) {
-      this.taskChanged(val);
-    }
-  }
-
-  private mounted() {
-    getTaskType()
-      .then(result => {
-        if (result && result.length > 0) {
-          this.taskType = result;
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  private next() {
+    this.$notify.error({
+      title: "无指向事件",
+      message: "",
+      duration: 0
+    });
   }
 }
 
@@ -69,14 +110,16 @@ export default FlowControlBar;
   width: 100%;
   display: flex;
   flex-direction: row;
+
+  .button {
+    border: none;
+    background-color: map-get($default, grey_5);
+    &:last-of-type {
+      background-color: map-get($default, primary_light_1);
+    }
+  }
   p {
     margin: auto 0.2rem;
-  }
-  .filter {
-    margin: auto $size_12;
-    &.input {
-      width: $size_240;
-    }
   }
 }
 </style>

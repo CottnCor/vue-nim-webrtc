@@ -26,10 +26,17 @@
       </div>
     </div>
     <div class="buttom-wapper">
-      <div class="buttom popup">
+      <div class="left popup">
         <div class="content">
           <div class="radius">
-            <slot name="buttom"></slot>
+            <slot name="buttom-left"></slot>
+          </div>
+        </div>
+      </div>
+      <div class="right popup">
+        <div class="content">
+          <div class="radius">
+            <slot name="buttom-right"></slot>
           </div>
         </div>
       </div>
@@ -88,13 +95,19 @@ export default FaceTimeLayout;
   .top-wapper,
   .buttom-wapper {
     height: $size_64;
+    .left {
+      width: 58%;
+    }
+    .right {
+      width: 42%;
+    }
   }
 
   .main-wapper {
     flex: 1;
     height: calc(100% - #{($size_84 * 2)});
     .left {
-      width: 80%;
+      width: 79%;
       & > div {
         & > div {
           padding: 0;
@@ -102,7 +115,7 @@ export default FaceTimeLayout;
       }
     }
     .right {
-      width: 20%;
+      width: 21%;
     }
   }
 }

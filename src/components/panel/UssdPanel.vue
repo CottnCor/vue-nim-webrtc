@@ -1,20 +1,19 @@
 <template>
-  <div class="panel radius">
+  <div class="ussd-panel radius">
     <div class="visible-controller">
-      <div :class="[this.panelState[0].state ? 'active' : '', 'motion']" @click="activatePanel(0)">
-        <p class="primary pure"><i class="el-icon-position"></i>人员列表</p>
+      <div v-for="item in this.visiblePanelTab" :key="item.tag" :class="[item.state ? 'active' : '', 'motion']" @click="activatePanel(item.tag)">
+        <p class="primary pure">{{item.label}}</p>
       </div>
-      <div :class="[this.panelState[1].state ? 'active' : '', 'motion']" @click="activatePanel(1)">
-        <p class="primary pure"><i class="el-icon-crop"></i>图斑列表</p>
+      <div v-if="this.panelState.length > this.panelMax" class="motion" @click="activatePanel(-1)">
+        <p class="primary pure">
+          <i v-if="this.panelSurplus" class="el-icon-d-arrow-left"></i>
+          <i v-else class="el-icon-more-outline"></i>
+        </p>
       </div>
     </div>
     <div class="content radius">
-      <div v-if="this.panelState[0].state" class="radius">
-        <people-list-panel />
-      </div>
-      <div v-else class="radius">
-        <spot-list-panel />
-      </div>
+      <component v-if="false" :is="this.visiblePanel.component" />
+      <content-none v-else :tips="`无${this.visiblePanel.label}信息`" />
     </div>
   </div>
 </template>
@@ -24,18 +23,39 @@ import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 
 import { Getter, Action, namespace } from "vuex-class";
 
-import { PeopleListPanel, SpotListPanel } from "@/components";
+import {
+  ContentNone,
+  SpotInfoBasic,
+  SpotMultimedia,
+  SpotSupervisedInfo
+} from "@/components";
 
-@Component({ components: { PeopleListPanel, SpotListPanel } })
+@Component({
+  components: { ContentNone, SpotInfoBasic, SpotMultimedia, SpotSupervisedInfo }
+})
 class UssdPanel extends Vue {
+  private panelMax = 2;
+
+  private panelSurplus = false;
+
   private panelState = [
     {
       tag: 0,
-      state: true
+      state: true,
+      label: "基本信息",
+      component: "SpotInfoBasic"
     },
     {
       tag: 1,
-      state: false
+      state: false,
+      label: "外业信息",
+      component: "SpotMultimedia"
+    },
+    {
+      tag: 2,
+      state: false,
+      label: "审核信息",
+      component: "SpotMultimedia"
     }
   ];
 
@@ -46,6 +66,32 @@ class UssdPanel extends Vue {
       } else {
         item.state = false;
       }
+      if (tag < 0) {
+        this.panelSurplus = !this.panelSurplus;
+      }
+    }
+  }
+
+  private get visiblePanelTab(): any {
+    let tabs: any = null;
+    if (this.panelSurplus) {
+      tabs = this.panelState.filter((item, index) => index > this.panelMax - 1);
+    } else {
+      tabs = this.panelState.filter((item, index) => index < this.panelMax);
+    }
+    return tabs.map((item, index) => {
+      if (index === 0) {
+        item.state = true;
+      }
+      return item;
+    });
+  }
+
+  private get visiblePanel(): any {
+    for (const item of this.panelState) {
+      if (item.state) {
+        return item;
+      }
     }
   }
 }
@@ -53,9 +99,10 @@ export default UssdPanel;
 </script>
 
 <style lang='scss' scoped>
-.panel {
+.ussd-panel {
   height: 100%;
   width: 100%;
+  padding: $size_6;
   display: flex;
   flex-direction: column;
 
@@ -65,10 +112,6 @@ export default UssdPanel;
 
   .content {
     height: calc(100% - #{($size_32)});
-    & > div {
-      height: 100%;
-      width: 100%;
-    }
   }
 
   .visible-controller {

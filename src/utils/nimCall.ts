@@ -91,8 +91,8 @@ export default class NimCall {
     token: string,
     appkey?: string
   ): any {
+    this.setStatus(this.nimCallStatusCode.initing)
     if (!this.nim) {
-      this.setStatus(this.nimCallStatusCode.initing)
       this.callback = callback
       this.nim = this.NIM.getInstance({
         debug: true,
@@ -122,7 +122,10 @@ export default class NimCall {
         }
       })
       console.log(this.nim)
-    } else console.log('已经登录，无需再登录')
+    } else {
+      console.log('已经登录，无需再登录')
+      this.setStatus(this.nimCallStatusCode.waiting)
+    }
   }
 
   /**
@@ -300,6 +303,7 @@ export default class NimCall {
    * sendInvitationsDone
    */
   private sendInvitationsDone(error: object, msg: object): any {
+    console.error('msg: ', msg)
     if (error) {
       this.setStatus(this.nimCallStatusCode.failure)
     } else this.setStatus(this.nimCallStatusCode.calling)

@@ -21,6 +21,7 @@ import FaceTimeTool from './face-time/FaceTimeTool.vue'
 import FaceTimeControl from './face-time/FaceTimeControl.vue'
 import FaceTimeInfo from './face-time/FaceTimeInfo.vue'
 
+import SpotInfoAssistBar from './spot-operat-info/SpotInfoAssistBar.vue'
 import SpotInfoBasic from './spot-operat-info/SpotInfoBasic.vue'
 import SpotMultimedia from './spot-operat-info/SpotMultimedia.vue'
 import SpotinfoUpload from './spot-operat-info/SpotinfoUpload.vue'
@@ -79,6 +80,7 @@ export {
   FaceTimeTool,
   FaceTimeControl,
   FaceTimeInfo,
+  SpotInfoAssistBar,
   SpotInfoBasic,
   SpotMultimedia,
   SpotinfoUpload,
