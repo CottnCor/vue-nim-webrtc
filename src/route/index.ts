@@ -33,14 +33,14 @@ router.beforeEach((to: any, from: any, next: any) => {
   if (to.name === ASSIST_ROUTER.error.name) {
     next()
   } else {
-    const verify = to.query.token && to.query.userid ? true : false
+    const verify = to.query.token && to.query.userid && to.query.username ? true : false
     if (!verify) {
       next({
         name: ASSIST_ROUTER.error.name
       })
       Vue.prototype.$notify.error({
         title: "无权限访问",
-        message: "检查 token | userid 参数",
+        message: "检查 token | userid | username 参数",
         duration: 0
       })
     } else {

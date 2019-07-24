@@ -63,20 +63,31 @@ class PeopleListItem extends Vue {
       center: true
     }).then(() => {
       if (this.content.value) {
-        getYxInfo({ userid: this.content.value })
+        getYxInfo({ username: this.content.title })
           .then(result => {
+            debugger
             if (result) {
               this.setTo({
                 userid: this.content.value,
                 username: this.content.title,
-                account: result.account,
-                status: result.status
+                account: result.account
               });
               this.addTimes();
+            } else {
+              this.$notify.error({
+                title: "未能成功发起视频",
+                message: "该用户未登录过APP",
+                duration: 0
+                })
             }
           })
           .catch(err => {
             console.log(err);
+            this.$notify.error({
+                title: "未能成功发起视频",
+                message: "该用户未登录过APP",
+                duration: 0
+                })
           });
       }
     });

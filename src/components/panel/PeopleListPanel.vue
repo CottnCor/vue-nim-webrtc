@@ -1,12 +1,12 @@
 <template>
-  <div class="people-list-panel">
-    <div class="header">
-      <people-filter v-if="false" />
+  <div class='people-list-panel'>
+    <div class='header'>
+      <people-filter v-if='false' />
     </div>
-    <div class="content" v-if="this.peopleList && this.peopleList.length > 0">
-      <people-list-item v-for="(item, index) in this.peopleList" :key="index" :content="{state: true, title: item.username, value: item.userid}" />
+    <div class='content' v-if='this.peopleList && this.peopleList.length > 0'>
+      <people-list-item v-for='(item, index) in this.peopleList' :key='index' :content='{state: true, title: item.username, value: item.id}' />
     </div>
-    <content-none v-else tips="未找到相关人员"/>
+    <content-none v-else tips='未找到相关人员' />
   </div>
 </template>
 
@@ -17,13 +17,21 @@ import { PeopleFilter, PeopleListItem, ContentNone } from "@/components";
 
 import { getPeopleTree } from "@/api/face-time";
 
+import { namespace } from "vuex-class";
+
+const store = namespace("FaceTime");
+
 @Component({ components: { PeopleFilter, PeopleListItem, ContentNone } })
 class PeopleListPanel extends Vue {
+  @store.Getter("token")
+  private token!: string;
+
   private peopleList = null;
 
   private mounted() {
-    getPeopleTree()
+    getPeopleTree({ token: this.token, page: 1, limit: 999 })
       .then(result => {
+        debugger
         if (result && result.length > 0) {
           this.peopleList = result;
         }

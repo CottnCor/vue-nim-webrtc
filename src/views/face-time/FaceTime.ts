@@ -25,6 +25,9 @@ class FaceTime extends Vue {
   @Prop({ default: null })
   private userid!: string
 
+  @Prop({ default: null })
+  private username!: string
+
   @store.Action("set_token")
   private setToken!: (val: string) => void;
 
@@ -38,20 +41,31 @@ class FaceTime extends Vue {
     }
   }
 
-  @Watch('userid', { immediate: true, deep: true })
-  private onUseridChanged(val: string, oldVal: string) {
+  @Watch('username', { immediate: true, deep: true })
+  private onUsernamechanged(val: string, oldVal: string) {
     if (val) {
-      getYxInfo({userid: val}).then((result) => {
+      getYxInfo({username: val}).then((result) => {
         if(result){
           this.setFrom({
-            userid: result.userid,
+            userid: this.userid,
+            username: val,
             account: result.account,
             token: result.token,
-            status: result.status,
           });
+        } else {
+          this.$notify.error({
+            title: "初始化失败",
+            message: "用户未进行审核",
+            duration: 0
+            })
         }
       }).catch((err) => {
         console.log(err);
+        this.$notify.error({
+          title: "初始化失败",
+          message: "用户未进行审核",
+          duration: 0
+          })
       });
     }
   }

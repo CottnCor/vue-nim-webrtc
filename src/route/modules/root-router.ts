@@ -17,7 +17,8 @@ const rootRouter = [
     component: () => import('@/views/face-time/FaceTime.vue'),
     props: route => ({
       token: route.query.token,
-      userid: route.query.userid
+      userid: route.query.userid,
+      username: route.query.username
     }),
     meta: {
       icon: '',
@@ -32,7 +33,8 @@ const rootRouter = [
     component: () => import('@/views/call-number/CallNumber.vue'),
     props: route => ({
       token: route.query.token,
-      userid: route.query.userid
+      userid: route.query.userid,
+      username: route.query.username
     }),
     meta: {
       icon: '',
