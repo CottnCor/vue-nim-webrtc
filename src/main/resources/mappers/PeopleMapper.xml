@@ -3,14 +3,13 @@
 <mapper namespace="nim.webrtc.api.mapper.PeopleMapper">
     <select id="selectYxInfo" resultType="java.util.Map" statementType="STATEMENT">
         SELECT
-            t1.f_userid AS userid,
-            t1.f_accid AS account,
-            t2.f_token AS token,
-            t1.f_status AS status
+            f_id AS userid,
+            f_accid AS account,
+            f_token AS token
         FROM
-            tb_user2yx t1 LEFT JOIN tb_yxuser t2 ON t1.f_accid = t2.f_accid
+            tb_yxuser2
         WHERE
-            f_userid = ${userid}
+            f_id = ${userid}
     </select>
     <select id="selectUserInfo" resultType="java.util.Map" statementType="STATEMENT">
         SELECT
@@ -31,7 +30,7 @@
             tb_devicetrack
         WHERE
             f_updatetime > ( now() - '00:01:01' :: INTERVAL )
-          AND f_userid = 20057
+          AND f_userid = ${userid}
     </select>
     <select id="selectUserCoords" resultType="java.util.Map" statementType="STATEMENT">
         SELECT f_lon AS lng,
