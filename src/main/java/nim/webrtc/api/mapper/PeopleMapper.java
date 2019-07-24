@@ -9,9 +9,7 @@ import java.util.Map;
 @Repository
 public interface PeopleMapper {
 
-    List<Map> selectPeopleTree();
-
-    Map selectYxInfo(@Param("userid")String userid);
+    Map selectYxInfo(@Param("username")String username);
 
     Map selectUserInfo(@Param("userid")String userid);
 

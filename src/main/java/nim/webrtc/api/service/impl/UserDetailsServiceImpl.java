@@ -1,21 +1,15 @@
 package nim.webrtc.api.service.impl;
 
-import nim.webrtc.api.base.ResultCode;
 import nim.webrtc.api.domain.User;
-import nim.webrtc.api.entity.HttpResult;
 import nim.webrtc.api.entity.JwtUser;
 import nim.webrtc.api.properties.AuthProperties;
 import nim.webrtc.api.service.IAuthService;
 import nim.webrtc.api.service.IUserRepository;
-import nim.webrtc.api.util.HttpsClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author CottnCor

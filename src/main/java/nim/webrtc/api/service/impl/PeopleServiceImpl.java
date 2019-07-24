@@ -1,11 +1,14 @@
 package nim.webrtc.api.service.impl;
 
-import nim.webrtc.api.properties.*;
+import nim.webrtc.api.base.ResultStatus;
+import nim.webrtc.api.properties.AuthProperties;
 import nim.webrtc.api.mapper.CommonMapper;
 import nim.webrtc.api.mapper.PeopleMapper;
 import nim.webrtc.api.service.IPeopleService;
 
 import com.alibaba.fastjson.JSONObject;
+import nim.webrtc.api.util.ProxyUtil;
+import org.apache.http.entity.StringEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,21 +24,32 @@ import java.util.Map;
 public class PeopleServiceImpl implements IPeopleService {
 
     @Autowired
-    private AuthProperties auth;
-
-    @Autowired
-    private BusinessProperties business;
-
-    @Autowired
     private PeopleMapper peopleMapper;
 
     @Autowired
     private CommonMapper commonMapper;
 
+    @Autowired
+    private AuthProperties authProperties;
+
     @Override
-    public List<Map> getPeopleTree(String xzqdm) {
+    public List<Map> getPeopleTree(String token, Short page, Short limit) {
         try {
-            return peopleMapper.selectPeopleTree();
+
+            JSONObject params = new JSONObject();
+            params.put("token", token);
+            params.put("recursive", true);
+            params.put("pageIndex", page);
+            params.put("pageSize", limit);
+            params.put("appkey", authProperties.getAppAppkey());
+            StringEntity entity = new StringEntity(params.toJSONString());
+            String url = authProperties.getEndpoint() + "getUserList";
+            JSONObject result = ProxyUtil.post(url, entity);
+            if(result != null && ResultStatus.OK.toString().equals(result.getString("status"))){
+                List<Map> peopleTree = result.getJSONObject("data").getJSONArray("data").toJavaList(Map.class);
+                return peopleTree;
+            }
+            return null;
         } catch (Exception ex) {
             return null;
         }
@@ -106,9 +120,9 @@ public class PeopleServiceImpl implements IPeopleService {
     }
 
     @Override
-    public Map getYxInfo(String userid) {
+    public Map getYxInfo(String username) {
         try {
-            return peopleMapper.selectYxInfo(userid);
+            return peopleMapper.selectYxInfo(username);
         } catch (Exception ex) {
             return null;
         }

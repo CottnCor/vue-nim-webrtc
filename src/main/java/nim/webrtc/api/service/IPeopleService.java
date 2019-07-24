@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface IPeopleService {
 
-    Map getYxInfo(String userid);
+    Map getYxInfo(String username);
 
     Map getUserInfo(String userid);
 
@@ -13,7 +13,7 @@ public interface IPeopleService {
 
     Map getUserCoords(String userid);
 
-    List<Map> getPeopleTree(String xzqdm);
+    List<Map> getPeopleTree(String token, Short page, Short limit);
 
     List<Map> getPeopleCoords(Short level, String bounds);
 }

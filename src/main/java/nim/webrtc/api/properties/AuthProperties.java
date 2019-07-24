@@ -1,35 +1,47 @@
 package nim.webrtc.api.properties;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
-
+import org.springframework.web.bind.annotation.RestController;
 /**
  * @author CottnCor
  */
-@Component
-@ConfigurationProperties(prefix="auth")
+@RestController
 @PropertySource("classpath:auth.properties")
 public class AuthProperties {
 
-//    private List<String> appkey;
-//
-//    private List<String> appsecret;
-//
-//    private String tokenEndpoint;
-//
-//    public List<String> getAppkey() {
-//        return appkey;
-//    }
-//
-//    public List<String> getAppsecret() {
-//        return appsecret;
-//    }
-//
-//    public String getTokenEndpoint() {
-//        return tokenEndpoint;
-//    }
+    @Value("${auth.web.appkey}")
+    private String webAppkey;
 
+    @Value("${auth.web.appsecret}")
+    private String webAppsecret;
+
+    @Value("${auth.app.appkey}")
+    private String appAppkey;
+
+    @Value("${auth.app.appsecret}")
+    private String appAppsecret;
+
+    @Value("${auth.endpoint}")
+    private String endpoint;
+
+    public String getWebAppkey() {
+        return webAppkey;
+    }
+
+    public String getWebAppsecret() {
+        return webAppsecret;
+    }
+
+    public String getAppAppkey() {
+        return appAppkey;
+    }
+
+    public String getAppAppsecret() {
+        return appAppsecret;
+    }
+
+    public String getEndpoint() {
+        return endpoint;
+    }
 }

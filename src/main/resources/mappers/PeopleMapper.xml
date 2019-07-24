@@ -3,14 +3,12 @@
 <mapper namespace="nim.webrtc.api.mapper.PeopleMapper">
     <select id="selectYxInfo" resultType="java.util.Map" statementType="STATEMENT">
         SELECT
-            t1.f_userid AS userid,
-            t1.f_accid AS account,
-            t2.f_token AS token,
-            t1.f_status AS status
+            f_accid AS account,
+            f_token AS token
         FROM
-            tb_user2yx t1 LEFT JOIN tb_yxuser t2 ON t1.f_accid = t2.f_accid
+            tb_yxuser
         WHERE
-            f_userid = '${userid}'
+            f_name = '${username}'
     </select>
     <select id="selectUserInfo" resultType="java.util.Map" statementType="STATEMENT">
         SELECT T.f_userid                                             as userid,
@@ -71,9 +69,6 @@
                                              ON z1.f_userid = z2.f_userid) T
                     WHERE T.f_userid IS NOT NULL) t1) T
         WHERE T.f_userid = '${userid}'
-    </select>
-    <select id="selectPeopleTree" resultType="java.util.Map" statementType="STATEMENT">
-        SELECT f_id AS userid, f_username AS username FROM tb_reguser WHERE f_id IN (SELECT f_userid FROM tb_user2yx)
     </select>
     <select id="selectUserState" resultType="java.util.Map" statementType="STATEMENT">
         SELECT COUNT(f_userid)

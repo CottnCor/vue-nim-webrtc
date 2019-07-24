@@ -16,8 +16,8 @@ public class PeopleController {
     private IPeopleService peopleService;
 
     @GetMapping("/getPeopleTree")
-    public String getPeopleTree(@RequestParam(name="xzqdm",required=false)String xzqdm) {
-        List<Map> maps = peopleService.getPeopleTree(xzqdm);
+    public String getPeopleTree(@RequestParam(name="token")String token, @RequestParam(name="page")Short page, @RequestParam(name="limit")Short limit) {
+        List<Map> maps = peopleService.getPeopleTree(token, page, limit);
         return GlobalUtil.PackResponse(maps);
     }
 
@@ -28,8 +28,8 @@ public class PeopleController {
     }
 
     @GetMapping("/getYxInfo")
-    public String getYxAccount(@RequestParam(name="userid")String userid) {
-        Map map = peopleService.getYxInfo(userid);
+    public String getYxAccount(@RequestParam(name="username")String username) {
+        Map map = peopleService.getYxInfo(username);
         return GlobalUtil.PackResponse(map);
     }
 
