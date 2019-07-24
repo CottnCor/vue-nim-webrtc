@@ -6,11 +6,10 @@ const MapboxToken =
 export const MAP_URL = {
   STREETS: `https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=${MapboxToken}`,
   SATELLITE: `https://api.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=${MapboxToken}`,
-  IMG: `https://maps.ynmap.cn/services/img/map/3857/WMTS?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%252fpng`,
-  VEC: `https://maps.ynmap.cn/services/vec/map/3857/WMTS?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%252fpng`,
-  CVA: `https://maps.ynmap.cn/services/cva/map/3857/WMTS?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%252fpng`,
-  CIA: `https://maps.ynmap.cn/services/cia/map/3857/WMTS?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%252fpng`,
-  IBO: `https://maps.ynmap.cn/services/ibo/map/3857/WMTS?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%252fpng`,
+  IMG: `https://maps.ynmap.cn/arcgis/rest/services/TdtYn/tdtYnImg100cm84/MapServer/WMTS?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}`,
+  VEC: `https://maps.ynmap.cn/arcgis/rest/services/TdtYn/tdtYnVectorMap84/MapServer/WMTS?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}`,
+  LAB: `https://maps.ynmap.cn/arcgis/rest/services/TdtYn/tdtYnImgLable84/MapServer/WMTS?&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}`,
+  TERRAIN: `https://maps.ynmap.cn/arcgis/rest/services/TdtYn/tdtYnTerrain84/MapServer/WMTS?&REQUEST=GetTile&VERSION=1.0.0&LAYER=tdtYnImg100cm2000_2017&STYLE=default&TILEMATRIXSET=default&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}`
 }
 
 export const MAP_ZOOM = 12

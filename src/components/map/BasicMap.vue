@@ -1,10 +1,10 @@
 <template>
   <div class="map-container">
-    <l-map ref="map" class="leaflet-map" :crs="crs" :zoom="zoom" :min-zoom="minZoom" :max-zoom="maxZoom" :center="center" :options="options" @update:center="centerUpdated">
-      <!-- <l-tile-layer :url="defaultLayer" /> -->
+    <l-map ref="map" class="leaflet-map" :crs="crs" :maxBounds="maxBounds" :zoom="zoom" :min-zoom="minZoom" :max-zoom="maxZoom" :center="center" :options="options" @update:center="centerUpdated">
+      <l-tile-layer :url="defaultLayer" />
       <l-tile-layer :url="imgLayer" />
-      <l-tile-layer :url="iboLayer" />
-      <l-tile-layer :url="ciaLayer" />
+      <l-tile-layer :url="labLayer" />
+      <!-- <l-tile-layer :url="terrainLayer" /> -->
       <slot name="wkt-layer"></slot>
       <slot name="cluster-markers"></slot>
       <slot name="spin-marker"></slot>
@@ -34,7 +34,7 @@ const store = namespace("Common");
 class BasicMap extends Vue {
   private map!: any;
   private zoom = MAP_ZOOM;
-  private minZoom = 0;
+  private minZoom = 6;
   private maxZoom = 18;
   private loading = false;
   private crs = CRS.EPSG3857;
@@ -42,9 +42,8 @@ class BasicMap extends Vue {
   private defaultLayer = MAP_URL.STREETS;
   private imgLayer = MAP_URL.IMG;
   private vecLayer = MAP_URL.VEC;
-  private cavLayer = MAP_URL.CVA;
-  private ciaLayer = MAP_URL.CIA;
-  private iboLayer = MAP_URL.IBO;
+  private labLayer = MAP_URL.LAB;
+  private terrainLayer = MAP_URL.TERRAIN;
   private maxBounds = latLngBounds(
     latLng(MAP_BOUND.MAX_LAT, MAP_BOUND.MAX_LNG),
     latLng(MAP_BOUND.MIN_LAT, MAP_BOUND.MIN_LNG)
