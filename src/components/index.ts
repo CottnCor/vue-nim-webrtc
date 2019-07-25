@@ -8,6 +8,7 @@ import InfoEditer from './widgets/InfoEditer.vue'
 import InfoViewBar from './widgets/InfoViewBar.vue'
 import PeekabooWapper from './widgets/PeekabooWapper.vue'
 import Pagination from './widgets/Pagination.vue'
+import CountDown from './widgets/CountDown.vue'
 
 import FaceTimeUtil from './face-time/FaceTimeUtil.vue'
 import FaceTimeInit from './face-time/FaceTimeInit.vue'
@@ -69,6 +70,7 @@ export {
   InfoViewBar,
   PeekabooWapper,
   Pagination,
+  CountDown,
   FaceTimeUtil,
   FaceTimeInit,
   FaceTimeWaiting,

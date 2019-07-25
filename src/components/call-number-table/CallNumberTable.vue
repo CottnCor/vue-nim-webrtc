@@ -1,15 +1,23 @@
 <template>
   <div class="call-number-table">
     <el-table v-if="this.callNumber && this.callNumber.length > 0" :data="callNumber" size="small" :row-style="this.renderRow" :cell-style="this.renderCell">
-      <el-table-column label="项目名称" align="center">
+      <el-table-column align="center" width="150" v-if="this.state.includes(0) || this.state.includes(3)">
+        <template slot="header">
+          <i class="el-icon-message-solid title warning"></i>
+        </template>
         <template v-slot="scope">
-          <span class="right no-wrap">{{ scope.row.name}}</span>
+          <count-down :startTime="new Date().getTime()" :endTime="new Date(scope.row.createtime).getTime()" alert-seconds="300" />
         </template>
       </el-table-column>
-      <el-table-column label="图斑编号" align="center">
+      <el-table-column label="项目名称" width="160" align="center">
+        <template v-slot="scope">
+          <span class="no-wrap">{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="图斑编号" width="120" align="center">
         <template v-slot="scope">
           <div slot="reference">
-            <el-tag size="small">{{ scope.row.tbbh }}</el-tag>
+            <el-tag size="small"><span class="no-wrap">{{ scope.row.tbbh }}</span></el-tag>
           </div>
         </template>
       </el-table-column>
@@ -21,7 +29,7 @@
       <el-table-column label="预约人" align="center">
         <template v-slot="scope">
           <span class="no-wrap left">{{ scope.row.username }}</span>
-          <el-tag size="small">{{ scope.row.online === 0 ? '离线' : '在线' }}</span></el-tag>
+          <el-tag size="small" :type="scope.row.online === 1 ? 'success' : 'danger'">{{ scope.row.online === 1 ? '在线' : '离线' }}</span></el-tag>
         </template>
       </el-table-column>
       <el-table-column label="调度人" align="center" v-if="this.state.includes(5)">
@@ -39,18 +47,18 @@
           <span>{{ scope.row.endtime }}</span>
         </template>
       </el-table-column>
-      <el-table-column v-slot="scope" label="状态" align="center" v-if="this.state.includes(0) || this.state.includes(3)">
+      <el-table-column v-slot="scope" label="状态" width="72" align="center" v-if="this.state.includes(0) || this.state.includes(3)">
         <span v-if="scope.row.state === 0" class="success">排队中</span>
         <span v-else-if="scope.row.state === 3" class="highlight">未应答</span>
       </el-table-column>
       <el-table-column label="操作" align="center" v-if="this.state.includes(0)">
         <template v-slot="scope">
-          <el-button type="primary" :disabled="scope.row.online === 0 ? true:false" size="mini" icon="el-icon-phone-outline" @click="handleCall(scope.$index, scope.row)">呼叫</el-button>
+          <el-button type="primary" :disabled="scope.row.online === 1 ? false:true" size="mini" icon="el-icon-phone-outline" @click="handleCall(scope.$index, scope.row)">呼叫</el-button>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" v-else>
         <template v-slot="scope">
-          <el-button type="primary" :disabled="scope.row.online === 0 ? true:false" size="mini" icon="el-icon-phone-outline" @click="handleCall(scope.$index, scope.row)">重新呼叫</el-button>
+          <el-button type="primary" :disabled="scope.row.online === 1 ? false:true" size="mini" icon="el-icon-phone-outline" @click="handleCall(scope.$index, scope.row)">重新呼叫</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -68,13 +76,13 @@ import { formatDate } from "@/utils/common";
 
 import { ROOT_PATH, ROOT_ROUTER } from "@/config";
 
-import { ContentNone } from "@/components";
+import { ContentNone, CountDown } from "@/components";
 
 import { namespace } from "vuex-class";
 
 const callNumberStore = namespace("CallNumber");
 
-@Component({ components: { ContentNone } })
+@Component({ components: { ContentNone, CountDown } })
 class CallNumberTable extends Vue {
   @callNumberStore.Getter("token")
   public token!: string;
@@ -137,21 +145,24 @@ class CallNumberTable extends Vue {
             this.callNumber = [];
             this.callNumber.push(
               ...result.map(item => {
-                if (item.createtime)
+                if (item.createtime) {
                   item.createtime = formatDate(
                     new Date(item.createtime),
-                    "yyyy-MM-dd HH:mm:ss"
+                    "yyyy/MM/dd HH:mm:ss"
                   );
-                if (item.begintime)
+                }
+                if (item.begintime) {
                   item.begintime = formatDate(
                     new Date(item.begintime),
-                    "yyyy-MM-dd HH:mm:ss"
+                    "yyyy/MM/dd HH:mm:ss"
                   );
-                if (item.endtime)
+                }
+                if (item.endtime) {
                   item.endtime = formatDate(
                     new Date(item.endtime),
                     "yyyy-MM-dd HH:mm:ss"
                   );
+                }
                 return item;
               })
             );
