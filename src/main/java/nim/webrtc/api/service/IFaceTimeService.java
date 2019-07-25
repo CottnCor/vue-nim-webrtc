@@ -1,5 +1,7 @@
 package nim.webrtc.api.service;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -16,4 +18,6 @@ public interface IFaceTimeService {
     void editFaceTimeState(String id, Short state) throws Exception;
 
     void setFaceTimeStaff(String id, Long userid) throws Exception;
+
+    void editFaceTimeRandom() throws Exception;
 }

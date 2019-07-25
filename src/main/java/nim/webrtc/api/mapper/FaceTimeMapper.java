@@ -20,5 +20,8 @@ public interface FaceTimeMapper {
     Boolean updateFaceTimeState(@Param("id") String id, @Param("state") Short state);
 
     Boolean updateFaceTimeStaff(@Param("id") String id, @Param("userid") Long userid, @Param("username") String username);
-    
+
+    Boolean updateFaceTimeRandom(@Param("id") String id);
+
+    List<Map> selectFaceTimeAll();
 }

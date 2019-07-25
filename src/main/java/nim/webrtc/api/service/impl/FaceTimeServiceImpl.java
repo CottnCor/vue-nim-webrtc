@@ -75,4 +75,14 @@ public class FaceTimeServiceImpl implements IFaceTimeService {
         String username = PeopleMapper.selectUserInfo(userid).get("username").toString();
         FaceTimeMapper.updateFaceTimeStaff(id, userid, username);
     }
+
+    @Override
+    public void editFaceTimeRandom() throws Exception{
+        List<Map> faceTimeAll = FaceTimeMapper.selectFaceTimeAll();
+        for (Map faceTime : faceTimeAll) {
+            Thread.sleep(1000);
+            String id = faceTime.get("id").toString();
+            FaceTimeMapper.updateFaceTimeRandom(id);
+        }
+    }
 }
