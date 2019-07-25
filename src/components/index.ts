@@ -39,9 +39,9 @@ import SpinMarker from './map/SpinMarker.vue'
 import MapWidgets from './map/MapWidgets.vue'
 import BasicMap from './map/BasicMap.vue'
 
-import StatusFilter from './call-number-list/StatusFilter.vue'
-import CalendarFilter from './call-number-list/CalendarFilter.vue'
-import CallNumberList from './call-number-list/CallNumberList.vue'
+import StatusFilter from './call-number-table/StatusFilter.vue'
+import CalendarFilter from './call-number-table/CalendarFilter.vue'
+import CallNumberTable from './call-number-table/CallNumberTable.vue'
 
 import PeopleFilter from './people-list/PeopleFilter.vue'
 import PeopleListItem from './people-list/PeopleListItem.vue'
@@ -98,7 +98,7 @@ export {
   BasicMap,
   StatusFilter,
   CalendarFilter,
-  CallNumberList,
+  CallNumberTable,
   PeopleFilter,
   PeopleListItem,
   SpotFilter,

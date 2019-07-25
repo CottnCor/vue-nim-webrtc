@@ -51,7 +51,6 @@ export default SpotFilter;
     height: 50%;
     width: 100%;
     display: flex;
-    flex-direction: row;
 
     .filter {
       margin: auto $size_12 auto 0;

@@ -88,7 +88,6 @@ export default FaceTimeLayout;
   .main-wapper,
   .buttom-wapper {
     display: flex;
-    flex-direction: row;
     width: 100%;
   }
 

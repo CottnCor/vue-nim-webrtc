@@ -198,6 +198,7 @@ export default class NimCall {
    */
   public startCalling(to: any, content?: any): any {
     let channelName = guid()
+    if(content) channelName = content;
     this.createChannel(channelName, to, content)
   }
 

@@ -90,7 +90,6 @@ export default PeopleListItem;
 .people-list-item {
   display: flex;
   padding: $size_6;
-  flex-direction: row;
   border-left: $size_12 solid transparent;
 
   &:hover {

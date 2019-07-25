@@ -56,7 +56,7 @@ class MapPanel extends Vue {
     "POLYGON ((10 10, 30 50, 70 50, 30 35, 50 35, 40 50, 50 50, 50 10, 80 10, 40 25, 30 85, 30 10, 30 10))"
   ];
 
-  private jctb: any[] = [];
+  private jctb = [];
 
   @Watch("track", { immediate: true, deep: true })
   private onTrackChanged(val: any, oldVal: any) {

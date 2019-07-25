@@ -52,7 +52,6 @@ export default SpotInfoAssistBar;
   height: 100%;
   width: 100%;
   display: flex;
-  flex-direction: row;
 
   & > a,
   & > div {

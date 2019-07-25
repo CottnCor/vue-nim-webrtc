@@ -20,6 +20,7 @@ export default ContentNone;
 
 <style lang="scss" scoped>
 .content-none {
+  margin: auto;
   width: 100%;
   height: 100%;
   display: flex;
@@ -27,7 +28,6 @@ export default ContentNone;
     margin: auto;
     display: flex;
     padding: $size_6;
-    flex-direction: row;
     p {
       margin: auto $size_6 auto 0;
       &.center {

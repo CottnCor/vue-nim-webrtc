@@ -41,7 +41,6 @@ export default PeopleFilter;
   height: 100%;
   width: 100%;
   display: flex;
-  flex-direction: row;
 
   .filter {
     margin: auto $size_12 auto 0;

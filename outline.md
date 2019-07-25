@@ -32,7 +32,7 @@
 - PinMarker
 - SpinMarker
 
-##### 4. CallNumberList
+##### 4. CallNumberTable
 
 - StatusFilter
 - CalendarFilter

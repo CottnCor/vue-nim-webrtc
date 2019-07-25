@@ -112,7 +112,6 @@ export default MapSketchLayout;
   .buttom-wapper {
     margin: auto;
     display: flex;
-    flex-direction: row;
     width: 100%;
   }
 
@@ -134,7 +133,6 @@ export default MapSketchLayout;
   .popup {
     margin: auto;
     display: flex;
-    flex-direction: row;
     z-index: $zindex_dropdown;
     transition: all $ease_in_out;
 

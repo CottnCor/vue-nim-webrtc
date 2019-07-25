@@ -109,7 +109,6 @@ export default FlowControlBar;
   height: 100%;
   width: 100%;
   display: flex;
-  flex-direction: row;
 
   .button {
     border: none;

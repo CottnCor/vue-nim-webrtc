@@ -13,9 +13,8 @@
     </div>
     <div class="content radius">
       <call-number-layout>
-        <calendar-filter slot="top" @task-changed="this.taskChanged" />
-        <call-number-list ref="callNumberList" slot="main" :state="this.visiblePanel.param" :taskid="this.taskid" :page-size="this.pageSize" />
-        <!-- <content-none slot="main" v-else :tips="`无${this.visiblePanel.label}任务`" /> -->
+        <calendar-filter slot="top" @task-changed="this.taskChanged" :state="this.visiblePanel.param" />
+        <call-number-table ref="callNumberTable" slot="main" :state="this.visiblePanel.param" :taskid="this.taskid" :page-size="this.pageSize" :tips="this.visiblePanel.label" />
         <pagination slot="buttom" @page-changed="this.pageChanged" :total="this.totalCount" :page-size="this.pageSize" />
       </call-number-layout>
     </div>
@@ -31,25 +30,14 @@ import { CallNumberLayout } from "@/layout";
 
 import { getFaceTimeOverview } from "@/api/call-number";
 
-import {
-  Pagination,
-  CalendarFilter,
-  ContentNone,
-  CallNumberList
-} from "@/components";
+import { Pagination, CalendarFilter, CallNumberTable } from "@/components";
 
 @Component({
-  components: {
-    Pagination,
-    CalendarFilter,
-    CallNumberLayout,
-    ContentNone,
-    CallNumberList
-  }
+  components: { Pagination, CalendarFilter, CallNumberLayout, CallNumberTable }
 })
 class CallNumberPanel extends Vue {
   public $refs!: {
-    callNumberList: CallNumberList;
+    callNumberTable: CallNumberTable;
   };
 
   private panelMax = 3;
@@ -126,8 +114,8 @@ class CallNumberPanel extends Vue {
   }
 
   private pageChanged(page: number, taskid?: string) {
-    if (page && this.$refs.callNumberList) {
-      this.$refs.callNumberList.refresh(page, taskid);
+    if (page && this.$refs.callNumberTable) {
+      this.$refs.callNumberTable.refresh(page, taskid);
     }
   }
 

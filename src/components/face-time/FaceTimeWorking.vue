@@ -44,7 +44,6 @@ export default FaceTimeWorking;
   .content {
     display: flex;
     height: $size_64;
-    flex-direction: row;
     z-index: $zindex_dropdown;
   }
 

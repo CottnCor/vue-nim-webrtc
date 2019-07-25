@@ -35,19 +35,19 @@ router.beforeEach((to: any, from: any, next: any) => {
   } else {
     let verify = true
     let message = ''
-    if (to.name === ROOT_ROUTER.callNumber.name) {
-      message = '检查 token | userid 参数'
-      verify = to.query.token && to.query.userid ? true : false
-    } else if (to.name === ROOT_ROUTER.faceTime.name) {
-      message = '检查 token | userid | callnumer | staffuser 参数'
-      verify =
-        to.query.token &&
-        to.query.userid &&
-        to.query.staffuser &&
-        to.query.callnumer
-          ? true
-          : false
-    }
+    // if (to.name === ROOT_ROUTER.callNumber.name) {
+    //   message = '检查 token | userid 参数'
+    //   verify = to.query.token && to.query.userid ? true : false
+    // } else if (to.name === ROOT_ROUTER.faceTime.name) {
+    //   message = '检查 token | userid | callnumer | staffuser 参数'
+    //   verify =
+    //     to.query.token &&
+    //     to.query.userid &&
+    //     to.query.staffuser &&
+    //     to.query.callnumer
+    //       ? true
+    //       : false
+    // }
     if (!verify) {
       next({
         name: ASSIST_ROUTER.error.name

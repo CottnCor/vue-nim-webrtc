@@ -68,7 +68,6 @@ export default FaceTimeHangup;
 
   .content {
     display: flex;
-    flex-direction: row;
 
     & > a {
       margin: auto $size_6;

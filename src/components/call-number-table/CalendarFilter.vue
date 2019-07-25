@@ -1,16 +1,23 @@
 <template>
   <div class="calendar-filter">
     <p class="primary strong left"><i class="el-icon-thumb success"></i></p>
-    <p class="primary strong left">任务类型:</p>
+    <p class="primary strong left">任务类型：</p>
     <el-select class="filter" v-if="this.taskType.length > 0" v-model="currentTask" size="small" placeholder="请选择">
       <el-option class="flex" v-for="item in this.taskType" :key="item.id" :label="item.name" :value="item.id">
         <p class="primary strong left"><i class="el-icon-finished success"></i></p>
         <p class="primary left">{{ item.name }}</p>
       </el-option>
     </el-select>
-    <p class="primary strong left"><i class="el-icon-date success"></i></p>
-    <p class="primary strong left">任务日期:</p>
-    <p class="primary strong left primary-color motion">{{this.currentDate}}</p>
+    <div v-if="this.state.includes(0) || this.state.includes(3)">
+      <p class="primary strong left"><i class="el-icon-date success"></i></p>
+      <p class="primary strong left">任务日期：</p>
+      <p class="primary strong left primary-color motion">{{this.currentDate}}</p>
+    </div>
+    <div v-else>
+      <p class="primary strong left"><i class="el-icon-date success"></i></p>
+      <p class="primary strong left">日期过滤：</p>
+      <el-date-picker v-model="calendar" size="small" type="daterange" align="right" unlink-panels range-separator=" - " start-placeholder="开始日期" end-placeholder="结束日期" />
+    </div>
     <span style="flex: 1;" />
     <el-input class="filter input" size="small" placeholder="输入预约用户名进行搜索" suffix-icon="el-icon-search" v-model="this.filterText" />
   </div>
@@ -25,11 +32,16 @@ import { formatDate } from "@/utils/common";
 
 @Component({})
 class CalendarFilter extends Vue {
+  @Prop({ default: null })
+  private state!: number[];
+
   private taskType = [];
 
   private currentTask = "";
 
   private filterText = "";
+
+  private calendar = "";
 
   private get currentDate(): string {
     return formatDate(new Date(), "yyyy-MM-dd");
@@ -68,7 +80,9 @@ export default CalendarFilter;
   height: 100%;
   width: 100%;
   display: flex;
-  flex-direction: row;
+  & > div {
+    display: flex;
+  }
   p {
     margin: auto 0.2rem;
   }

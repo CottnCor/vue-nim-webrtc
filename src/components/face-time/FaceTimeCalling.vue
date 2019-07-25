@@ -45,7 +45,6 @@ export default FaceTimeCalling;
       display: flex;
       padding: 0 $size_12 0 0;
       margin: $size_24 auto;
-      flex-direction: row;
       i {
         margin: auto $size_12 auto 0;
       }
@@ -63,7 +62,6 @@ export default FaceTimeCalling;
 
   .content {
     display: flex;
-    flex-direction: row;
   }
 }
 </style>

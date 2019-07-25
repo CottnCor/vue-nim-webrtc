@@ -43,7 +43,6 @@ export default FaceTimeInfo;
   .tips {
     display: flex;
     padding: 0 $size_6;
-    flex-direction: row;
     margin: $size_2 0 $size_2 auto;
     background-image: map-get($default, linear_background);
     i {

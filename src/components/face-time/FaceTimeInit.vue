@@ -22,7 +22,6 @@ export default FaceTimeInit;
   margin: auto;
   display: flex;
   padding: 0 $size_12;
-  flex-direction: row;
   i {
     margin: auto $size_12;
   }

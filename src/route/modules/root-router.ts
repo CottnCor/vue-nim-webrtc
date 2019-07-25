@@ -9,7 +9,7 @@ import { ROOT_PATH, ROOT_ROUTER } from '@/config'
 const rootRouter = [
   {
     path: ROOT_PATH,
-    redirect: ROOT_PATH + ROOT_ROUTER.faceTime.name
+    redirect: ROOT_PATH + ROOT_ROUTER.callNumber.name
   },
   {
     path: ROOT_PATH + ROOT_ROUTER.faceTime.name,

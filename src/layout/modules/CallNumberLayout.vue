@@ -83,7 +83,6 @@ export default CallNumberLayout;
     margin: auto;
     display: flex;
     padding: $size_12 0;
-    flex-direction: row;
   }
 
   .buttom-wapper {
@@ -100,7 +99,6 @@ export default CallNumberLayout;
     height: 100%;
     margin: auto;
     display: flex;
-    flex-direction: row;
     z-index: $zindex_dropdown;
     transition: all $ease_in_out;
 
