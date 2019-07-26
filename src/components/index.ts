@@ -1,4 +1,5 @@
 import ContentNone from './widgets/ContentNone.vue'
+import BasicForm from './widgets/BasicForm.vue'
 import SwitchTab from './widgets/SwitchTab.vue'
 import ExceptionCard from './widgets/ExceptionCard.vue'
 import NavBar from './widgets/NavBar.vue'
@@ -28,6 +29,10 @@ import SpotMultimedia from './spot-operat-info/SpotMultimedia.vue'
 import SpotinfoUpload from './spot-operat-info/SpotinfoUpload.vue'
 import SpotSupervisedInfo from './spot-operat-info/SpotSupervisedInfo.vue'
 import SpotinfoEditer from './spot-operat-info/SpotinfoEditer.vue'
+
+import BasicInfoForm from './ussd-form/BasicInfoForm.vue'
+import FieldNoteForm from './ussd-form/FieldNoteForm.vue'
+import UssdAuditForm from './ussd-form/UssdAuditForm.vue'
 
 import MapLocalizer from './map/MapLocalizer.vue'
 import MapPopup from './map/MapPopup.vue'
@@ -61,6 +66,7 @@ import CallNumberPanel from './panel/CallNumberPanel.vue'
 
 export {
   ContentNone,
+  BasicForm,
   SwitchTab,
   ExceptionCard,
   NavBar,
@@ -88,6 +94,9 @@ export {
   SpotinfoUpload,
   SpotSupervisedInfo,
   SpotinfoEditer,
+  BasicInfoForm,
+  FieldNoteForm,
+  UssdAuditForm,
   MapLocalizer,
   MapPopup,
   ClusterMarkers,

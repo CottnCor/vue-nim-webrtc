@@ -274,8 +274,8 @@ export default class NimCall {
    */
   private sendInvitations(channelName: string, to: any, content: any) {
     this.nim.sendCustomSysMsg({
-      scene: 'p2p',
-      to: to.account,
+      scene: "p2p",
+      to: "a5f6d6f654034764a3775e385997344a",
       apnsText: content || channelName,
       content: channelName,
       done: (error, msg) => {

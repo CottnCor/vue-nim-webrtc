@@ -34,17 +34,11 @@ import {
   components: { ContentNone, SpotInfoBasic, SpotMultimedia, SpotSupervisedInfo }
 })
 class SpotOperatPanel extends Vue {
-  private panelMax = 3;
+  private panelMax = 5;
 
   private panelSurplus = false;
 
   private panelState = [
-    {
-      tag: 0,
-      state: true,
-      label: "图斑信息",
-      component: "SpotInfoBasic"
-    },
     {
       tag: 1,
       state: false,
@@ -62,12 +56,6 @@ class SpotOperatPanel extends Vue {
       state: false,
       label: "扫描件",
       component: "SpotMultimedia"
-    },
-    {
-      tag: 4,
-      state: false,
-      label: "监管信息",
-      component: "SpotSupervisedInfo"
     }
   ];
 

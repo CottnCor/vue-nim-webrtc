@@ -1,5 +1,5 @@
 <template>
-  <div class="switch-tab">
+  <div class="basic-form">
 
   </div>
 </template>
@@ -8,13 +8,13 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({})
-class SwitchTab extends Vue {}
+class BasicForm extends Vue {}
 
-export default SwitchTab;
+export default BasicForm;
 </script>
 
 <style lang="scss" scoped>
-.switch-tab {
+.basic-form {
   margin: auto;
   display: flex;
 }
