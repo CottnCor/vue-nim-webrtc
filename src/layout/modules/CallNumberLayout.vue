@@ -31,41 +31,9 @@
 </template>
 
 <script lang='ts'>
-import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
-
-import { namespace } from "vuex-class";
-
-const store = namespace("FaceTime");
-
+import { Component, Vue } from "vue-property-decorator";
 @Component({})
-class CallNumberLayout extends Vue {
-  @store.Getter("status")
-  private status!: string;
-
-  private popupState = [
-    {
-      tag: 0,
-      state: true
-    },
-    {
-      tag: 1,
-      state: false
-    }
-  ];
-
-  @Watch("status", { immediate: true, deep: true })
-  private onStatusChanged(val: number, oldVal: number) {
-    if (val === 3) this.popupState[1].state = true;
-  }
-
-  private activatePopup(tag: number) {
-    for (const item of this.popupState) {
-      if (tag === item.tag) {
-        item.state = !item.state;
-      }
-    }
-  }
-}
+class CallNumberLayout extends Vue {}
 export default CallNumberLayout;
 </script>
 
@@ -114,7 +82,7 @@ export default CallNumberLayout;
         width: 100%;
         height: 100%;
         padding: $size_6;
-        border: $size_2 dashed map-get($default, grey_4);
+        border: $size_2 dashed map-get($default, grey_3);
       }
     }
   }
@@ -124,9 +92,6 @@ export default CallNumberLayout;
       & > div {
         box-shadow: none;
         background-color: map-get($default, none);
-        & > div {
-          // border: none;
-        }
       }
     }
   }

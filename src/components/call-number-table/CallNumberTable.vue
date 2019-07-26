@@ -187,7 +187,7 @@ class CallNumberTable extends Vue {
           query: {
             token: this.token,
             staffuser: this.userid.toString(),
-            callnumer: row.id,
+            facatimeId: row.id,
             userid: row.userid
           }
         });

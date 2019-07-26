@@ -1,5 +1,5 @@
 <template>
-  <el-tag size="small" class="count-down" :type="this.msTime.totalSeconds() < this.alertSeconds ? 'danger' : 'success'">
+  <el-tag size="small" class="count-up" type="success">
     <span v-if="this.msTime.day > 0">{{(this.msTime.day < 10 ? "0":"") + this.msTime.day + "天-"}}</span>
     <span>{{(this.msTime.hour < 10 ? "0":"") + this.msTime.hour + ":"}}</span>
     <span>{{(this.msTime.minutes < 10 ? "0":"") + this.msTime.minutes + ":"}}</span>
@@ -11,15 +11,9 @@
 import { Component, Prop, Vue, Emit, Watch } from "vue-property-decorator";
 
 @Component({})
-class CountDown extends Vue {
+class CountUp extends Vue {
   @Prop({ default: 0 })
   private startTime!: number;
-
-  @Prop({ default: 0 })
-  private endTime!: number;
-
-  @Prop({ default: 60 })
-  private alertSeconds!: number;
 
   private dayConst = 86400000;
   private hourConst = 3600000;
@@ -49,7 +43,7 @@ class CountDown extends Vue {
       let currentTime = new Date().getTime();
       let timeInterval = currentTime - this.startTime;
       if (timeInterval > 0) {
-        this.runTime(currentTime, this.endTime);
+        this.runTime(this.startTime, currentTime);
       }
     }, this.secondsConst);
   }
@@ -85,11 +79,11 @@ interface MsTime {
   totalSeconds: () => number;
 }
 
-export default CountDown;
+export default CountUp;
 </script>
 
 <style lang="scss" scoped>
-.count-down {
+.count-up {
   margin: auto;
 }
 </style>

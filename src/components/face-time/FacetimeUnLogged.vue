@@ -22,14 +22,18 @@ class FacetimeUnLogged extends Vue {
   private tips!: string;
 
   @Prop({ default: null })
-  private updateStore!: Function;
+  private updateStore!: (type: number, content: any) => void;
 
   @store.Getter("from")
   private from!: any;
 
   private login() {
     if (this.from && this.from.account && this.from.token) {
-      NimCall.getInstance().login(this.updateStore, this.from.account, this.from.token);
+      NimCall.getInstance().login(
+        this.updateStore,
+        this.from.account,
+        this.from.token
+      );
     }
   }
 }

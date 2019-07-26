@@ -42,8 +42,8 @@ class FlowControlBar extends Vue {
   @store.Getter("from")
   private from!: any;
 
-  @store.Action("set_callnumber")
-  private setCallnumber!: (val: string) => void;
+  @store.Action("set_faceTimeId")
+  private setFaceTimeId!: (val: string) => void;
 
   @store.Action("set_from")
   private setFrom!: (val: any) => void;
@@ -64,7 +64,7 @@ class FlowControlBar extends Vue {
       if (this.token && this.from) {
         let userid = this.from.userid;
         NimCall.getInstance().hangup();
-        this.setCallnumber("");
+        this.setFaceTimeId("");
         this.setFrom(null);
         this.setTo(null);
         this.$router.push({

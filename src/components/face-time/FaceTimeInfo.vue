@@ -2,7 +2,7 @@
   <div class="face-time-info">
     <p class="tips secondary pure right radius">
       <i class="el-icon-info"></i>
-      <span class="right secondary pure">{{this.time}}</span>
+      <count-up :startTime="new Date().getTime()"/>
     </p>
     <p class="tips secondary pure right radius">
       <i class="el-icon-info"></i>
@@ -14,16 +14,12 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component({})
+import { CountUp } from "@/components";
+
+@Component({ components: { CountUp } })
 class FaceTimeInfo extends Vue {
   @Prop({ default: "" })
   private tips!: string;
-
-  @Prop({ default: "" })
-  private time!: string;
-
-  @Prop({ default: null })
-  private from!: any;
 
   @Prop({ default: null })
   private to!: any;

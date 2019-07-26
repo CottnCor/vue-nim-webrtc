@@ -34,7 +34,7 @@ class FaceTime extends Vue {
   private userid!: number
 
   @Prop({ default: null })
-  private callnumer!: string
+  private facatimeId!: string
 
   @Prop({ default: null })
   private staffuser!: number
@@ -42,8 +42,8 @@ class FaceTime extends Vue {
   @store.Action('set_token')
   private setToken!: (val: string) => void
 
-  @store.Action('set_callnumber')
-  private setCallnumber!: (val: string) => void
+  @store.Action('set_faceTimeId')
+  private setFaceTimeId!: (val: string) => void
 
   @store.Action('set_from')
   private setFrom!: (val: any) => void
@@ -56,8 +56,8 @@ class FaceTime extends Vue {
       this.setToken(this.token)
     }
 
-    if (this.callnumer) {
-      this.setCallnumber(this.callnumer)
+    if (this.facatimeId) {
+      this.setFaceTimeId(this.facatimeId)
     }
 
     if (this.userid) {

@@ -2,7 +2,7 @@ import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
 interface FaceTimeStore {
   token: string,
-  callnumber: string,
+  faceTimeId: string,
   from: any,
   to: any,
   times: number,
@@ -13,7 +13,7 @@ const namespaced = true
 
 const state: FaceTimeStore = {
   token: "",
-  callnumber: "",
+  faceTimeId: "",
   from: null,
   to: null,
   times: 0,
@@ -22,7 +22,7 @@ const state: FaceTimeStore = {
 
 const getters: GetterTree<FaceTimeStore, any> = {
   token: (state: FaceTimeStore) => state.token,
-  callnumber: (state: FaceTimeStore) => state.callnumber,
+  faceTimeId: (state: FaceTimeStore) => state.faceTimeId,
   from: (state: FaceTimeStore) => state.from,
   to: (state: FaceTimeStore) => state.to,
   times: (state: FaceTimeStore) => state.times,
@@ -33,8 +33,8 @@ const actions: ActionTree<FaceTimeStore, any> = {
   set_token({ commit }, data?: string) {
     commit('update_token', data)
   },
-  set_callnumber({ commit }, data?: string) {
-    commit('update_callnumber', data)
+  set_faceTimeId({ commit }, data?: string) {
+    commit('update_faceTimeId', data)
   },
   set_from({ commit }, data?: any) {
     commit('update_from', data)
@@ -51,8 +51,8 @@ const actions: ActionTree<FaceTimeStore, any> = {
 }
 
 const mutations: MutationTree<FaceTimeStore> = {
-  update_callnumber(state: FaceTimeStore, data: string) {
-    state.callnumber = data
+  update_faceTimeId(state: FaceTimeStore, data: string) {
+    state.faceTimeId = data
   },
   update_token(state: FaceTimeStore, data: string) {
     state.token = data

@@ -1,9 +1,9 @@
 <template>
   <div class="face-time-panel">
-    <component v-if="this.from" :is="this.visibleState.component" :tips="this.visibleState.tips" :from="this.from" :to="this.to" :updateStore="this.updateStore" />
+    <component v-if="this.from" :is="this.visibleSwitch.component" :tips="this.visibleSwitch.tips" :from="this.from" :to="this.to" :updateStore="this.updateStore" />
     <face-time-failure v-else tips="未挂接通话账号" />
-    <face-time-tool v-if="this.visibleState.tag === this.faceTimeeStateCode.working" />
-    <face-time-info v-if="this.visibleState.tag === this.faceTimeeStateCode.working" :time="this.mockTime" :tips="this.visibleState.tips" :from="this.from" :to="this.to" />
+    <face-time-tool v-if="this.visibleSwitch.tag === this.faceTimeeSwitchCode.working" />
+    <face-time-info v-if="this.visibleSwitch.tag === this.faceTimeeSwitchCode.working" :tips="this.visibleSwitch.tips" :to="this.to" />
   </div>
 </template>
 
@@ -16,8 +16,9 @@ import { formatDate } from "@/utils/common";
 
 import NimCall from "@/utils/nimCall";
 
+import { editFaceTimeState } from "@/api/call-number";
+
 import { namespace } from "vuex-class";
-import CallNumber from "../../views/call-number/CallNumber";
 
 const faceTimeStore = namespace("FaceTime");
 
@@ -56,62 +57,67 @@ class FaceTimePanel extends Vue {
     track: 1
   };
 
-  private faceTimeeStateCode = {
+  private faceTimeeSwitchCode = {
     unLogged: 0,
     initing: 1,
     waiting: 2,
     calling: 3,
     working: 4,
     failure: 5,
-    hangup: 6
+    hangup: 6,
+    timeout: 7
   };
 
-  private faceTimeState = [
+  private faceTimeSwitch = [
     {
-      state: false,
+      switch: false,
       tips: "刷新",
       component: "FacetimeUnLogged",
-      tag: this.faceTimeeStateCode.unLogged
+      tag: this.faceTimeeSwitchCode.unLogged
     },
     {
-      state: true,
+      switch: true,
       tips: "初始化中",
       component: "FaceTimeInit",
-      tag: this.faceTimeeStateCode.initing
+      tag: this.faceTimeeSwitchCode.initing
     },
     {
-      state: false,
+      switch: false,
       tips: "初始化成功, 当前可以使用通话功能",
       component: "FaceTimeWaiting",
-      tag: this.faceTimeeStateCode.waiting
+      tag: this.faceTimeeSwitchCode.waiting
     },
     {
-      state: false,
-      tips: "正在呼叫",
+      switch: false,
+      tips: "等待对方接听",
       component: "FaceTimeCalling",
-      tag: this.faceTimeeStateCode.calling
+      tag: this.faceTimeeSwitchCode.calling
     },
     {
-      state: false,
+      switch: false,
       tips: "通话中",
       component: "FaceTimeWorking",
-      tag: this.faceTimeeStateCode.working
+      tag: this.faceTimeeSwitchCode.working
     },
     {
-      state: false,
+      switch: false,
       tips: "初始化失败, 请刷新当前页面",
       component: "FaceTimeFailure",
-      tag: this.faceTimeeStateCode.failure
+      tag: this.faceTimeeSwitchCode.failure
     },
     {
-      state: false,
+      switch: false,
       tips: "已挂断",
       component: "FaceTimeHangup",
-      tag: this.faceTimeeStateCode.hangup
+      tag: this.faceTimeeSwitchCode.hangup
+    },
+    {
+      switch: false,
+      tips: "呼叫超时, 对方未应答",
+      component: "FaceTimeHangup",
+      tag: this.faceTimeeSwitchCode.timeout
     }
   ];
-
-  private mockTime = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss");
 
   @faceTimeStore.Action("set_status")
   private setStatus!: (val: number) => void;
@@ -131,22 +137,31 @@ class FaceTimePanel extends Vue {
   @faceTimeStore.Getter("to")
   private to!: any;
 
-  @faceTimeStore.Getter("callnumber")
-  private callnumber!: string;
+  @faceTimeStore.Getter("faceTimeId")
+  private faceTimeId!: string;
 
   @Watch("status", { immediate: true, deep: true })
   private onStatusChanged(val: number, oldVal: number) {
-    if (val !== this.faceTimeeStateCode.working) {
+    if (val !== this.faceTimeeSwitchCode.working) {
       this.setTrack(null);
       this.setPanto(MAX_PANTO_TIMES);
     } else {
       this.setPanto(0);
     }
 
-    if(val === this.faceTimeeStateCode.waiting){
+    if (val === this.faceTimeeSwitchCode.waiting) {
       if (this.from && this.to) {
-        NimCall.getInstance().startCalling(this.to, this.callnumber);
+        NimCall.getInstance().startCalling(this.to, this.faceTimeId);
       }
+    } else if (val === this.faceTimeeSwitchCode.calling) {
+      editFaceTimeState({ id: this.faceTimeId, state: 1 });
+    } else if (val === this.faceTimeeSwitchCode.working) {
+      editFaceTimeState({ id: this.faceTimeId, state: 2 });
+    } else if (
+      val === this.faceTimeeSwitchCode.hangup &&
+      oldVal === this.faceTimeeSwitchCode.working
+    ) {
+      editFaceTimeState({ id: this.faceTimeId, state: 5 });
     }
   }
 
@@ -157,27 +172,27 @@ class FaceTimePanel extends Vue {
     }
   }
 
-  private get visibleState(): any {
-    for (const item of this.faceTimeState) {
-      if (item.state) {
+  private get visibleSwitch(): any {
+    for (const item of this.faceTimeSwitch) {
+      if (item.switch) {
         return item;
       }
     }
   }
 
-  private updateState(stateCode: number) {
-    for (const item of this.faceTimeState) {
-      if (stateCode === item.tag) {
-        item.state = true;
+  private updateSwitch(switchCode: number) {
+    for (const item of this.faceTimeSwitch) {
+      if (switchCode === item.tag) {
+        item.switch = true;
         this.setStatus(item.tag);
       } else {
-        item.state = false;
+        item.switch = false;
       }
     }
   }
 
   private updateTrack(trackJson: string) {
-    if (trackJson && this.status === this.faceTimeeStateCode.working) {
+    if (trackJson && this.status === this.faceTimeeSwitchCode.working) {
       let track = JSON.parse(trackJson);
       this.setTrack({
         currentLatLng: [Number(track.y), Number(track.x)],
@@ -190,7 +205,7 @@ class FaceTimePanel extends Vue {
 
   private updateStore(type: number, content: any) {
     if (type === this.storeType.status) {
-      this.updateState(content);
+      this.updateSwitch(content);
     } else if (type === this.storeType.track) {
       this.updateTrack(content);
     }

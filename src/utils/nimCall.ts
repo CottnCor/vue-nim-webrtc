@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 import { NIM_CONFIG } from '@/config'
 
 import { guid } from '@/utils/common'
@@ -14,7 +16,7 @@ export default class NimCall {
   private nim: any
   private netcall: any
 
-  private callback!: Function
+  private callback!: (type: number, content: any) => void
 
   private callbackType = {
     status: 0,
@@ -36,7 +38,8 @@ export default class NimCall {
     calling: 3,
     working: 4,
     failure: 5,
-    hangup: 6
+    hangup: 6,
+    timeout: 7
   }
 
   private nimCallStatus = [
@@ -74,8 +77,15 @@ export default class NimCall {
       tag: 6,
       state: false,
       tips: 'hangup'
+    },
+    {
+      tag: 7,
+      state: false,
+      tips: 'timeout'
     }
   ]
+
+  private countdownInterval!: number
 
   private constructor() {}
 
@@ -86,7 +96,7 @@ export default class NimCall {
    * @param token
    */
   public login(
-    callback: Function,
+    callback: (type: number, content: any) => void,
     account: string,
     token: string,
     appkey?: string
@@ -143,6 +153,11 @@ export default class NimCall {
       if (item.tag === tag) {
         item.state = true
         this.emit(this.callbackType.status, item.tag)
+        if (item.tag === this.nimCallStatusCode.calling) {
+          this.startCallCountdown()
+        } else {
+          this.stopCallCountdown()
+        }
       } else {
         item.state = false
       }
@@ -198,7 +213,7 @@ export default class NimCall {
    */
   public startCalling(to: any, content?: any): any {
     let channelName = guid()
-    if(content) channelName = content;
+    if (content) channelName = content
     this.createChannel(channelName, to, content)
   }
 
@@ -206,7 +221,13 @@ export default class NimCall {
    * hangup
    */
   public hangup(): any {
-    if (this.WebRTC) {
+    this.trialClose()
+    this.setStatus(this.nimCallStatusCode.hangup)
+    this.emit(this.callbackType.track, null)
+  }
+
+  private trialClose() {
+    if (this.netcall && this.WebRTC) {
       // 停止本地视频预览
       this.netcall.stopLocalStream()
       // 停止对端视频预览
@@ -221,9 +242,8 @@ export default class NimCall {
       this.netcall.stopDevice(this.WebRTC.DEVICE_TYPE_AUDIO_OUT_CHAT)
       // 离开房间
       this.netcall.leaveChannel()
+      // 注销登陆
       // this.nim.disconnect()
-      this.setStatus(this.nimCallStatusCode.hangup)
-      this.emit(this.callbackType.track, null)
     }
   }
 
@@ -239,12 +259,14 @@ export default class NimCall {
       .then(obj => {
         this.joinChannel(channelName, to, content)
       })
-      .then(obj => {
-        this.setStatus(this.nimCallStatusCode.calling)
-      })
       .catch(err => {
-        console.error('创建房间失败: ', err)
-        this.setStatus(this.nimCallStatusCode.failure)
+        let code = 417
+        if (err && err.event && err.event.code === code) {
+          this.joinChannel(channelName, to, content)
+        } else {
+          console.error('创建房间失败: ', err)
+          this.setStatus(this.nimCallStatusCode.failure)
+        }
       })
   }
 
@@ -274,8 +296,8 @@ export default class NimCall {
    */
   private sendInvitations(channelName: string, to: any, content: any) {
     this.nim.sendCustomSysMsg({
-      scene: "p2p",
-      to: "a5f6d6f654034764a3775e385997344a",
+      scene: 'p2p',
+      to: to.account,
       apnsText: content || channelName,
       content: channelName,
       done: (error, msg) => {
@@ -291,7 +313,6 @@ export default class NimCall {
     this.netcall
       .startRtc(obj)
       .then(data => {
-        this.setStatus(this.nimCallStatusCode.working)
         this.openTheMicro()
         this.openTheCamera()
       })
@@ -304,7 +325,6 @@ export default class NimCall {
    * sendInvitationsDone
    */
   private sendInvitationsDone(error: object, msg: object): any {
-    console.error('msg: ', msg)
     if (error) {
       this.setStatus(this.nimCallStatusCode.failure)
     } else this.setStatus(this.nimCallStatusCode.calling)
@@ -342,6 +362,7 @@ export default class NimCall {
    */
   private callRejectedEventHandler(): any {
     this.hangup()
+    this.tips('对方已挂断');
   }
 
   /**
@@ -354,6 +375,7 @@ export default class NimCall {
    */
   private hangupEventHandler(): any {
     this.hangup()
+    this.tips('对方已挂断');
   }
 
   /**
@@ -366,6 +388,50 @@ export default class NimCall {
    */
   private leaveChannelEventHandler(): any {
     this.hangup()
+    this.tips('对方已挂断');
+  }
+
+  /**
+   * ----------------------------------------
+   * ----------------------------------------
+   */
+
+  /**
+   * ----------------------------------------
+   *              呼叫超时处理
+   * ----------------------------------------
+   */
+
+  /**
+   * 超时处理
+   */
+  private handleTimeout() {
+    this.trialClose()
+    this.setStatus(this.nimCallStatusCode.timeout)
+  }
+
+  /**
+   * 开始呼叫倒数时
+   */
+  private startCallCountdown() {
+    let countdown = 30
+    let secondsConst = 1000
+    this.countdownInterval = setInterval(() => {
+      countdown--
+      if (countdown < 0) {
+        this.handleTimeout()
+        this.tips('呼叫超时, 对方未应答');
+      }
+    }, secondsConst)
+  }
+
+  /**
+   * 呼叫倒数时清零
+   */
+  private stopCallCountdown() {
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval)
+    }
   }
 
   /**
@@ -384,14 +450,9 @@ export default class NimCall {
    */
   private remoteTrackEventHandler(param: any): any {
     if (param && param.track && param.track.kind === 'audio') {
-      this.netcall
-        .startDevice({
-          type: WebRTC.DEVICE_TYPE_AUDIO_OUT_CHAT
-        })
-        .then(obj => {})
-        .catch(err => {
-          this.setStatus(this.nimCallStatusCode.failure)
-        })
+      this.netcall.startDevice({
+        type: WebRTC.DEVICE_TYPE_AUDIO_OUT_CHAT
+      })
     } else if (param && param.track && param.track.kind === 'video') {
       this.previewRemoteVideo(param.account)
     }
@@ -418,7 +479,15 @@ export default class NimCall {
   private previewRemoteVideo(account: string): any {
     let node = document.getElementById(NIM_CONFIG.remoteContainer)
     if (node) {
-      this.netcall.startRemoteStream({ account, node })
+      this.netcall
+        .startRemoteStream({ account, node })
+        .then(obj => {
+          this.setStatus(this.nimCallStatusCode.working)
+        })
+        .catch(err => {
+          console.log(err)
+          this.setStatus(this.nimCallStatusCode.failure)
+        })
       this.netcall.setVideoViewRemoteSize({
         account,
         width: node.scrollWidth,
@@ -509,6 +578,10 @@ export default class NimCall {
     this.netcall.getDevicesOfType(this.WebRTC.DEVICE_TYPE_VIDEO).then(data => {
       this.deviceList.video = data
     })
+  }
+
+  private tips(title: string, message = '', duration = 10) {
+    Vue.prototype.$notify.info({ title, message, duration })
   }
 
   /**
