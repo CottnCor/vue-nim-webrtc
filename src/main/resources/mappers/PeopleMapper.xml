@@ -5,6 +5,7 @@
         SELECT
             f_id AS userid,
             f_accid AS account,
+            f_name AS username,
             f_token AS token
         FROM
             tb_yxuser2
