@@ -362,7 +362,7 @@ export default class NimCall {
    */
   private callRejectedEventHandler(): any {
     this.hangup()
-    this.tips('对方已挂断');
+    this.tips('对方已挂断')
   }
 
   /**
@@ -375,20 +375,22 @@ export default class NimCall {
    */
   private hangupEventHandler(): any {
     this.hangup()
-    this.tips('对方已挂断');
+    this.tips('对方已挂断')
   }
 
   /**
    * 对方加入房间
    */
-  private joinChannelEventHandler(): any {}
+  private joinChannelEventHandler(): any {
+    this.setStatus(this.nimCallStatusCode.working)
+  }
 
   /**
    * 对方离开房间
    */
   private leaveChannelEventHandler(): any {
     this.hangup()
-    this.tips('对方已挂断');
+    this.tips('对方已挂断')
   }
 
   /**
@@ -420,7 +422,7 @@ export default class NimCall {
       countdown--
       if (countdown < 0) {
         this.handleTimeout()
-        this.tips('呼叫超时, 对方未应答');
+        this.tips('呼叫超时, 对方未应答')
       }
     }, secondsConst)
   }
@@ -468,7 +470,7 @@ export default class NimCall {
       this.netcall.setVideoViewSize({
         width: node.scrollWidth,
         height: node.scrollHeight,
-        cut: false
+        cut: true
       })
     }
   }
@@ -481,9 +483,7 @@ export default class NimCall {
     if (node) {
       this.netcall
         .startRemoteStream({ account, node })
-        .then(obj => {
-          this.setStatus(this.nimCallStatusCode.working)
-        })
+        .then(obj => {})
         .catch(err => {
           console.log(err)
           this.setStatus(this.nimCallStatusCode.failure)
@@ -492,7 +492,7 @@ export default class NimCall {
         account,
         width: node.scrollWidth,
         height: node.scrollHeight,
-        cut: false
+        cut: true
       })
     }
   }
@@ -580,8 +580,12 @@ export default class NimCall {
     })
   }
 
-  private tips(title: string, message = '', duration = 10) {
-    Vue.prototype.$notify.info({ title, message, duration })
+  private tips(tips: string) {
+    Vue.prototype.$notify.info({
+      title: '呼叫状态',
+      message: tips,
+      duration: 10
+    })
   }
 
   /**

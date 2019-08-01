@@ -1,10 +1,10 @@
 <template>
-  <el-tag size="small" class="count-up" type="success">
+  <div class="count-up">
     <span v-if="this.msTime.day > 0">{{(this.msTime.day < 10 ? "0":"") + this.msTime.day + "天-"}}</span>
     <span>{{(this.msTime.hour < 10 ? "0":"") + this.msTime.hour + ":"}}</span>
     <span>{{(this.msTime.minutes < 10 ? "0":"") + this.msTime.minutes + ":"}}</span>
     <span>{{(this.msTime.seconds < 10 ? "0":"") + this.msTime.seconds}}</span>
-  </el-tag>
+  </div>
 </template>
 
 <script lang="ts">
