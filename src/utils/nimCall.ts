@@ -116,7 +116,6 @@ export default class NimCall {
         },
         onsyncdone: () => {
           this.initNetcall()
-          this.setStatus(this.nimCallStatusCode.waiting)
           console.log('同步完成')
         },
         onmsg: (msg: any) => {
@@ -133,33 +132,12 @@ export default class NimCall {
       })
       console.log(this.nim)
     } else {
-      console.log('已经登录，无需再登录')
-      this.setStatus(this.nimCallStatusCode.waiting)
-    }
-  }
-
-  /**
-   * emit
-   */
-  private emit(type: number, content: any): any {
-    if (this.callback) this.callback(type, content)
-  }
-
-  /**
-   * setStatus
-   */
-  private setStatus(tag: number): any {
-    for (const item of this.nimCallStatus) {
-      if (item.tag === tag) {
-        item.state = true
-        this.emit(this.callbackType.status, item.tag)
-        if (item.tag === this.nimCallStatusCode.calling) {
-          this.startCallCountdown()
-        } else {
-          this.stopCallCountdown()
-        }
+      if (this.netcall) {
+        console.log('已经登录，无需再登录')
+        this.setStatus(this.nimCallStatusCode.waiting)
       } else {
-        item.state = false
+        this.initNetcall()
+        console.log('同步完成')
       }
     }
   }
@@ -199,7 +177,36 @@ export default class NimCall {
         this.leaveChannelEventHandler()
       })
       this.syncDeviceList()
-    } else return this.netcall
+    }
+    if (this.netcall) {
+      this.setStatus(this.nimCallStatusCode.waiting)
+    }
+  }
+
+  /**
+   * emit
+   */
+  private emit(type: number, content: any): any {
+    if (this.callback) this.callback(type, content)
+  }
+
+  /**
+   * setStatus
+   */
+  private setStatus(tag: number): any {
+    for (const item of this.nimCallStatus) {
+      if (item.tag === tag) {
+        item.state = true
+        this.emit(this.callbackType.status, item.tag)
+        if (item.tag === this.nimCallStatusCode.calling) {
+          this.startCallCountdown()
+        } else {
+          this.stopCallCountdown()
+        }
+      } else {
+        item.state = false
+      }
+    }
   }
 
   /**
@@ -580,10 +587,83 @@ export default class NimCall {
     })
   }
 
+  /**
+   * ----------------------------------------
+   * ----------------------------------------
+   */
+
+  /**
+   * ----------------------------------------
+   *              工具
+   * ----------------------------------------
+   */
+
+  /**
+   *  截图
+   */
+  public startScreenShot() {}
+
+  /**
+   * 录制视频
+   */
+  public async startRecord(account: string): Promise<string> {
+    let recordId = ''
+    await this.netcall
+      .startMediaRecording({
+        account,
+        type: 'video'
+      })
+      .then(result => {
+        if (result) {
+          this.tips('录制视频')
+          recordId = result.recordId
+        }
+      })
+      .catch(err => {
+        console.log('录制视频出错: ', err)
+      })
+    return recordId
+  }
+
+  /**
+   * 录制视频
+   */
+  public stopRecord(recordId: string) {
+    if (recordId) {
+      this.netcall
+        .stopMediaRecording({
+          recordId
+        })
+        .then(() => {
+          this.tips('已停止视频录制')
+          this.downloadMediaRecording(recordId)
+        })
+        .catch(err => {
+          console.log('停止视频录制出错: ', err)
+        })
+    }
+  }
+
+  public downloadMediaRecording(recordId: string) {
+    if (recordId) {
+      this.netcall
+        .downloadMediaRecording({
+          recordId
+        })
+        .then(result => {
+          debugger
+        })
+        .catch(err => {
+          console.log('停止视频录制出错: ', err)
+        })
+    }
+  }
+
   private tips(tips: string) {
-    Vue.prototype.$notify.info({
-      title: '呼叫状态',
+    Vue.prototype.$notify({
+      title: '状态提示',
       message: tips,
+      type: 'info',
       duration: 10
     })
   }

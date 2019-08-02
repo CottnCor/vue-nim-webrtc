@@ -1,12 +1,12 @@
 <template>
   <div class="face-time-tool">
     <el-tooltip content="截屏" placement="left">
-      <p class="primary">
+      <p class="primary motion" @click="startScreenShot">
         <i class="el-icon-camera-solid"></i>
       </p>
     </el-tooltip>
     <el-tooltip content="录屏" placement="left">
-      <p class="primary">
+      <p class="primary motion" @click="startRecord">
         <i class="el-icon-video-camera-solid"></i>
       </p>
     </el-tooltip>
@@ -16,9 +16,38 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component({})
-class FaceTimeTool extends Vue {}
+import NimCall from "@/utils/nimCall";
 
+import { namespace } from "vuex-class";
+
+const store = namespace("faceTime");
+
+@Component({})
+class FaceTimeTool extends Vue {
+  @store.Getter("to")
+  private to!: any;
+
+  private recordState = false;
+
+  private recordId = "";
+
+  private startScreenShot() {
+    NimCall.getInstance().startScreenShot();
+  }
+
+  private startRecord() {
+    if (this.recordState) {
+      NimCall.getInstance().stopRecord(this.recordId);
+    } else {
+      NimCall.getInstance()
+        .startRecord(this.to.account)
+        .then(result => {
+          this.recordId = result;
+        });
+    }
+    this.recordState = !this.recordState;
+  }
+}
 export default FaceTimeTool;
 </script>
 

@@ -51,12 +51,7 @@ class MapPanel extends Vue {
   @store.Action("set_panto")
   private setPanto!: (val: number) => void;
 
-  private wkt = [
-    "POLYGON ((20 10, 20 50, 30 50, 30 35, 40 35, 40 50, 50 50, 50 10, 40 10, 40 25, 30 25, 30 10, 20 10))",
-    "POLYGON ((10 10, 30 50, 70 50, 30 35, 50 35, 40 50, 50 50, 50 10, 80 10, 40 25, 30 85, 30 10, 30 10))"
-  ];
-
-  private jctb = [];
+  private jctb: string[] = [];
 
   @Watch("track", { immediate: true, deep: true })
   private onTrackChanged(val: any, oldVal: any) {
@@ -65,6 +60,8 @@ class MapPanel extends Vue {
         this.setCoord(latLng(val.currentLatLng[0], val.currentLatLng[1]));
         this.setPanto(this.panto + 1);
       }
+    } else {
+      this.jctb = [];
     }
   }
 
@@ -73,10 +70,11 @@ class MapPanel extends Vue {
     if (val && this.$refs.basicMap) {
       if (this.panto < 3) {
         this.$refs.basicMap.panTo(val);
+        this.jctb = [];
+        this.visibleJctb();
       } else {
         this.$refs.basicMap.flyTo(val);
       }
-      // this.visibleJctb();
     }
   }
 
@@ -93,8 +91,10 @@ class MapPanel extends Vue {
         maxx: east,
         maxy: north
       })
-        .then(result => {
-          this.jctb = result;
+        .then((result: any) => {
+          if (result && result.data && result.data.length > 0) {
+            this.jctb.push(...result.data);
+          }
         })
         .catch(err => {
           console.log(err);
