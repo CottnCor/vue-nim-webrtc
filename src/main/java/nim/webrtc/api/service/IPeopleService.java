@@ -9,9 +9,7 @@ public interface IPeopleService {
 
     Map getUserInfo(String token);
 
-    Map getUserState(String userid);
-
-    Map getUserCoords(String userid);
+    Map getUserState(String token, String username);
 
     List<Map> getPeopleTree(String token, String organizationid, Short page, Short limit);
 

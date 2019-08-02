@@ -137,8 +137,8 @@ public class PeopleServiceImpl implements IPeopleService {
             String url = authProperties.getEndpoint() + "getUserInfo";
             JSONObject result = ProxyUtil.post(url, entity);
             if(result != null && ResultStatus.OK.toString().equals(result.getString("status"))){
-                Map peopleInfo = result.getJSONArray("data").toJavaList(Map.class).get(0);
-                return peopleInfo;
+                Map userInfo = result.getJSONArray("data").toJavaList(Map.class).get(0);
+                return userInfo;
             }
             return null;
         } catch (Exception ex) {
@@ -147,18 +147,19 @@ public class PeopleServiceImpl implements IPeopleService {
     }
 
     @Override
-    public Map getUserState(String userid) {
+    public Map getUserState(String token, String username) {
         try {
-            return peopleMapper.selectUserState(userid);
-        } catch (Exception ex) {
+            JSONObject params = new JSONObject();
+            params.put("token", token);
+            params.put("username", username);
+            StringEntity entity = new StringEntity(params.toJSONString());
+            String url = authProperties.getEndpoint() + "getSimpleUserInfo";
+            JSONObject result = ProxyUtil.post(url, entity);
+            if(result != null && ResultStatus.OK.toString().equals(result.getString("status"))){
+                Map userState = result.getJSONObject("data");
+                return userState;
+            }
             return null;
-        }
-    }
-
-    @Override
-    public Map getUserCoords(String userid) {
-        try {
-            return peopleMapper.selectUserCoords(userid);
         } catch (Exception ex) {
             return null;
         }

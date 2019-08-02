@@ -11,10 +11,6 @@ public interface PeopleMapper {
 
     Map selectYxInfo(@Param("username")String username);
 
-    Map selectUserState(@Param("userid")String userid);
-
-    Map selectUserCoords(@Param("userid")String userid);
-
     List<Map> selectPeopleCoords(@Param("wkt")String wkt);
 
     List<Map> selectPeopleCluster(@Param("level")Short level, @Param("filter")String filter);

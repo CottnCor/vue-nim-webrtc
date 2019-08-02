@@ -10,19 +10,6 @@
         WHERE
             f_name = '${username}'
     </select>
-    <select id="selectUserState" resultType="java.util.Map" statementType="STATEMENT">
-        SELECT COUNT(f_userid)
-        FROM tbsys_user
-        WHERE f_updatetime > (now() - '00:01:01' :: INTERVAL)
-          AND f_islogin = 1
-          AND f_userid = '${userid}'
-    </select>
-    <select id="selectUserCoords" resultType="java.util.Map" statementType="STATEMENT">
-        SELECT f_lon AS lng,
-               f_lat AS lat
-        FROM tb_devicetrack
-        WHERE f_userid = '${userid}'
-    </select>
     <select id="selectPeopleCoords" resultType="java.util.Map" statementType="STATEMENT">
         WITH RESULT AS (
             SELECT f1.lng,

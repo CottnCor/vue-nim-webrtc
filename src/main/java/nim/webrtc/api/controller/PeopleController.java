@@ -40,14 +40,8 @@ public class PeopleController {
     }
 
     @GetMapping("/getUserState")
-    public String getUserState(@RequestParam(name="userid")String userid) {
-        Map map = peopleService.getUserState(userid);
-        return GlobalUtil.PackResponse(map);
-    }
-
-    @GetMapping("/getUserCoords")
-    public String getUserLocation(@RequestParam(name="userid")String userid) {
-        Map map = peopleService.getUserCoords(userid);
+    public String getUserState(@RequestParam(name="token")String token, @RequestParam(name="username")String username) {
+        Map map = peopleService.getUserState(token, username);
         return GlobalUtil.PackResponse(map);
     }
 }
