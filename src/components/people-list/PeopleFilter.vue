@@ -105,12 +105,12 @@ class PeopleFilter extends Vue {
 }
 interface Organizations {
   id: string;
-  name: any;
+  name: string;
   children: Children[];
 }
 interface Children {
   id: string;
-  name: any;
+  name: string;
 }
 export default PeopleFilter;
 </script>

@@ -665,7 +665,7 @@ export default class NimCall {
       title: '状态提示',
       message: tips,
       type: 'info',
-      duration: 10
+      duration: 10000
     })
   }
 

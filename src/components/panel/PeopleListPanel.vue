@@ -5,7 +5,7 @@
     </div>
     <div class='content' v-loading='this.loading' element-loading-background="rgba(0, 0, 0, 0)">
       <div v-if="this.peopleList && this.peopleList.length > 0">
-        <people-list-item v-for='(item, index) in this.peopleList' :key='index' :content='{state: true, title: item.username, value: item.id}' />
+        <people-list-item v-for='(item, index) in this.peopleList' :key='index' :content='{token: token, title: item.username, value: item.id}' />
       </div>
       <content-none v-if="!this.loading && (!this.peopleList || this.peopleList.length < 1)" tips='无APP注册用户' />
     </div>

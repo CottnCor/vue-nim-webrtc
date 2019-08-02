@@ -22,3 +22,10 @@ export const getYxInfo = (param?: any) => {
 export const getUserInfo = (param?: any) => {
   return request.get('api/people/getUserInfo', param);
 };
+
+/**
+ * @param  {any} param?
+ */
+export const getUserState = (param?: any) => {
+  return request.get('api/people/getUserState', param);
+};

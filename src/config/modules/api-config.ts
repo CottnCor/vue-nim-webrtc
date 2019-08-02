@@ -16,4 +16,4 @@ export const QA_HOST = 'http://127.0.0.1:8095/'
 export const MOCK_HOST = './mock/'
 
 // 当前的host ONLINE_HOST | QA_HOSTQA_HOST| MOCK_HOST
-export const CURRENT_HOST = ONLINE_HOST
+export const CURRENT_HOST = QA_HOST
