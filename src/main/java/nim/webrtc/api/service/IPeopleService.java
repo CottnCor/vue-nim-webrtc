@@ -7,13 +7,13 @@ public interface IPeopleService {
 
     Map getYxInfo(String username);
 
-    Map getUserInfo(String userid);
+    Map getUserInfo(String token);
 
     Map getUserState(String userid);
 
     Map getUserCoords(String userid);
 
-    List<Map> getPeopleTree(String token, Short page, Short limit);
+    List<Map> getPeopleTree(String token, String organizationid, Short page, Short limit);
 
     List<Map> getPeopleCoords(Short level, String bounds);
 }

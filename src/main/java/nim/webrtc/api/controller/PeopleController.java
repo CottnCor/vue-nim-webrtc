@@ -16,8 +16,8 @@ public class PeopleController {
     private IPeopleService peopleService;
 
     @GetMapping("/getPeopleTree")
-    public String getPeopleTree(@RequestParam(name="token")String token, @RequestParam(name="page")Short page, @RequestParam(name="limit")Short limit) {
-        List<Map> maps = peopleService.getPeopleTree(token, page, limit);
+    public String getPeopleTree(@RequestParam(name="token")String token, @RequestParam(name="organizationid")String organizationid, @RequestParam(name="page")Short page, @RequestParam(name="limit")Short limit) {
+        List<Map> maps = peopleService.getPeopleTree(token, organizationid, page, limit);
         return GlobalUtil.PackResponse(maps);
     }
 
@@ -34,8 +34,8 @@ public class PeopleController {
     }
 
     @GetMapping("/getUserInfo")
-    public String getUserInfo(@RequestParam(name="userid")String userid) {
-        Map map = peopleService.getUserInfo(userid);
+    public String getUserInfo(@RequestParam(name="token")String token) {
+        Map map = peopleService.getUserInfo(token);
         return GlobalUtil.PackResponse(map);
     }
 

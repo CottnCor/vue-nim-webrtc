@@ -11,8 +11,6 @@ public interface PeopleMapper {
 
     Map selectYxInfo(@Param("username")String username);
 
-    Map selectUserInfo(@Param("userid")String userid);
-
     Map selectUserState(@Param("userid")String userid);
 
     Map selectUserCoords(@Param("userid")String userid);

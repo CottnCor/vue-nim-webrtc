@@ -33,11 +33,11 @@ public class PeopleServiceImpl implements IPeopleService {
     private AuthProperties authProperties;
 
     @Override
-    public List<Map> getPeopleTree(String token, Short page, Short limit) {
+    public List<Map> getPeopleTree(String token, String organizationid, Short page, Short limit) {
         try {
-
             JSONObject params = new JSONObject();
             params.put("token", token);
+            params.put("organizationid", organizationid);
             params.put("recursive", true);
             params.put("pageIndex", page);
             params.put("pageSize", limit);
@@ -129,9 +129,18 @@ public class PeopleServiceImpl implements IPeopleService {
     }
 
     @Override
-    public Map getUserInfo(String userid) {
+    public Map getUserInfo(String token) {
         try {
-            return peopleMapper.selectUserInfo(userid);
+            JSONObject params = new JSONObject();
+            params.put("token", token);
+            StringEntity entity = new StringEntity(params.toJSONString());
+            String url = authProperties.getEndpoint() + "getUserInfo";
+            JSONObject result = ProxyUtil.post(url, entity);
+            if(result != null && ResultStatus.OK.toString().equals(result.getString("status"))){
+                Map peopleInfo = result.getJSONArray("data").toJavaList(Map.class).get(0);
+                return peopleInfo;
+            }
+            return null;
         } catch (Exception ex) {
             return null;
         }
