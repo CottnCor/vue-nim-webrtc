@@ -51,19 +51,18 @@ class MapPanel extends Vue {
   @store.Action("set_panto")
   private setPanto!: (val: number) => void;
 
-  private wkt = [
-    "POLYGON ((20 10, 20 50, 30 50, 30 35, 40 35, 40 50, 50 50, 50 10, 40 10, 40 25, 30 25, 30 10, 20 10))",
-    "POLYGON ((10 10, 30 50, 70 50, 30 35, 50 35, 40 50, 50 50, 50 10, 80 10, 40 25, 30 85, 30 10, 30 10))"
-  ];
-
-  private jctb: any[] = [];
+  private jctb: string[] = [];
 
   @Watch("track", { immediate: true, deep: true })
   private onTrackChanged(val: any, oldVal: any) {
     if (val && val.currentLatLng) {
-      if (this.panto < MAX_PANTO_TIMES) {
-        this.setCoord(latLng(val.currentLatLng[0], val.currentLatLng[1]));
-        this.setPanto(this.panto + 1);
+      if (val && val.currentLatLng) {
+        if (this.panto < MAX_PANTO_TIMES) {
+          this.setCoord(latLng(val.currentLatLng[0], val.currentLatLng[1]));
+          this.setPanto(this.panto + 1);
+        }
+      } else {
+        this.jctb = [];
       }
     }
   }
