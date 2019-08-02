@@ -73,10 +73,11 @@ class MapPanel extends Vue {
     if (val && this.$refs.basicMap) {
       if (this.panto < 3) {
         this.$refs.basicMap.panTo(val);
+        this.jctb = [];
+        this.visibleJctb();
       } else {
         this.$refs.basicMap.flyTo(val);
       }
-      // this.visibleJctb();
     }
   }
 
@@ -93,8 +94,10 @@ class MapPanel extends Vue {
         maxx: east,
         maxy: north
       })
-        .then(result => {
-          this.jctb = result;
+        .then((result: any) => {
+          if (result && result.data && result.data.length > 0) {
+            this.jctb.push(...result.data);
+          }
         })
         .catch(err => {
           console.log(err);

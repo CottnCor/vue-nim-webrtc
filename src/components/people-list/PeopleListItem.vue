@@ -65,7 +65,6 @@ class PeopleListItem extends Vue {
       if (this.content.value) {
         getYxInfo({ username: this.content.title })
           .then(result => {
-            debugger
             if (result) {
               this.setTo({
                 userid: this.content.value,

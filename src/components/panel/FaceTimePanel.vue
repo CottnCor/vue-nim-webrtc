@@ -62,7 +62,8 @@ class FaceTimePanel extends Vue {
     calling: 3,
     working: 4,
     failure: 5,
-    hangup: 6
+    hangup: 6,
+    timeout: 7
   };
 
   private faceTimeState = [
@@ -107,6 +108,12 @@ class FaceTimePanel extends Vue {
       tips: "已挂断",
       component: "FaceTimeHangup",
       tag: this.faceTimeeStateCode.hangup
+    },
+    {
+      switch: false,
+      tips: "呼叫超时, 对方未应答",
+      component: "FaceTimeHangup",
+      tag: this.faceTimeeStateCode.timeout
     }
   ];
 
@@ -191,7 +198,7 @@ class FaceTimePanel extends Vue {
     }
   }
 
-  private updateStore(type: number, content: any) {
+  private updateStore(type: number, content: any): void {
     if (type === this.storeType.status) {
       this.updateState(content);
     } else if (type === this.storeType.track) {

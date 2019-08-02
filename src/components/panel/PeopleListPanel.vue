@@ -1,17 +1,19 @@
 <template>
   <div class='people-list-panel'>
     <div class='header'>
-      <people-filter v-if='false' />
+      <people-filter :token="this.token" />
     </div>
-    <div class='content' v-if='this.peopleList && this.peopleList.length > 0'>
-      <people-list-item v-for='(item, index) in this.peopleList' :key='index' :content='{state: true, title: item.username, value: item.id}' />
+    <div class='content' v-loading='this.loading' element-loading-background="rgba(0, 0, 0, 0)">
+      <div v-if="this.peopleList && this.peopleList.length > 0">
+        <people-list-item v-for='(item, index) in this.peopleList' :key='index' :content='{state: true, title: item.username, value: item.id}' />
+      </div>
+      <content-none v-if="!this.loading && (!this.peopleList || this.peopleList.length < 1)" tips='无APP注册用户' />
     </div>
-    <content-none v-else tips='未找到相关人员' />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
 import { PeopleFilter, PeopleListItem, ContentNone } from "@/components";
 
@@ -23,22 +25,37 @@ const store = namespace("FaceTime");
 
 @Component({ components: { PeopleFilter, PeopleListItem, ContentNone } })
 class PeopleListPanel extends Vue {
+  private peopleList = [];
+
+  private loading = true;
+
   @store.Getter("token")
   private token!: string;
 
-  private peopleList = null;
+  @store.Getter("organizationid")
+  private organizationid!: string;
 
-  private mounted() {
-    getPeopleTree({ token: this.token, page: 1, limit: 999 })
-      .then(result => {
-        debugger
-        if (result && result.length > 0) {
-          this.peopleList = result;
-        }
+  @Watch("organizationid", { immediate: true, deep: true })
+  private onCoordChanged(val: string, oldVal: string) {
+    if (val) {
+      this.loading = true;
+      this.peopleList = [];
+      getPeopleTree({
+        token: this.token,
+        organizationid: val,
+        page: 1,
+        limit: 999
       })
-      .catch(err => {
-        console.log(err);
-      });
+        .then(result => {
+          this.loading = false;
+          if (result && result.length > 0) {
+            this.peopleList = result;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 }
 
