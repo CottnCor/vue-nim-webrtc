@@ -12,6 +12,7 @@
         <p class="primary left">{{ item.name }}<span class="strong strong-color">{{' (' + item.id + ')'}}</span></p>
       </el-option>
     </el-select>
+    <a @click="refresh" class="button motion"><i class="primary-color el-icon-refresh"></i></a>
   </div>
 </template>
 
@@ -24,12 +25,21 @@ const faceTimeStore = namespace("FaceTime");
 class PeopleFilter extends Vue {
   @Prop({ default: null })
   private token!: string;
+  @faceTimeStore.Getter("organizationid")
+  private organizationid!: string;
   @faceTimeStore.Action("set_organizationid")
   private setOrganizationid!: (val: string) => void;
   private currentOrganization = "";
   private currentSubOrganization = "";
   private organizations: Organizations[] = [];
   private subOrganizations: Organizations[] = [];
+  private refresh() {
+    if (this.organizationid) {
+      let organizationid = this.organizationid;
+      this.setOrganizationid("");
+      this.setOrganizationid(organizationid);
+    }
+  }
   private organizationChanged(id: string) {
     if (id) {
       this.setOrganizationid(id);
@@ -124,6 +134,16 @@ export default PeopleFilter;
   .filter {
     flex: 1;
     margin: auto $size_12 auto 0;
+  }
+  .button {
+    padding: 0;
+    border: none;
+    background: none;
+    border-radius: 0;
+    &:hover {
+      background: none;
+      box-shadow: none;
+    }
   }
 }
 </style>
