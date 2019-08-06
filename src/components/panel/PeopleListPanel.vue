@@ -5,7 +5,7 @@
     </div>
     <div class='content' v-loading='this.loading' element-loading-background="rgba(0, 0, 0, 0)">
       <div v-if="this.peopleList && this.peopleList.length > 0">
-        <people-list-item v-for='(item, index) in this.peopleList' :key='index' :content='{token: token, title: item.username, value: item.id}' />
+        <people-list-item v-for='(item, index) in this.peopleList' :key='index' :content='item' />
       </div>
       <content-none v-if="!this.loading && (!this.peopleList || this.peopleList.length < 1)" tips='无APP注册用户' />
     </div>
@@ -25,7 +25,7 @@ const store = namespace("FaceTime");
 
 @Component({ components: { PeopleFilter, PeopleListItem, ContentNone } })
 class PeopleListPanel extends Vue {
-  private peopleList = [];
+  private peopleList: UserState[] = [];
 
   private loading = true;
 
@@ -49,7 +49,15 @@ class PeopleListPanel extends Vue {
         .then(result => {
           this.loading = false;
           if (result && result.length > 0) {
-            this.peopleList = result;
+            this.peopleList = result.map(item => {
+              return {
+                userid: item.id,
+                username: item.username,
+                online: item.online,
+                lat: item.online ? item.lat : 0.0,
+                lng: item.online ? item.lon : 0.0
+              };
+            });
           }
         })
         .catch(err => {
@@ -58,7 +66,13 @@ class PeopleListPanel extends Vue {
     }
   }
 }
-
+interface UserState {
+  userid: string;
+  username: string;
+  online: boolean;
+  lat: number;
+  lng: number;
+}
 export default PeopleListPanel;
 </script>
 

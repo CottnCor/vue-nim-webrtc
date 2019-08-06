@@ -1,11 +1,11 @@
 <template>
-  <l-marker :lat-lng="latLng" :icon="icon">
-    <l-icon class-name="marker">
-      <div class="marker no-bg">
-        <img class="overstory bg" src="img/icon/marker.png" />
+  <l-marker :lat-lng="latLng">
+    <l-icon class-name="spin-marker">
+      <div class="spin-marker no-bg">
+        <img class="overstory bg" src="img/map/spin-marker.png" />
       </div>
     </l-icon>
-    <map-popup content="content"></map-popup>
+    <!-- <map-popup content="content"></map-popup> -->
   </l-marker>
 </template>
 
@@ -29,7 +29,7 @@ export default PinMarker;
 </script>
 
 <style lang="scss" scoped>
-.marker {
+.spin-marker {
   padding: 0;
   width: $size_36;
   height: calc(#{($size_64 + $size_4)});

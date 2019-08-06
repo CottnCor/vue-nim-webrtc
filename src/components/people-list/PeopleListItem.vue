@@ -1,19 +1,19 @@
 <template>
-  <div v-if="content" class="people-list-item radius">
-    <el-tooltip :content="this.userState.online ? '在线' : '离线'" placement="right">
-      <p :class="[this.userState.online ? 'success' : 'disable', 'primary', 'strong']"><i class="el-icon-link"></i></p>
+  <div v-if="this.content" class="people-list-item radius">
+    <el-tooltip :content="this.content.online ? '在线' : '离线'" placement="right">
+      <p :class="[this.content.online ? 'success' : 'disable', 'primary', 'strong']"><i class="el-icon-link"></i></p>
     </el-tooltip>
-    <p class="primary strong center">{{ content.title }}</p>
+    <p class="primary strong center">{{ this.content.username }}</p>
     <span style="flex: 1;" />
-    <el-button @click="locate" class="motion" type="text" size="mini" round><i :class="[this.userState.online ? 'strong-color' : 'disable', 'el-icon-location-outline']"></i></el-button>
-    <el-button @click="call" class="motion" type="text" size="mini" round><i :class="[this.userState.online ? 'primary-color' : 'disable', 'el-icon-video-camera']"></i></el-button>
+    <el-button @click="locate" class="motion" type="text" size="mini" round><i :class="[this.content.online ? 'strong-color' : 'disable', 'el-icon-location-outline']"></i></el-button>
+    <el-button @click="call" class="motion" type="text" size="mini" round><i :class="[this.content.online ? 'primary-color' : 'disable', 'el-icon-video-camera']"></i></el-button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import { getYxInfo, getUserState } from "@/api/face-time";
+import { getYxInfo } from "@/api/face-time";
 
 import { latLng, LatLng } from "leaflet";
 
@@ -26,19 +26,10 @@ const mapStore = namespace("Map");
 @Component({})
 class PeopleListItem extends Vue {
   @Prop({ default: null })
-  private content!: any;
+  private content!: UserState;
 
-  private interval!: number;
-
-  private secondsConst = 10000;
-
-  private userState: UserState = {
-    userid: "",
-    username: "",
-    online: false,
-    lat: 0.0,
-    lng: 0.0
-  };
+  @faceTimeStore.Getter("token")
+  private token!: string;
 
   @faceTimeStore.Getter("status")
   private status!: number;
@@ -53,8 +44,8 @@ class PeopleListItem extends Vue {
   private setCoord!: (val: LatLng) => void;
 
   private locate() {
-    if (this.userState.online) {
-      this.setCoord(latLng(this.userState.lat, this.userState.lng));
+    if (this.content.online) {
+      this.setCoord(latLng(this.content.lat, this.content.lng));
     } else {
       this.$notify.warning({
         title: "用户已离线",
@@ -64,39 +55,21 @@ class PeopleListItem extends Vue {
     }
   }
 
-  private refreshUserState() {
-    getUserState({ token: this.content.token, username: this.content.title })
-      .then(result => {
-        if (result) {
-          this.userState = {
-            userid: result.id,
-            username: result.username,
-            online: result.online,
-            lat: result.online ? result.lat : 0.0,
-            lng: result.online ? result.lng : 0.0
-          };
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
   private call() {
-    if (this.userState.online) {
+    if (this.content.online) {
       this.$confirm("即将发起视频呼叫, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
         center: true
       }).then(() => {
-        if (this.content.value) {
-          getYxInfo({ username: this.content.title })
+        if (this.content.userid) {
+          getYxInfo({ username: this.content.username })
             .then(result => {
               if (result) {
                 this.setTo({
-                  userid: this.content.value,
-                  username: this.content.title,
+                  userid: this.content.userid,
+                  username: this.content.username,
                   account: result.account
                 });
                 this.addTimes();
@@ -125,17 +98,6 @@ class PeopleListItem extends Vue {
         duration: 10000
       });
     }
-  }
-
-  private mounted() {
-    this.refreshUserState();
-    this.interval = setInterval(() => {
-      this.refreshUserState();
-    }, this.secondsConst);
-  }
-
-  private beforeDestroy() {
-    if (this.interval) clearInterval(this.interval);
   }
 }
 

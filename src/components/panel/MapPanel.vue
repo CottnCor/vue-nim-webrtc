@@ -4,6 +4,7 @@
       <wkt-layer v-for="(item, index) in this.jctb" slot="wkt-layer" :wkt="item.wkt" />
       <cluster-markers slot="cluster-markers" markers="[]" />
       <spin-marker v-if="this.track && this.track.currentLatLng" slot="spin-marker" :latLng="this.track.currentLatLng" :rotationAngle="this.track.currentAngle" />
+      <pin-marker v-if="this.coord && !(this.track && this.track.currentLatLng)" slot="pin-marker" :latLng="this.coord" />
     </basic-map>
   </div>
 </template>
@@ -21,11 +22,18 @@ import { namespace } from "vuex-class";
 
 const store = namespace("Map");
 
-import { ClusterMarkers, SpinMarker, WktLayer, BasicMap } from "@/components";
+import {
+  ClusterMarkers,
+  SpinMarker,
+  PinMarker,
+  WktLayer,
+  BasicMap
+} from "@/components";
 
 @Component({
   components: {
     ClusterMarkers,
+    PinMarker,
     SpinMarker,
     WktLayer,
     BasicMap
@@ -75,7 +83,7 @@ class MapPanel extends Vue {
         this.jctb = [];
         this.visibleJctb();
       } else {
-        this.$refs.basicMap.flyTo(val);
+        this.$refs.basicMap.panTo(val);
       }
     }
   }

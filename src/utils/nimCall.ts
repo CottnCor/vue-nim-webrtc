@@ -652,7 +652,6 @@ export default class NimCall {
           recordId
         })
         .then(result => {
-          debugger
         })
         .catch(err => {
           console.log('停止视频录制出错: ', err)

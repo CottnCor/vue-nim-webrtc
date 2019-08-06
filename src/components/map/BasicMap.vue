@@ -7,6 +7,7 @@
       <!-- <l-tile-layer :url="terrainLayer" /> -->
       <slot name="wkt-layer"></slot>
       <slot name="cluster-markers"></slot>
+      <slot name="pin-marker"></slot>
       <slot name="spin-marker"></slot>
     </l-map>
     <img class="logo-tdt" src="img/map/logo-tdt.png" />
@@ -77,13 +78,6 @@ class BasicMap extends Vue {
 
   public zoomOut() {
     this.map.zoomOut();
-  }
-
-  public flyTo(center: LatLng) {
-    if (center) {
-      let zoom = 17;
-      this.map.flyTo(center, zoom);
-    }
   }
 
   public panTo(center: LatLng) {
