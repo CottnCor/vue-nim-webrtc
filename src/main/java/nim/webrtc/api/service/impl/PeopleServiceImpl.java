@@ -43,7 +43,7 @@ public class PeopleServiceImpl implements IPeopleService {
             params.put("pageSize", limit);
             params.put("appkey", authProperties.getAppAppkey());
             StringEntity entity = new StringEntity(params.toJSONString());
-            String url = authProperties.getEndpoint() + "getUserList";
+            String url = authProperties.getEndpoint() + "getSimpleUserList";
             JSONObject result = ProxyUtil.post(url, entity);
             if(result != null && ResultStatus.OK.toString().equals(result.getString("status"))){
                 List<Map> peopleTree = result.getJSONObject("data").getJSONArray("data").toJavaList(Map.class);
