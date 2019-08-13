@@ -17,6 +17,6 @@ export default CallNumberLayout;
     width: 100%;
     min-height: 100%;
     display: flex;
-    background: map-get($default, bg);
+    background-color: map-get($default, bg);
 }
 </style>

@@ -430,6 +430,18 @@ a {
     }
   }
 
+  &.icon {
+    padding: 0;
+    margin: auto;
+    width: $size_32;
+    height: $size_32;
+    box-shadow: $shadow_strong;
+    background-image: map-get($default, linear_primary_2);
+    i {
+      margin: auto;
+    }
+  }
+
   &.button {
     display: flex;
     margin: auto;
@@ -631,6 +643,10 @@ mark {
 .no-bg {
   background-color: transparent !important;
   background-image: none !important;
+}
+
+.bg {
+  background-image: map-get($default, linear_background);
 }
 
 .circle {

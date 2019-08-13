@@ -1,17 +1,16 @@
 <template>
   <div class="people-filter">
-    <el-select class="filter" v-if="this.organizations.length > 0" v-model="currentOrganization" size="mini" placeholder="请选择" @change="organizationChanged">
+    <!-- <el-select class="filter" v-if="this.organizations.length > 0" v-model="currentOrganization" size="mini" placeholder="请选择" @change="organizationChanged">
       <el-option class="flex" v-for="item in this.organizations" :key="item.id" :label="item.name" :value="item.id">
-        <p class="primary strong left"><i class="el-icon-more success"></i></p>
         <p class="primary left">{{ item.name }}<span class="strong strong-color">{{' (' + item.id + ')'}}</span></p>
       </el-option>
     </el-select>
     <el-select class="filter" v-model="currentSubOrganization" size="mini" placeholder="请选择" @change="subOrganizationChanged">
       <el-option class="flex" v-for="item in this.subOrganizations" :key="item.id" :label="item.name" :value="item.id">
-        <p class="primary strong left"><i class="el-icon-more success"></i></p>
         <p class="primary left">{{ item.name }}<span class="strong strong-color">{{' (' + item.id + ')'}}</span></p>
       </el-option>
-    </el-select>
+    </el-select> -->
+    <infinite-tree class="flex-full" />
     <a @click="refresh" class="button motion"><i class="primary-color el-icon-refresh"></i></a>
   </div>
 </template>
@@ -19,9 +18,10 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { getUserInfo } from "@/api/face-time";
+import { InfiniteTree } from "@/components";
 import { namespace } from "vuex-class";
 const faceTimeStore = namespace("FaceTime");
-@Component({})
+@Component({ components: { InfiniteTree } })
 class PeopleFilter extends Vue {
   @Prop({ default: null })
   private token!: string;
@@ -72,10 +72,10 @@ class PeopleFilter extends Vue {
             result.organizations &&
             result.organizations.length > 0
           ) {
+            console.log(result);
             let organization = result.organizations[0];
             let children = organization.children;
             if (organization.level === 2) {
-              let children = organization.children;
               this.organizations = children.map(item => {
                 return {
                   id: item.id,
