@@ -40,7 +40,7 @@ class PeopleFilter extends Vue {
     this.filterChanged(value);
   }
   private organizationChanged(param: any) {
-    if (param && this.organizationid != param.id) {
+    if (param && this.organizationid !== param.id) {
       this.organizationid = param.id;
       this.setOrganizationid(param.id);
     }
