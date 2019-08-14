@@ -42,7 +42,7 @@ export default SpotListPanel;
     flex: 1;
 
     overflow-y: auto;
-    box-shadow: $shadow_strong_inset;
+    box-shadow: $shadow_base_inset;
     height: calc(100% - #{($size_84)});
 
     .spot-list-item {

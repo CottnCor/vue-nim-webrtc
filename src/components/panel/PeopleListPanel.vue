@@ -24,11 +24,15 @@ import { getPeopleTree } from "@/api/face-time";
 
 import { namespace } from "vuex-class";
 
+import { FREQUENCY } from "@/config";
+
 const store = namespace("FaceTime");
 
 @Component({ components: { PeopleFilter, PeopleListItem, ContentNone } })
 class PeopleListPanel extends Vue {
   private peopleList: UserState[] = [];
+
+  private interval!: number;
 
   private peopleCount = 0;
 
@@ -71,8 +75,6 @@ class PeopleListPanel extends Vue {
   @Watch("currentPage", { immediate: true, deep: true })
   private onCurrentPageChanged(val: number, oldVal: number) {
     if (val > 0 && this.organizationid) {
-      this.loading = true;
-      this.peopleList = [];
       getPeopleTree({
         token: this.token,
         organizationid: this.organizationid,
@@ -80,7 +82,6 @@ class PeopleListPanel extends Vue {
         limit: 10
       })
         .then(result => {
-          this.loading = false;
           if (result && result.length > 0) {
             this.peopleList = result.map(item => {
               return {
@@ -91,6 +92,8 @@ class PeopleListPanel extends Vue {
                 lng: item.online ? item.lon : 0.0
               };
             });
+          } else {
+            this.peopleList = [];
           }
         })
         .catch(err => {
@@ -101,6 +104,18 @@ class PeopleListPanel extends Vue {
 
   private currentPageChanged(val: number) {
     this.currentPage = val;
+  }
+
+  private mounted() {
+    this.interval = setInterval(() => {
+      this.onCurrentPageChanged(this.currentPage, this.currentPage);
+    }, FREQUENCY.BASIC);
+  }
+
+  private beforeDestroy() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 }
 interface UserState {
@@ -134,7 +149,7 @@ export default PeopleListPanel;
     flex: 1;
     width: 100%;
     overflow-y: auto;
-    box-shadow: $shadow_strong_inset;
+    box-shadow: $shadow_base_inset;
     .people-list-item {
       &:nth-child(odd) {
         background-color: map-get($default, grey_3);

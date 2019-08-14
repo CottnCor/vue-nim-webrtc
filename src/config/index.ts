@@ -20,6 +20,8 @@ export { MAP_URL, MAP_ZOOM, MAX_PANTO_TIMES, MAP_CENTER, MAP_BOUND } from './mod
 
 export { NIM_CONFIG } from './modules/nim-config'
 
+export { FREQUENCY } from './modules/frequency-config';
+
 // 平台
 export const HOST_PLATFORM = 'WEB'
 
