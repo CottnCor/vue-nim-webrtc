@@ -69,7 +69,7 @@ class FaceTimePanel extends Vue {
   private faceTimeState = [
     {
       state: false,
-      tips: "刷新",
+      tips: "账号在别处登陆自动下线，点击重新登陆",
       component: "FacetimeUnLogged",
       tag: this.faceTimeeStateCode.unLogged
     },
