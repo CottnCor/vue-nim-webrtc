@@ -2,7 +2,7 @@
   <div class="infinite-tree flex radius">
     <el-input class="flex-full flex-center gap" placeholder="点击左侧展开树选择节点" size="small" :readonly="true" :clearable="true" v-model="tips">
       <template slot="prepend">
-        <el-popover class="tree-popover flex" placement="bottom" trigger="click" v-model="popoverVisible" @show="handlePopoverShow" @hide="handlePopoverHide">
+        <el-popover class="tree-popover flex" placement="bottom" trigger="hover" v-model="popoverVisible" @show="handlePopoverShow" @hide="handlePopoverHide">
           <el-input class="flex-full" size="small" placeholder="输入关键字进行过滤" prefix-icon="el-icon-search" :clearable="true" v-model="filter" @change="handleFilterChanged">
             <template slot="append">
               <el-tooltip class="item" effect="dark" content="全部收起" placement="right">
