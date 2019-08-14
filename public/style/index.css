@@ -2,14 +2,24 @@
 .el-popper {
   border: none !important;
   outline: none !important;
-  background-color: #ac8ece !important;
 }
 
-/* .el-tree-node {
-  height: 48px;
+.el-input__inner {
+  border-radius: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
 }
 
 .el-tree-node__content {
-  height: 100%;
-  width: 100%;
-} */
+  height: max-content !important;
+}
+
+.el-input-group__prepend,
+.el-input-group__append {
+  border: none !important;
+  outline: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+}

@@ -180,7 +180,7 @@ export default MapSketchLayout;
     .popup {
       height: 96%;
       &.left {
-        width: 24%;
+        width: 27%;
       }
       &.right {
         width: 32%;
@@ -191,7 +191,7 @@ export default MapSketchLayout;
         & > div.content {
           width: 0;
           height: 0;
-          opacity: 0.2;
+          opacity: 0;
         }
         &.left {
           margin-left: calc(#{($size_32 - $size_12)} - 12%);

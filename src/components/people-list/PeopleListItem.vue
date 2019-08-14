@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.content" class="people-list-item radius">
+  <div v-if="this.content" :class="[this.content.online ? 'online' : '', 'people-list-item']">
     <el-tooltip :content="this.content.online ? '在线' : '离线'" placement="right">
       <p :class="[this.content.online ? 'success' : 'disable', 'primary', 'strong']"><i class="el-icon-link"></i></p>
     </el-tooltip>
@@ -118,6 +118,10 @@ export default PeopleListItem;
   padding: $size_6;
   flex-direction: row;
   border-left: $size_12 solid transparent;
+
+  &.online{
+    border-color: map-get($default, success);
+  }
 
   &:hover {
     box-shadow: $shadow_strong;

@@ -7,7 +7,10 @@
       <div v-if="this.peopleList && this.peopleList.length > 0">
         <people-list-item v-for='(item, index) in this.peopleList' :key='index' :content='item' />
       </div>
-      <content-none v-if="!this.loading && (!this.peopleList || this.peopleList.length < 1)" tips='无APP注册用户' />
+      <content-none v-if="!this.loading && (!this.peopleList || this.peopleList.length < 1)" tips='该组织下未挂接用户' />
+    </div>
+    <div v-if="this.peopleCount > 0" class="footer flex">
+      <el-pagination background layout="prev, pager, next" pager-count="2" page-size="10" :current-page="this.currentPage" :total="this.peopleCount" @current-change="currentPageChanged" style="margin: auto;" />
     </div>
   </div>
 </template>
@@ -27,6 +30,10 @@ const store = namespace("FaceTime");
 class PeopleListPanel extends Vue {
   private peopleList: UserState[] = [];
 
+  private peopleCount = 0;
+
+  private currentPage = 1;
+
   private loading = true;
 
   @store.Getter("token")
@@ -36,15 +43,41 @@ class PeopleListPanel extends Vue {
   private organizationid!: string;
 
   @Watch("organizationid", { immediate: true, deep: true })
-  private onCoordChanged(val: string, oldVal: string) {
+  private onOrganizationidChanged(val: string, oldVal: string) {
     if (val) {
+      this.currentPage = 0;
+      this.currentPage = 1;
       this.loading = true;
-      this.peopleList = [];
       getPeopleTree({
         token: this.token,
         organizationid: val,
         page: 1,
-        limit: 999
+        limit: 9999
+      })
+        .then(result => {
+          this.loading = false;
+          if (result && result.length > 0) {
+            this.peopleCount = result.length;
+          } else {
+            this.peopleCount = 0;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
+
+  @Watch("currentPage", { immediate: true, deep: true })
+  private onCurrentPageChanged(val: number, oldVal: number) {
+    if (val > 0 && this.organizationid) {
+      this.loading = true;
+      this.peopleList = [];
+      getPeopleTree({
+        token: this.token,
+        organizationid: this.organizationid,
+        page: this.currentPage,
+        limit: 10
       })
         .then(result => {
           this.loading = false;
@@ -65,6 +98,10 @@ class PeopleListPanel extends Vue {
         });
     }
   }
+
+  private currentPageChanged(val: number) {
+    this.currentPage = val;
+  }
 }
 interface UserState {
   userid: string;
@@ -83,16 +120,21 @@ export default PeopleListPanel;
   display: flex;
   flex-direction: column;
 
-  .header {
-    height: $size_42;
+  .header,
+  .footer {
+    padding: $size_10 0;
+    height: max-content;
+  }
+
+  .footer {
+    padding-bottom: 0;
   }
 
   .content {
+    flex: 1;
     width: 100%;
     overflow-y: auto;
     box-shadow: $shadow_strong_inset;
-    height: calc(100% - #{($size_42)});
-
     .people-list-item {
       &:nth-child(odd) {
         background-color: map-get($default, grey_3);

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="content" class="spot-list-item radius">
+  <div v-if="content" class="spot-list-item">
     <el-tooltip :content="content.state ? '可用' : '不可用'" placement="bottom">
       <p :class="[content.state ? 'success' : 'disable', 'primary', 'strong', 'primary-color']"><i class="el-icon-success"></i></p>
     </el-tooltip>

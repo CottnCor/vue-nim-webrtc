@@ -291,10 +291,6 @@ textarea {
     color: map-get($default, grey_6);
   }
 
-  &.highlight {
-    color: map-get($default, high_light);
-  }
-
   &.strong {
     font-weight: 600;
   }
@@ -332,6 +328,10 @@ textarea {
 
   &.nowrap {
     white-space: nowrap;
+  }
+
+  &.inline {
+    display: inline-block;
   }
 
   &.shadow {
@@ -435,8 +435,10 @@ a {
     margin: auto;
     width: $size_32;
     height: $size_32;
-    box-shadow: $shadow_strong;
-    background-image: map-get($default, linear_primary_2);
+    background-color: map-get($default, primary_light_1);
+    &:hover {
+      background-image: map-get($default, linear_background);
+    }
     i {
       margin: auto;
     }
@@ -638,6 +640,24 @@ mark {
 
 .flex {
   display: flex;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-full {
+  flex: 1;
+}
+
+.flex-center {
+  margin: auto;
 }
 
 .no-bg {

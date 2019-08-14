@@ -1,22 +1,15 @@
 <template>
-  <div class="people-filter">
-    <!-- <el-select class="filter" v-if="this.organizations.length > 0" v-model="currentOrganization" size="mini" placeholder="请选择" @change="organizationChanged">
-      <el-option class="flex" v-for="item in this.organizations" :key="item.id" :label="item.name" :value="item.id">
-        <p class="primary left">{{ item.name }}<span class="strong strong-color">{{' (' + item.id + ')'}}</span></p>
-      </el-option>
-    </el-select>
-    <el-select class="filter" v-model="currentSubOrganization" size="mini" placeholder="请选择" @change="subOrganizationChanged">
-      <el-option class="flex" v-for="item in this.subOrganizations" :key="item.id" :label="item.name" :value="item.id">
-        <p class="primary left">{{ item.name }}<span class="strong strong-color">{{' (' + item.id + ')'}}</span></p>
-      </el-option>
-    </el-select> -->
-    <infinite-tree class="flex-full" />
+  <div class="people-filter flex">
+    <div class="flex-column flex-full">
+      <infinite-tree class="flex-full" :loading="this.loading" :content="this.organizations" @node-changed="this.organizationChanged" />
+      <!-- <el-input class="flex-full filter" size="small" placeholder="输入关键字进行过滤" prefix-icon="el-icon-search" :clearable="true" v-model="filter" @change="handleFilterChanged"></el-input> -->
+    </div>
     <a @click="refresh" class="button motion"><i class="primary-color el-icon-refresh"></i></a>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Emit } from "vue-property-decorator";
 import { getUserInfo } from "@/api/face-time";
 import { InfiniteTree } from "@/components";
 import { namespace } from "vuex-class";
@@ -29,10 +22,13 @@ class PeopleFilter extends Vue {
   private organizationid!: string;
   @faceTimeStore.Action("set_organizationid")
   private setOrganizationid!: (val: string) => void;
-  private currentOrganization = "";
-  private currentSubOrganization = "";
-  private organizations: Organizations[] = [];
-  private subOrganizations: Organizations[] = [];
+  private organizations: any[] = [];
+  private loading = true;
+  private filter = "";
+  @Emit()
+  private filterChanged(val: any) {
+    return val;
+  }
   private refresh() {
     if (this.organizationid) {
       let organizationid = this.organizationid;
@@ -40,31 +36,18 @@ class PeopleFilter extends Vue {
       this.setOrganizationid(organizationid);
     }
   }
-  private organizationChanged(id: string) {
-    if (id) {
-      this.setOrganizationid(id);
-      this.subOrganizations = [];
-      this.currentSubOrganization = "";
-      for (const item of this.organizations) {
-        if (item.id === id) {
-          this.subOrganizations = item.children.map(item => {
-            return {
-              id: item.id,
-              name: item.name,
-              children: []
-            };
-          });
-        }
-      }
-    }
+  private handleFilterChanged(value) {
+    this.filterChanged(value);
   }
-  private subOrganizationChanged(id: string) {
-    if (id) {
-      this.setOrganizationid(id);
+  private organizationChanged(param: any) {
+    if (param && this.organizationid != param.id) {
+      this.organizationid = param.id;
+      this.setOrganizationid(param.id);
     }
   }
   private mounted() {
     if (this.token) {
+      this.loading = true;
       getUserInfo({ token: this.token })
         .then(result => {
           if (
@@ -72,39 +55,8 @@ class PeopleFilter extends Vue {
             result.organizations &&
             result.organizations.length > 0
           ) {
-            console.log(result);
-            let organization = result.organizations[0];
-            let children = organization.children;
-            if (organization.level === 2) {
-              this.organizations = children.map(item => {
-                return {
-                  id: item.id,
-                  name: item.name,
-                  children:
-                    item.children && item.children.length > 0
-                      ? item.children.map(item => {
-                          return {
-                            id: item.id,
-                            name: item.name
-                          };
-                        })
-                      : []
-                };
-              });
-              this.currentOrganization = this.organizations[0].name;
-              this.organizationChanged(this.organizations[0].id);
-            } else if (organization.level > 2) {
-              let data = organization.level === 3 ? children : [organization];
-              this.subOrganizations = data.map(item => {
-                return {
-                  id: item.id,
-                  name: item.name,
-                  children: []
-                };
-              });
-              this.currentSubOrganization = this.subOrganizations[0].name;
-              this.subOrganizationChanged(this.subOrganizations[0].id);
-            }
+            this.loading = false;
+            this.organizations = result.organizations;
           }
         })
         .catch(err => {
@@ -129,11 +81,8 @@ export default PeopleFilter;
 .people-filter {
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: row;
   .filter {
-    flex: 1;
-    margin: auto $size_12 auto 0;
+    margin-top: $size_10;
   }
   .button {
     padding: 0;
