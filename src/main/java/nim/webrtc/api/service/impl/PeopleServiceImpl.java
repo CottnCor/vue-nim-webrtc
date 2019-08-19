@@ -38,7 +38,7 @@ public class PeopleServiceImpl implements IPeopleService {
             JSONObject params = new JSONObject();
             params.put("token", token);
             params.put("organizationid", organizationid);
-            params.put("recursive", true);
+            params.put("recursive", false);
             params.put("pageIndex", page);
             params.put("pageSize", limit);
             params.put("appkey", authProperties.getAppAppkey());
